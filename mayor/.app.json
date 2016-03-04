@@ -73,6 +73,6 @@
   "name": "kendoUiMobileApp",
   "navigation": "tabstrip",
   "view": "home",
-  "transition": "slide",
+  "transition": "overlay",
   "skin": "nova"
 }

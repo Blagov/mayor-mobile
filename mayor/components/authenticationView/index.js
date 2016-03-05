@@ -12,8 +12,8 @@ app.authenticationView = kendo.observable({
 (function(parent) {
     var provider = app.data.mayorMobile,
         mode = 'signin',
-        registerRedirect = 'home',
-        signinRedirect = 'home',
+        registerRedirect = 'formView',
+        signinRedirect = 'formView',
         init = function(error) {
             if (error) {
                 if (error.message) {
@@ -32,7 +32,6 @@ app.authenticationView = kendo.observable({
         },
         successHandler = function(data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
-
             if (data && data.result) {
                 app.user = data.result;
 

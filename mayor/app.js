@@ -8,7 +8,7 @@
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                transition: 'overlay',
+                transition: 'none',
                 skin: 'nova',
                 initial: 'components/home/view.html'
             });

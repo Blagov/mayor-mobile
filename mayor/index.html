@@ -6,12 +6,13 @@
     <meta charset="utf-8">
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet">
-	
-    <script src="js/location.js"></script>
     <script src="cordova.js"></script>
+    
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="js/location.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js"></script> 
     <script src="bower_components/everlive/min/everlive.all.min.js"></script>
     <script src="dataProviders/mayorMobile.js"></script>
 </head>
@@ -30,29 +31,22 @@
                 <a href="components/authenticationView/view.html" data-icon="contacts">sign in</a>
             </div>
         </header>
-
         <!-- application views will be rendered here -->
-
         <footer data-role="footer">
-
         </footer>
     </div>
-
     <div data-role="layout" data-id="main-nonav">
         <header data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
             </div>
         </header>
-
         <!-- application views will be rendered here -->
-
         <footer data-role="footer">
         </footer>
     </div>
     <!-- START_CUSTOM_CODE_kendoUiMobileApp -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_kendoUiMobileApp -->
 </body>
 

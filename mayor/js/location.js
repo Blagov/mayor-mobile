@@ -13,7 +13,7 @@ geolocation.prototype = {
             frequency: 1000,
             enableHighAccuracy: true
         };
-        navigator.geolocation.watchPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             cb(position, null)
         }, function(error) {
              cb(null, error)

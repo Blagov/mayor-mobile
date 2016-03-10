@@ -13,12 +13,10 @@
                     </label>
                 </li>
             </ul>
-
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="primary" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
-
                 <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
-
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.loginWithFacebook }">Facebook Login</a>
             </div>
         </form>
     </div>
@@ -52,11 +50,8 @@
     </div>
     <!-- START_CUSTOM_CODE_authenticationViewModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_authenticationViewModel -->
-
     <!-- START_CUSTOM_CODE_authenticationView -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->
-
     <!-- END_CUSTOM_CODE_authenticationView -->
 </div>

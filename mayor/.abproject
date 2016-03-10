@@ -37,6 +37,9 @@
   "WP8TileTitle": "",
   "WP8Publisher": "",
   "WP8Capabilities": [
+    "ID_CAP_IDENTITY_USER",
+    "ID_CAP_LOCATION",
+    "ID_CAP_MAP",
     "ID_CAP_NETWORKING",
     "ID_CAP_WEBBROWSERCOMPONENT"
   ],

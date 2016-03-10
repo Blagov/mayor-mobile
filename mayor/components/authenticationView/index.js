@@ -83,7 +83,26 @@ app.authenticationView = kendo.observable({
                     return false;
                 }
 
-                provider.Users.register(email, password, attrs, successHandler, init);
+                //provider.Users.register(email, password, attrs, successHandler, init);
+
+                provider.Users.register(email,
+                    password,
+                    attrs,
+                    function (data) {
+                        //alert(JSON.stringify(data));
+                        el.authentication.login(email, // username
+                            password, // password
+                            function (data) {
+                                //alert(JSON.stringify(data));
+                                app.mobileApp.navigate('components/formView/view.html');
+                            },
+                            function (error) {
+                                //alert(JSON.stringify(error));
+                            });
+                    },
+                    function (error) {
+                        //alert(JSON.stringify(error));
+                    });
             },
             toggleView: function () {
                 mode = mode === 'signin' ? 'register' : 'signin';
@@ -101,14 +120,14 @@ app.authenticationView = kendo.observable({
                     scope: 'email',
                     display: 'touch'
                 };
-                
+
                 var facebook = new IdentityProvider(facebookConfig);
-                
+
                 facebook.getAccessToken(function (accessToken) {
                     Everlive.$.Users.loginWithFacebook(accessToken,
                         function (success) {
                             //alert(JSON.stringify(data));
-                        	app.mobileApp.navigate('components/formView/view.html');
+                            app.mobileApp.navigate('components/formView/view.html');
                         },
                         function (error) {
                             //alert(JSON.stringify(error));

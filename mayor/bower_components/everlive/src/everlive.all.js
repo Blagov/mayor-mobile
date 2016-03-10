@@ -1359,26 +1359,26 @@ var at, // The index of the current character
             text:    text
         };
     },
-
+    
     next = function (c) {
         // If a c parameter is provided, verify that it matches the current character.
         if (c && c !== ch) {
             error("Expected '" + c + "' instead of '" + ch + "'");
         }
-
+        
         // Get the next character. When there are no more characters,
         // return the empty string.
-
+        
         ch = text.charAt(at);
         at += 1;
         return ch;
     },
-
+    
     number = function () {
         // Parse a number value.
         var number,
             string = '';
-
+        
         if (ch === '-') {
             string = '-';
             next('-');
@@ -1412,14 +1412,14 @@ var at, // The index of the current character
             return number;
         }
     },
-
+    
     string = function () {
         // Parse a string value.
         var hex,
             i,
             string = '',
             uffff;
-
+        
         // When parsing for string values, we must look for " and \ characters.
         if (ch === '"') {
             while (next()) {
@@ -1576,7 +1576,7 @@ value = function () {
 
 module.exports = function (source, reviver) {
     var result;
-
+    
     text = source;
     at = 0;
     ch = ' ';
@@ -1631,7 +1631,7 @@ function quote(string) {
     // backslash characters, then we can safely slap some quotes around it.
     // Otherwise we must also replace the offending characters with safe escape
     // sequences.
-
+    
     escapable.lastIndex = 0;
     return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
         var c = meta[a];
@@ -1649,47 +1649,47 @@ function str(key, holder) {
         mind = gap,
         partial,
         value = holder[key];
-
+    
     // If the value has a toJSON method, call it to obtain a replacement value.
     if (value && typeof value === 'object' &&
             typeof value.toJSON === 'function') {
         value = value.toJSON(key);
     }
-
+    
     // If we were called with a replacer function, then call the replacer to
     // obtain a replacement value.
     if (typeof rep === 'function') {
         value = rep.call(holder, key, value);
     }
-
+    
     // What happens next depends on the value's type.
     switch (typeof value) {
         case 'string':
             return quote(value);
-
+        
         case 'number':
             // JSON numbers must be finite. Encode non-finite numbers as null.
             return isFinite(value) ? String(value) : 'null';
-
+        
         case 'boolean':
         case 'null':
             // If the value is a boolean or null, convert it to a string. Note:
             // typeof null does not produce 'null'. The case is included here in
             // the remote chance that this gets fixed someday.
             return String(value);
-
+            
         case 'object':
             if (!value) return 'null';
             gap += indent;
             partial = [];
-
+            
             // Array.isArray
             if (Object.prototype.toString.apply(value) === '[object Array]') {
                 length = value.length;
                 for (i = 0; i < length; i += 1) {
                     partial[i] = str(i, value) || 'null';
                 }
-
+                
                 // Join all of the elements together, separated with commas, and
                 // wrap them in brackets.
                 v = partial.length === 0 ? '[]' : gap ?
@@ -1698,7 +1698,7 @@ function str(key, holder) {
                 gap = mind;
                 return v;
             }
-
+            
             // If the replacer is an array, use it to select the members to be
             // stringified.
             if (rep && typeof rep === 'object') {
@@ -1724,7 +1724,7 @@ function str(key, holder) {
                     }
                 }
             }
-
+            
         // Join all of the member texts together, separated with commas,
         // and wrap them in braces.
 
@@ -1740,7 +1740,7 @@ module.exports = function (value, replacer, space) {
     var i;
     gap = '';
     indent = '';
-
+    
     // If the space parameter is a number, make an indent string containing that
     // many spaces.
     if (typeof space === 'number') {
@@ -1760,7 +1760,7 @@ module.exports = function (value, replacer, space) {
     && (typeof replacer !== 'object' || typeof replacer.length !== 'number')) {
         throw new Error('JSON.stringify');
     }
-
+    
     // Make a fake root object containing our value under the key of ''.
     // Return the result of stringifying the value.
     return str('', {'': value});
@@ -1791,7 +1791,7 @@ module.exports = function (value, replacer, space) {
   var jstz = (function () {
       'use strict';
       var HEMISPHERE_SOUTH = 's',
-
+          
           /**
            * Gets the offset in minutes from UTC for a certain date.
            * @param {Date} date
@@ -1830,12 +1830,12 @@ module.exports = function (value, replacer, space) {
            */
           date_is_dst = function (date) {
               var is_southern = date.getMonth() > 7,
-                  base_offset = is_southern ? get_june_offset(date.getFullYear()) :
+                  base_offset = is_southern ? get_june_offset(date.getFullYear()) : 
                                               get_january_offset(date.getFullYear()),
                   date_offset = get_date_offset(date),
                   is_west = base_offset < 0,
                   dst_offset = base_offset - date_offset;
-
+                  
               if (!is_west && !is_southern) {
                   return dst_offset < 0;
               }
@@ -1850,7 +1850,7 @@ module.exports = function (value, replacer, space) {
            * client device.
            *
            * Returns a key that can be used to do lookups in jstz.olson.timezones.
-           * eg: "720,1,2".
+           * eg: "720,1,2". 
            *
            * @returns {String}
            */
@@ -1943,7 +1943,7 @@ module.exports = function (value, replacer, space) {
       return {
           determine: determine,
           date_is_dst: date_is_dst,
-          dst_start_for: dst_start_for
+          dst_start_for: dst_start_for 
       };
   }());
 
@@ -1985,7 +1985,7 @@ module.exports = function (value, replacer, space) {
           },
 
           timezone_name = tz_name,
-
+          
           /**
            * Checks if a timezone has possible ambiguities. I.e timezones that are similar.
            *
@@ -2853,7 +2853,7 @@ module.exports = function (value, replacer, space) {
            usesExclusion = true;
         }
         if(val !== 0 && usesExclusion) {
-            throw new Error("You cannot mix including and excluding fields.");
+            throw new Error("You cannot mix including and excluding fields."); 
         }
       });
 
@@ -8203,12 +8203,12 @@ var JsonFormatter = {
 		var jsonObj = {
 			ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64)
 		};
-
+		
 		// optionally add iv and salt
 		if (cipherParams.iv) {
 			jsonObj.iv = cipherParams.iv.toString();
 		}
-
+		
 		if (cipherParams.salt) {
 			jsonObj.s = cipherParams.salt.toString();
 		}
@@ -8220,21 +8220,21 @@ var JsonFormatter = {
 	parse: function (jsonStr) {
 		// parse json string
 		var jsonObj = JSON.parse(jsonStr);
-
+		
 		// extract ciphertext from json object, and create cipher params object
 		var cipherParams = CryptoJS.lib.CipherParams.create({
 			ciphertext: CryptoJS.enc.Base64.parse(jsonObj.ct)
 		});
-
+		
 		// optionally extract iv and salt
 		if (jsonObj.iv) {
 			cipherParams.iv = CryptoJS.enc.Hex.parse(jsonObj.iv);
 		}
-
+            
 		if (jsonObj.s) {
 			cipherParams.salt = CryptoJS.enc.Hex.parse(jsonObj.s);
 		}
-
+		
 		return cipherParams;
 	}
 };
@@ -8848,7 +8848,7 @@ code.google.com/p/crypto-js/wiki/License
 
     function timedOut() {
       self._timedOut = true
-      self.request.abort()
+      self.request.abort()      
     }
 
     function error(resp, msg, t) {
@@ -11919,7 +11919,7 @@ code.google.com/p/crypto-js/wiki/License
     }
     // Assume equality for cyclic structures. The algorithm for detecting cyclic
     // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
-
+    
     // Initializing stack of traversed objects.
     // It's done here since we only need them for objects and arrays comparison.
     aStack = aStack || [];
@@ -12083,7 +12083,7 @@ code.google.com/p/crypto-js/wiki/License
     };
   };
 
-  // Returns a predicate for checking whether an object has a given set of
+  // Returns a predicate for checking whether an object has a given set of 
   // `key:value` pairs.
   _.matcher = _.matches = function(attrs) {
     attrs = _.extendOwn({}, attrs);
@@ -12310,7 +12310,7 @@ code.google.com/p/crypto-js/wiki/License
   // Provide unwrapping proxy for some methods used in engine operations
   // such as arithmetic and JSON stringification.
   _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-
+  
   _.prototype.toString = function() {
     return '' + this._wrapped;
   };
@@ -12820,7 +12820,7 @@ Processor.prototype._createExecuteNodeExecutor = function (relationsTree, execut
             if (err) {
                 return done(err);
             }
-
+			
 			var childRelationNode;
 
             for (var i = 0; i < executionNode.relations.length; i++) {
@@ -12828,7 +12828,7 @@ Processor.prototype._createExecuteNodeExecutor = function (relationsTree, execut
                 childRelationNode.result = self._extractResultForRelation(childRelationNode, result);
             }
             executionNode.result = childRelationNode.result;
-
+			
             var arr = [];
             for (var j = 0; j < executionNode.children.length; j++) {
                 var executionTreeMap = executionTree._map;
@@ -13052,49 +13052,49 @@ Processor.prototype.prepare = function (expandExpression, mainTypeName, isArray,
 Processor.prototype.expand = function (relationsTree, mainQueryResult, expandContext, done) {
     var relationsTreeMap = relationsTree.map;
     var self = this;
-
+	
 	//Build the execution tree
     var executionTree = new ExecutionTree(relationsTree);
     executionTree.build();
     relationsTreeMap[relationsTreeMap.$root].result = mainQueryResult;
-
+	
     var executionTreeMap = executionTree._map;
     var rootExecutionNode = executionTree.getRootNode();
     if (!rootExecutionNode) return;
 
 	//Get a list of execute definitions(queries) to execute against the DB
 	var executionList = this._getExecutionList(executionTree, rootExecutionNode, expandContext);
-
+	
 	//Check for the max queries limit
     var maxQueriesCount = 25;
     if (executionList.length > maxQueriesCount) {
         done(new ExpandError('Expand expression results in more than ' + maxQueriesCount + ' inner queries!'));
     }
-
+	
 	//Execute them in series, since the result of the parent relation is used to get correct filter.
 	async.forEachSeries(
 		executionList,
 		function(executeDefinition, callback) {
 			var executeOptions = executeDefinition.executeOptions;
 			var relationNode = executeDefinition.relationNode;
-
+			
 			//Adjust the filter for the execute definition, as it sometimes uses the result of the parent relation, which is only available after execution
 			self._adjustFilterForExecuteDefinition(executionTree, executeDefinition);
-
+			
 			//Apply the restrictions for expand
 			var errorMessage = RelationTreeBuilder.validateSingleRelation(relationNode, relationsTree);
 			if (errorMessage) {
 				return callback(new ExpandError(errorMessage));
 			}
-
+			
 			//Execute the query and set the result
 			self._executionNodeFunction.call(null, executeOptions, expandContext, function onProcessExecutionNode(err, result) {
 				if (err) {
 					return callback(err);
 				}
-
+				
 				var relationResult;
-
+				
 				if (executeDefinition.dataItem) {
 					relationResult = self._extractResultForRelation(relationNode, result);
 					if (!relationNode.result) relationNode.result = [];
@@ -13108,7 +13108,7 @@ Processor.prototype.expand = function (relationsTree, mainQueryResult, expandCon
 					}
 					executionNode.result = childRelationNode.result;
 				}
-
+				
 				callback();
 			});
 		},
@@ -13137,22 +13137,22 @@ Processor.prototype.expand = function (relationsTree, mainQueryResult, expandCon
 
 Processor.prototype._getExecutionList = function(executionTree, executionNode, expandContext) {
     var self = this;
-
+	
 	var relationTree = executionTree.getRelationTree();
 	var relationNode = executionTree.getRelationNode(executionNode.name);
 	var relationResult = relationNode.result;
-
+	
 	var executeDefinitions = [];
 	for (var i = 0; i < executionNode.children.length; i++) {
 		var executeDefinition;
-
+		
 		var childNodeName = executionNode.children[i];
 		var childExecutionNode = executionTree.getNode(childNodeName);
 		var childRelationNode = executionTree.getRelationNode(childNodeName);
 		if (childRelationNode.aggregateExpression) {
 			var relationResult = relationResult;
 			if (!Array.isArray(relationResult)) relationResult = [ relationResult ];
-
+			
 			for (var j = 0; j < relationResult.length; j++) {
 				executeDefinition = this._getExecuteDefinitionForItem(relationResult[j], childRelationNode, relationTree, expandContext);
 				executeDefinitions.push(executeDefinition);
@@ -13161,20 +13161,20 @@ Processor.prototype._getExecutionList = function(executionTree, executionNode, e
 			executeDefinition = this._getExecuteDefinitionForNode(executionTree, childExecutionNode, expandContext);
 			executeDefinitions.push(executeDefinition);
 		}
-
+		
 		var childFunctions = this._getExecutionList(executionTree, childExecutionNode, expandContext);
 		executeDefinitions = executeDefinitions.concat(childFunctions);
 	}
-
+	
 	return executeDefinitions;
 };
 
 //Adjusts the filter for the query
 Processor.prototype._adjustFilterForExecuteDefinition = function (executionTree, executeDefinition) {
 	var filter;
-
+	
 	var relationNode = executeDefinition.relationNode;
-
+	
 	if (executeDefinition.dataItem) {
 		filter = this._getFilterFromSingleItem(executeDefinition.dataItem, relationNode);
 	} else {
@@ -13236,9 +13236,9 @@ Processor.prototype._getExecuteDefinitionForNode = function (executionTree, exec
 Processor.prototype._getFilterFromSingleItem = function (dataItem, relationNode) {
 	var userDefinedFilter = relationNode.filterExpression;
 	var itemFilter;
-
+		
 	var relationFieldName = relationNode.relationField;
-
+	
 	if (relationNode.isInvertedRelation) {
 		itemFilter = {};
 		itemFilter[relationNode.relationField] = dataItem.Id;
@@ -13255,7 +13255,7 @@ Processor.prototype._getFilterFromSingleItem = function (dataItem, relationNode)
 			//Here we must stop the query, as there are no related items
 		}
 	}
-
+		
 	if (itemFilter && userDefinedFilter) {
 		return { '$and': [itemFilter, userDefinedFilter] };
 	} else if (itemFilter) {
@@ -13352,7 +13352,7 @@ RelationNode.createInverted = function (relationPath, expandExpression, parentRe
     var relationNameParts = relationPath.split('.');
 	var targetTypeName = relationNameParts[0];
 	var relationField = relationNameParts[1];
-
+	
 	return RelationNode._create(relationPath, targetTypeName, relationField, parentRelationPath, maxTakeValue, expandExpression, true);
 };
 
@@ -13365,16 +13365,16 @@ RelationNode.createInverted = function (relationPath, expandExpression, parentRe
  */
 RelationNode.createRegular = function (relationField, expandExpression, parentRelationPath, maxTakeValue) {
     var options = {};
-
+	
 	var relationPath = parentRelationPath + '.' + relationField;
 	var targetTypeName = expandExpression[Constants.TargetTypeNameFieldName];
-
+	
 	return RelationNode._create(relationPath, targetTypeName, relationField, parentRelationPath, maxTakeValue, expandExpression, false);
 };
 
 RelationNode._create = function(relationPath, targetTypeName, releationField, parentRelationPath, maxTakeValue, expandExpression, isInvertedRelation) {
 	var options = {};
-
+	
 	options.parent = parentRelationPath;
     options.path = relationPath;
     options.maxTakeValue = maxTakeValue;
@@ -13383,7 +13383,7 @@ RelationNode._create = function(relationPath, targetTypeName, releationField, pa
 	options.relationField = releationField;
 	options.targetTypeName = targetTypeName;
     options.isInvertedRelation = isInvertedRelation;
-
+	
     return new RelationNode(options);
 };
 
@@ -13494,7 +13494,7 @@ RelationTreeBuilder.prototype.buildMapInternal = function (expandExpression, roo
     for (var relationName in expandExpression) {
         if (expandExpression.hasOwnProperty(relationName)) {
             var fieldExpression = expandExpression[relationName];
-
+			
 			//Check if all options in an expand field definition are recognized
             for (var option in fieldExpression) {
                 if (fieldExpression.hasOwnProperty(option) && possibleExpandOptions.indexOf(option) === -1) {
@@ -13504,10 +13504,10 @@ RelationTreeBuilder.prototype.buildMapInternal = function (expandExpression, roo
 
             if (relationName.indexOf('.') > -1) { //If the relation is inverted
                 var invertedRelation = RelationNode.createInverted(relationName, fieldExpression, rootName, this.maxTakeValue);
-
+				
                 this.map[invertedRelation.path] = invertedRelation;
                 this.map[rootName].children.push(invertedRelation.path);
-
+				
                 // adds a field expression in the original fields expression in order to get the result for that field
                 RelationTreeBuilder.addFieldToFieldsExpression(this.map[invertedRelation.parentPath].originalFieldsExpression, invertedRelation.userDefinedName);
 
@@ -13517,7 +13517,7 @@ RelationTreeBuilder.prototype.buildMapInternal = function (expandExpression, roo
                 }
             } else {
                 var relationNode = RelationNode.createRegular(relationName, fieldExpression, rootName, this.maxTakeValue);
-
+				
                 this.map[relationNode.path] = relationNode;
                 this.map[rootName].children.push(relationNode.path);
 
@@ -13640,7 +13640,7 @@ RelationTreeBuilder.validateSingleRelation = function (relationNode, relationTre
             errorMessage += 'Filter and Sort are not allowed when expanding multiple items.';
             errorMessage += EOL;
         }
-
+		
 		if (relationTreeMap[relationNode.parentPath] === rootRelationNode &&
             isGetByFilterQuery && relationNode.isInvertedRelation &&
             relationNode.skip) {
@@ -13653,18 +13653,18 @@ RelationTreeBuilder.validateSingleRelation = function (relationNode, relationTre
         //    errorMessage += EOL;
         //}
     }
-
+	
     if (!relationNode.targetTypeName) {
         errorMessage += 'Expanding relation \"' + relationNode.relationField + '\" has no target type name specified. You should use \"TargetTypeName\" to specify it.';
         errorMessage += EOL;
     }
-
+	
     if (relationNode.fieldsExpression && Object.keys(relationNode.fieldsExpression).length && relationNode.singleFieldName) {
         errorMessage += relationNode.path + ' ';
         errorMessage += 'expand expression contains both \"Fields\" and \"SingleField\" expressions.';
         errorMessage += EOL;
     }
-
+	
     if (relationNode.singleFieldName) {
         if (relationNode.children) {
             if (relationNode.children.length > 1) {
@@ -14620,13 +14620,13 @@ module.exports = RelationTreeBuilder;
         };
         return q;
     };
-
+    
     async.priorityQueue = function (worker, concurrency) {
-
+        
         function _compareTasks(a, b){
           return a.priority - b.priority;
         };
-
+        
         function _binarySearch(sequence, item, compare) {
           var beg = -1,
               end = sequence.length - 1;
@@ -14640,7 +14640,7 @@ module.exports = RelationTreeBuilder;
           }
           return beg;
         }
-
+        
         function _insert(q, data, priority, callback) {
           if (!q.started){
             q.started = true;
@@ -14662,7 +14662,7 @@ module.exports = RelationTreeBuilder;
                   priority: priority,
                   callback: typeof callback === 'function' ? callback : null
               };
-
+              
               q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
 
               if (q.saturated && q.tasks.length === q.concurrency) {
@@ -14671,15 +14671,15 @@ module.exports = RelationTreeBuilder;
               async.setImmediate(q.process);
           });
         }
-
+        
         // Start with a normal queue
         var q = async.queue(worker, concurrency);
-
+        
         // Override push to accept second parameter representing priority
         q.push = function (data, priority, callback) {
           _insert(q, data, priority, callback);
         };
-
+        
         // Remove unshift function
         delete q.unshift;
 
@@ -15060,10 +15060,11 @@ module.exports = (function () {
      * @classdesc The constructor of the {{site.bs}} (Everlive) JavaScript SDK. This is the entry point for the SDK.
      * @param {object|string} options - An object containing configuration options for the Setup object. Alternatively, you can pass a string representing your App ID.
      * @param {string} options.apiKey - Your API Key. *Deprecated*: use options.appId instead.
-     * @param {string} options.appId - Your app's App ID.
+     * @param {string} options.appId - Your Telerik Platform app's App ID.
      * @param {string} [options.url=//api.everlive.com/v1/] - The {{site.TelerikBackendServices}} URL.
      * @param {string} [options.token] - An authentication token. The instance will be associated with the provided previously obtained token.
      * @param {string} [options.tokenType=bearer] - The type of the token that is used for authentication.
+     * @param {string} [options.masterKey] - The master key of the Telerik Platform app. Use this authorization scheme for operations that require it or to override you app's access control. Use only for development purposes. Do not deploy it with your app.
      * @param {string} [options.scheme=http] - The URI scheme used to make requests. Supported values: http, https
      * @param {boolean} [options.parseOnlyCompleteDateTimeObjects=false] - If set to true, the SDK will parse only complete date strings (according to the ISO 8601 standard).
      * @param {boolean} [options.emulatorMode=false] - Set this option to true to set the SDK in emulator mode.
@@ -15071,6 +15072,7 @@ module.exports = (function () {
      * @param {boolean} [options.offline.enabled=false] - When using an object to initialize Offline Support with non-default settings, set this option to enable or disable Offline Support.
      * @param {boolean} [options.offline.isOnline=true] - Whether the storage is in online mode initially.
      * @param {ConflictResolutionStrategy|function} [options.offline.conflicts.strategy=ConflictResolutionStrategy.ClientWins] - A constant specifying the conflict resolution strategy or a function used to resolve the conflicts.
+     * @param {boolean} [options.offline.syncUnmodified=false] - Whether to synchronize items updated or deleted on the server but not on the device.
      * @param {object} [options.offline.storage] - An object specifying settings for the offline storage.
      * @param {string} [options.offline.storage.provider=_platform dependant_] - Allows you to select an offline storage provider. Possible values: Everlive.Constants.StorageProvider.LocalStorage, Everlive.Constants.StorageProvider.FileSystem, Everlive.Constants.StorageProvider.Custom. Default value: Cordova, Web: Everlive.Constants.StorageProvider.LocalStorage; NativeScript, Node.js: Everlive.Constants.StorageProvider.FileSystem.
      * @param {string} [options.offline.storage.storagePath=el_store] - A relative path specifying where data will be saved if the FileSystem provider is used.
@@ -15533,7 +15535,11 @@ var EverliveErrors = {
     },
     filesNotSupportedInBrowser: {
         code: 706,
-        message: 'Offline files are not supported in web browsers.'
+        message: 'Create and Update operations are not supported for Files in browsers while in offline mode.'
+    },
+    pushNotSupportedOffline: {
+        code: 707,
+        message: 'Push is not supported in offline mode.'
     }
 };
 
@@ -15578,7 +15584,8 @@ var EverliveError = (function () {
 
 var DeviceRegistrationError = (function () {
     var DeviceRegistrationError = function (errorType, message, additionalInformation) {
-        EverliveError.call(this, message);
+        var errorCode = additionalInformation ? additionalInformation.code : undefined;
+        EverliveError.call(this, message, errorCode);
         this.errorType = errorType;
         this.message = message;
         if (additionalInformation !== undefined) {
@@ -15688,13 +15695,15 @@ module.exports = (function () {
 }());
 },{}],52:[function(require,module,exports){
 var utils = require('./utils');
+var platform = require('./everlive.platform');
 var buildPromise = utils.buildPromise;
 var DeviceRegistrationResult = utils.DeviceRegistrationResult;
 var everliveErrorModule = require('./EverliveError');
 var DeviceRegistrationError = everliveErrorModule.DeviceRegistrationError;
 var EverliveError = everliveErrorModule.EverliveError;
 var CurrentDevice = require('./push/CurrentDevice');
-var Platform = require('./constants').Platform;
+var constants = require('./constants');
+var Platform = constants.Platform;
 
 module.exports = (function () {
     /**
@@ -15705,8 +15714,8 @@ module.exports = (function () {
      */
     function Push(el) {
         this._el = el;
-        this.notifications = el.data('Push/Notifications');
-        this.devices = el.data('Push/Devices');
+        this.notifications = el.data(constants.Push.NotificationsType);
+        this.devices = el.data(constants.Push.DevicesType);
     }
 
     Push.prototype = {
@@ -16045,12 +16054,34 @@ module.exports = (function () {
 
             var currentDevice = this.currentDevice();
             return currentDevice.areNotificationsEnabled(options, onSuccess, onError);
+        },
+
+        /**
+         * Currently available only for iOS
+         * Use this method in case you are working with iOS interactive push notifications in background mode, including TextInput, or iOS silent push notifications
+         * Call it once you are done with processing your push notification in notificationCallbackIOS.
+         * @method notificationProcessed
+         * @name notificationProcessed
+         * @memberOf Push.prototype
+         */
+        /**
+         * Use this method in case you are working with iOS interactive push notifications in background mode, including TextInput, or iOS silent push notifications
+         * Call it once you are done with processing your push notification in notificationCallbackIOS.
+         * @method notificationProcessed
+         * @name notificationProcessed
+         * @memberOf Push.prototype
+         */
+        notificationProcessed: function () {
+            this.ensurePushIsAvailable();
+
+            var currentDevice = this.currentDevice();
+            currentDevice.notificationProcessed();
         }
     };
 
     return Push;
 }());
-},{"./EverliveError":48,"./constants":60,"./push/CurrentDevice":84,"./utils":102}],53:[function(require,module,exports){
+},{"./EverliveError":48,"./constants":60,"./everlive.platform":62,"./push/CurrentDevice":84,"./utils":102}],53:[function(require,module,exports){
 var utils = require('./utils');
 var rsvp = require('./common').rsvp;
 var buildAuthHeader = utils.buildAuthHeader;
@@ -16096,6 +16127,7 @@ module.exports = (function () {
         });
 
         _.extend(this, options);
+        delete this.headers[Headers.filter];
         _self = this;
         this._init(options);
     }
@@ -16109,34 +16141,35 @@ module.exports = (function () {
         // If there is a logged in user for the Everlive instance then her/his authentication will be used.
         buildAuthHeader: buildAuthHeader,
         // Builds the URL of the target Everlive service
-        buildUrl: function buildUrl(setup) {
-            return utils.buildUrl(setup);
+        buildUrl: function buildUrl() {
+            var queryString = '';
+
+            if (this.query && this.query.filter) {
+                queryString = '?filter=' + JSON.stringify(this.query.filter);
+            }
+
+            return utils.buildUrl(this.setup) + this.endpoint + queryString;
         },
         // Processes the given query to return appropriate headers to be used by the request
         buildQueryHeaders: function buildQueryHeaders(query) {
-            if (query) {
-                if (query instanceof Query) {
-                    return Request.prototype._buildQueryHeaders(query);
-                }
-                else {
-                    return Request.prototype._buildFilterHeader(query);
-                }
-            }
-            else {
+            if (query && query instanceof Query) {
+                return Request.prototype._buildQueryHeaders(query);
+            } else {
                 return {};
             }
         },
         // Initialize the Request object by using the passed options
         _init: function (options) {
-            _.extend(this.headers, this.buildAuthHeader(this.setup, options), this.buildQueryHeaders(options.query), options.headers);
+            _.extend(this.headers, this.buildAuthHeader(this.setup, options), this.buildQueryHeaders(options.query));
         },
         // Translates an Everlive.Query to request headers
         _buildQueryHeaders: function (query) {
             query = query.build();
             var headers = {};
-            if (query.$where !== null) {
-                headers[Headers.filter] = JSON.stringify(query.$where);
-            }
+
+            // query filter has been moved to the URL of the request
+            // in order to avoid character encoding difficulties
+
             if (query.$select !== null) {
                 headers[Headers.select] = JSON.stringify(query.$select);
             }
@@ -16155,12 +16188,6 @@ module.exports = (function () {
             if (query.$aggregate !== null) {
                 headers[Headers.aggregate] = JSON.stringify(query.$aggregate);
             }
-            return headers;
-        },
-        // Creates a header from a simple filter
-        _buildFilterHeader: function (filter) {
-            var headers = {};
-            headers[Headers.filter] = JSON.stringify(filter);
             return headers;
         }
     };
@@ -16186,7 +16213,7 @@ module.exports = (function () {
 
     if (typeof Request.sendRequest === 'undefined') {
         Request.sendRequest = function (request) {
-            var url = request.buildUrl(request.setup) + request.endpoint;
+            var url = request.buildUrl();
             url = utils.disableRequestCache(url, request.method);
             request.method = request.method || 'GET';
             var data = request.method === 'GET' ? request.data : JSON.stringify(request.data);
@@ -16975,7 +17002,14 @@ CacheModule.prototype = {
         return this._getExpirationForHash(contentType, hash)
             .then(function (cachedAt) {
                 var maxAgeForContentType = self.typeSettings && self.typeSettings[contentType] ? self.typeSettings[contentType].maxAge * 60 * 1000 : null;
-                var cacheAge = maxAge || maxAgeForContentType || self.maxAgeInMs;
+                var cacheAge;
+                if (maxAge || maxAge === 0) {
+                    cacheAge = maxAge;
+                } else if (maxAgeForContentType || maxAgeForContentType === 0) {
+                    cacheAge = maxAgeForContentType;
+                } else {
+                    cacheAge = self.maxAgeInMs;
+                }
                 return (cachedAt + cacheAge) < Date.now();
             });
     },
@@ -17365,6 +17399,7 @@ constants.FilesTypeName = 'Files';
 
 constants.MaxConcurrentDownloadTasks = 3;
 
+constants.DefaultFilesystemStorageQuota = 10485760;
 constants.Events = {
     SyncStart: 'syncStart',
     SyncEnd: 'syncEnd',
@@ -17400,6 +17435,11 @@ constants.DataQueryOperations = {
 
 constants.Aggregation = {
     MaxDocumentsCount: 100000
+};
+
+constants.Push = {
+    NotificationsType: 'Push/Notifications',
+    DevicesType: 'Push/Devices'
 };
 
 module.exports = constants;
@@ -17443,7 +17483,6 @@ module.exports = (function () {
     return CryptographicProvider;
 }());
 },{"node-cryptojs-aes":25}],62:[function(require,module,exports){
-(function (global){
 var isNativeScript = Boolean(((typeof android !== 'undefined' && android && android.widget && android.widget.Button)
 || (typeof UIButton !== 'undefined' && UIButton)));
 
@@ -17452,15 +17491,7 @@ var isCordova = false;
 var isWindowsPhone = false;
 var isAndroid = false;
 
-if (isNativeScript) {
-    global.window = {
-        localStorage: {
-            removeItem: function () {
-            } //shim for mongo-query under nativescript
-        }
-    };
-
-} else if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && !isNativeScript) {
     isCordova = /^file:\/{3}[^\/]|x-wmapp/i.test(window.location.href) && /ios|iphone|ipod|ipad|android|iemobile/i.test(navigator.userAgent);
     isWindowsPhone = isCordova && /iemobile/i.test(navigator.userAgent);
     isAndroid = isCordova && cordova.platformId === 'android';
@@ -17480,6 +17511,10 @@ if (isNativeScript) {
     platform = 'cordova';
 }
 
+var isInAppBuilderSimulator = function () {
+    return typeof window !== undefined && window.navigator && window.navigator.simulator;
+};
+
 module.exports = {
     isCordova: isCordova,
     isNativeScript: isNativeScript,
@@ -17488,10 +17523,9 @@ module.exports = {
     isAndroid: isAndroid,
     isNodejs: isNodejs,
     isRequirejs: isRequirejs,
-    platform: platform
+    platform: platform,
+    isInAppBuilderSimulator: isInAppBuilderSimulator
 };
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-
 },{}],63:[function(require,module,exports){
 'use strict';
 
@@ -18172,7 +18206,7 @@ module.exports = (function () {
  */
 /*!
  Everlive SDK
- Version 1.6.2
+ Version 1.6.6
  */
 (function () {
     var Everlive = require('./Everlive');
@@ -18495,16 +18529,13 @@ var operations = {
             return filter.logic === 'and';
         },
         _and: function (filter) {
-            var i, l, term, result = {};
+            var i, l, term, result = { $and: []};
             var operands = filter.filters;
             for (i = 0, l = operands.length; i < l; i++) {
                 term = filterBuilder._build(operands[i]);
-                result = filterBuilder._andAppend(result, term);
+                result.$and.push(term);
             }
             return result;
-        },
-        _andAppend: function (andObj, newObj) {
-            return QueryBuilder.prototype._andAppend.call(this, andObj, newObj);
         },
         _isOr: function (filter) {
             return filter.logic === 'or';
@@ -18840,7 +18871,7 @@ module.exports = function compactObject(o) {
 
 },{"underscore":35}],71:[function(require,module,exports){
 /*  Copyright (C) 2012-2014  Kurt Milam - http://xioup.com | Source: https://gist.github.com/1868955
- *
+ *   
  *  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
@@ -19489,6 +19520,12 @@ OfflineFilesProcessor.prototype = {
     },
 
     upsertFileFromObject: function (obj, isCreate, isSync) {
+        //TODO: make separate offline files processors when we start supporting nativescript
+        if (platform.isDesktop || platform.isNativeScript) {
+            //we will not support files in desktop and nativescript, only their metadata
+            return utils.successfulPromise();
+        }
+
         var self = this;
 
         if (!isSync) {
@@ -19704,18 +19741,19 @@ function OfflineQueryProcessor(persister, encryptionProvider, offlineFilesProces
 
 OfflineQueryProcessor.prototype = {
     processQuery: function (dataQuery) {
-        if (utils.isContentType.files(dataQuery.collectionName) && platform.isDesktop) {
+        var collectionName = dataQuery.collectionName;
+        if (utils.isContentType.pushDevices(collectionName) || utils.isContentType.pushNotifications(collectionName)) {
             if (this.everlive.isOnline()) {
                 return utils.successfulPromise();
             } else {
-                return utils.rejectedPromise(new EverliveError(EverliveErrors.filesNotSupportedInBrowser));
+                return utils.rejectedPromise(new EverliveError(EverliveErrors.pushNotSupportedOffline));
             }
         }
 
-        var unsupportedClientOpMessage = this.getUnsupportedClientOpMessage(dataQuery);
-        if (unsupportedClientOpMessage && !dataQuery.isSync) {
+        var queryNotSupportedError = this.checkSupportedQuery(dataQuery);
+        if (queryNotSupportedError && !dataQuery.isSync) {
             return new rsvp.Promise(function (resolve, reject) {
-                reject(new EverliveError(unsupportedClientOpMessage));
+                reject(new EverliveError(queryNotSupportedError));
             });
         }
 
@@ -19756,8 +19794,9 @@ OfflineQueryProcessor.prototype = {
             case DataQuery.operations.Delete:
                 return this.remove(dataQuery, queryParams.filter);
             case DataQuery.operations.DeleteById:
-                queryParams.filter._id = dataQuery.additionalOptions.id;
-                return this.remove(dataQuery, queryParams.filter);
+                return this.remove(dataQuery, {
+                    _id: dataQuery.additionalOptions.id
+                });
             case DataQuery.operations.Aggregate:
                 return this.aggregate(dataQuery, queryParams);
             default:
@@ -19765,7 +19804,7 @@ OfflineQueryProcessor.prototype = {
                     if (dataQuery.isSync) {
                         resolve();
                     } else {
-                        reject(new EverliveError(dataQuery.operation + ' is not supported in offline mode'));
+                        reject(new EverliveError(dataQuery.operation + ' is not supported in offline mode.'));
                     }
                 });
         }
@@ -19775,6 +19814,7 @@ OfflineQueryProcessor.prototype = {
         var self = this;
         var id = dataQuery.additionalOptions.id;
         var offlineFilePath;
+        var fileDirectUri;
 
         return self.everlive
             .files
@@ -19783,6 +19823,7 @@ OfflineQueryProcessor.prototype = {
             .getById(id)
             .then(function (res) {
                 var file = res.result;
+                fileDirectUri = file.Uri;
                 return self.everlive.offlineStorage.files._getFileUrlForId(file.Id, file.Filename);
             })
             .then(function (filePath) {
@@ -19790,21 +19831,15 @@ OfflineQueryProcessor.prototype = {
                 return self.everlive.offlineStorage._offlineFilesProcessor.fileStore.getFileByAbsolutePath(filePath);
             })
             .then(function (fileEntry) {
-                if (fileEntry) {
-                    return {
-                        result: {
-                            Uri: offlineFilePath
-                        }
-                    }
-                }
-
                 return {
-                    result: {}
-                }
+                    result: {
+                        Uri: fileEntry ? offlineFilePath : fileDirectUri
+                    }
+                };
             });
     },
 
-    getUnsupportedClientOpMessage: function (dataQuery) {
+    checkSupportedQuery: function (dataQuery) {
         for (var i = 0; i < unsupportedOfflineHeaders.length; i++) {
             var header = unsupportedOfflineHeaders[i];
             if (dataQuery.getHeader(header)) {
@@ -19814,6 +19849,13 @@ OfflineQueryProcessor.prototype = {
 
         if (utils.isContentType.users(dataQuery.collectionName) && unsupportedUsersOperations[dataQuery.operation]) {
             return buildUsersErrorMessage(dataQuery);
+        }
+
+        if (utils.isContentType.files(dataQuery.collectionName)) {
+            if ((dataQuery.operation === DataQuery.operations.create && Array.isArray(dataQuery.data)) ||
+                dataQuery.operation === DataQuery.operations.rawUpdate || dataQuery.operation === DataQuery.operations.update) {
+                return EverliveErrors.invalidRequest;
+            }
         }
 
         var isSingle = dataQuery.additionalOptions && dataQuery.additionalOptions.id;
@@ -20179,6 +20221,10 @@ OfflineQueryProcessor.prototype = {
     },
 
     updateFileContent: function (dataQuery) {
+        if (platform.isDesktop) {
+            return utils.successfulPromise();
+        }
+        
         var isSync = dataQuery.isSync;
         var updateExpression = dataQuery.data;
         var self = this;
@@ -20226,6 +20272,11 @@ OfflineQueryProcessor.prototype = {
                 if (dataQuery.additionalOptions && dataQuery.additionalOptions.id) {
                     var itemId = dataQuery.additionalOptions.id;
                     var singleItemForUpdate = self._getById(collection, itemId);
+                    if (!singleItemForUpdate) {
+                        throw new EverliveError(EverliveErrors.itemNotFound,
+                            'Item with id :' + itemId + ' does not exist offline in the collection :' + collectionName);
+                    }
+
                     updateItems = [singleItemForUpdate];
 
                     if (utils.isContentType.files(collectionName) && updateExpression.$set && updateExpression.$set.Filename || updateExpression.Filename) {
@@ -20340,7 +20391,8 @@ OfflineQueryProcessor.prototype = {
         var self = this;
 
         return new rsvp.Promise(function (resolve, reject) {
-            if (utils.isContentType.files(collectionName)) {
+            //we cannot remove files while in desktop mode
+            if (utils.isContentType.files(collectionName) && !platform.isDesktop) {
                 return self.everlive.offlineStorage.files.purge(itemToRemove._id).then(resolve, reject);
             } else {
                 return resolve();
@@ -20540,6 +20592,7 @@ var syncLocation = {
     client: 'client'
 };
 
+
 /**
  * @class OfflineModule
  * @classDesc A class providing access to the various offline storage features.
@@ -20551,7 +20604,7 @@ var syncLocation = {
  * @member {OfflineModule} offlineStorage
  */
 
-module.exports = (function () {
+module.exports = (function() {
     function OfflineModule(everlive, options, persister, encryptionProvider) {
         this._everlive = everlive;
         this.setup = options;
@@ -20572,13 +20625,13 @@ module.exports = (function () {
             this._everlive, this.setup.files.maxConcurrentDownloads);
     }
 
-    var getSyncFilterForItem = function (item) {
+    var getSyncFilterForItem = function(item) {
         var filter = getSyncFilterNoModifiedAt(item);
         filter.ModifiedAt = item.ModifiedAt;
         return filter;
     };
 
-    var getSyncFilterNoModifiedAt = function (item) {
+    var getSyncFilterNoModifiedAt = function(item) {
         return {
             Id: item.Id
         }
@@ -20601,7 +20654,7 @@ module.exports = (function () {
          * @memberOf OfflineModule.prototype
          * @returns {Promise}
          */
-        purgeAll: function (success, error) {
+        purgeAll: function(success, error) {
             return this._queryProcessor.purgeAll(success, error);
         },
 
@@ -20624,28 +20677,28 @@ module.exports = (function () {
          * @param {string} contentType The content type to purge.
          * @returns {Promise}
          */
-        purge: function (contentType, success, error) {
+        purge: function(contentType, success, error) {
             return this._queryProcessor.purge(contentType, success, error);
         },
 
-        processQuery: function (query) {
+        processQuery: function(query) {
             return this._queryProcessor.processQuery(query);
         },
 
-        _setOffline: function (offline) {
+        _setOffline: function(offline) {
             this.setup.offline = offline;
         },
 
-        isOnline: function () {
+        isOnline: function() {
             return !this.setup.offline;
         },
 
-        _prepareSyncData: function (contentTypesForSync) {
+        _prepareSyncData: function(contentTypesForSync) {
             var self = this;
 
             var contentTypesSyncData = {};
             var conflicts = [];
-            _.each(contentTypesForSync, function (contentType, typeName) {
+            _.each(contentTypesForSync, function(contentType, typeName) {
                 var syncItems = offlineTransformations.idTransform(contentType.offlineItemsToSync);
                 var syncData = self._getSyncItemStates(typeName, syncItems, contentType.serverItems);
                 conflicts.push(syncData.conflicts);
@@ -20658,25 +20711,25 @@ module.exports = (function () {
             };
         },
 
-        _resolveConflicts: function (syncData) {
+        _resolveConflicts: function(syncData) {
             var self = this;
             return this._applyResolutionStrategy(syncData.conflicts)
-                .then(function () {
+                .then(function() {
                     return self._mergeResolvedConflicts(syncData.conflicts, syncData.contentTypesSyncData);
                 })
-                .then(function () {
+                .then(function() {
                     return syncData.contentTypesSyncData;
                 });
         },
 
-        isSynchronizing: function () {
+        isSynchronizing: function() {
             return this._isSynchronizing;
         },
 
-        _fireSyncStart: function () {
+        _fireSyncStart: function() {
             var self = this;
 
-            return new rsvp.Promise(function (resolve) {
+            return new rsvp.Promise(function(resolve) {
                 if (!self._isSynchronizing) {
                     self._isSynchronizing = true;
                     self._everlive._emitter.emit(constants.Events.SyncStart);
@@ -20687,22 +20740,24 @@ module.exports = (function () {
             });
         },
 
-        _fireSyncEnd: function () {
+        _fireSyncEnd: function() {
             this._isSynchronizing = false;
             this._everlive._emitter.emit(constants.Events.SyncEnd, this._syncResultInfo);
             delete this._syncResultInfo;
         },
 
-        _eachSyncItem: function (items, getFilterFunction, contentTypeName, operation) {
+        _eachSyncItem: function(items, getFilterFunction, contentTypeName, operation) {
             var self = this;
 
-            _.each(items, function (item) {
+            _.each(items, function(item) {
                 var itemFilter = getFilterFunction(item.remoteItem);
                 // if we already have an error for this item we do not want to try and sync it again
                 var resultItem = item.resultingItem;
                 var isCustom = item.isCustom;
                 var resolutionType = item.resolutionType;
-                if (_.some(self._syncResultInfo.failedItems[contentTypeName], {itemId: resultItem.Id})) {
+                if (_.some(self._syncResultInfo.failedItems[contentTypeName], {
+                        itemId: resultItem.Id
+                    })) {
                     return;
                 }
 
@@ -20710,22 +20765,22 @@ module.exports = (function () {
             });
         },
 
-        _shouldAutogenerateIdForContentType: function (collectionName) {
+        _shouldAutogenerateIdForContentType: function(collectionName) {
             return this._queryProcessor._shouldAutogenerateIdForContentType(collectionName);
         },
 
-        _addCreatedFileToSyncPromises: function (resultingItemsForCreate, syncPromises, collectionName) {
+        _addCreatedFileToSyncPromises: function(resultingItemsForCreate, syncPromises, collectionName) {
             var self = this;
 
-            _.each(resultingItemsForCreate, function (item) {
+            _.each(resultingItemsForCreate, function(item) {
                 var filesCollection = self._everlive.files;
-                syncPromises[item.Id] = new rsvp.Promise(function (resolve, reject) {
+                syncPromises[item.Id] = new rsvp.Promise(function(resolve, reject) {
                     self.files.getOfflineLocation(item.Id)
-                        .then(function (location) {
+                        .then(function(location) {
                             if (location) {
                                 return self._transferFile(false, item, location);
                             }
-                        }, function (err) {
+                        }, function(err) {
                             reject({
                                 type: offlineItemStates.created,
                                 items: item,
@@ -20734,14 +20789,14 @@ module.exports = (function () {
                                 storage: syncLocation.server
                             });
                         })
-                        .then(function (res) {
+                        .then(function(res) {
                             var mergedWithServerResponseItem = _.extend({}, item, res.result);
                             self._onItemProcessed(mergedWithServerResponseItem, collectionName, syncLocation.server, offlineItemStates.created);
                             return filesCollection
                                 .isSync(true)
                                 .useOffline(true)
                                 .updateSingle(mergedWithServerResponseItem);
-                        }, function (err) {
+                        }, function(err) {
                             reject({
                                 type: offlineItemStates.created,
                                 items: item,
@@ -20750,7 +20805,7 @@ module.exports = (function () {
                                 storage: syncLocation.server
                             });
                         })
-                        .then(resolve, function (err) {
+                        .then(resolve, function(err) {
                             reject({
                                 type: offlineItemStates.modified,
                                 items: item,
@@ -20763,30 +20818,30 @@ module.exports = (function () {
             });
         },
 
-        _transferFile: function (isUpdate, item, location) {
+        _transferFile: function(isUpdate, item, location) {
             var sdk = this._everlive;
 
-            return new rsvp.Promise(function (resolve, reject) {
+            return new rsvp.Promise(function(resolve, reject) {
                 var self = this;
                 var uploadUrl = sdk.files.getUploadUrl();
                 var fileExistsPromise = utils.successfulPromise();
 
                 if (isUpdate) {
-                    fileExistsPromise = new rsvp.Promise(function (resolve) {
+                    fileExistsPromise = new rsvp.Promise(function(resolve) {
                         sdk.files
                             .isSync(true)
                             .applyOffline(false)
                             .getById(item.Id)
-                            .then(function () {
+                            .then(function() {
                                 resolve(true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 resolve(false);
                             });
                     });
                 }
 
-                fileExistsPromise.then(function (fileExistsOnServer) {
+                fileExistsPromise.then(function(fileExistsOnServer) {
                     var canUpdate = isUpdate && fileExistsOnServer;
                     if (canUpdate) {
                         uploadUrl += '/' + item.Id + '/Content';
@@ -20804,14 +20859,14 @@ module.exports = (function () {
 
                     options.params = {};
 
-                    _.each(item, function (value, key) {
+                    _.each(item, function(value, key) {
                         if (key.toLowerCase() !== 'base64') {
                             var prefixedKey = constants.fileUploadKey + constants.fileUploadDelimiter + key;
                             options.params[prefixedKey] = value;
                         }
                     });
 
-                    fileTransfer.upload(location, uploadUrl, function (result) {
+                    fileTransfer.upload(location, uploadUrl, function(result) {
                         var parsedResult = utils.parseUtilities.parseJSON(result.response);
                         if (parsedResult.Result === false) {
                             reject.apply(self, arguments);
@@ -20827,19 +20882,19 @@ module.exports = (function () {
             });
         },
 
-        _addCreatedObjectToSyncPromises: function (syncPromises, dataCollection, resultingItemsForCreate, contentTypeData, collectionName, ids) {
+        _addCreatedObjectToSyncPromises: function(syncPromises, dataCollection, resultingItemsForCreate, contentTypeData, collectionName, ids) {
             var self = this;
 
-            var promise = new rsvp.Promise(function (resolve, reject) {
+            var promise = new rsvp.Promise(function(resolve, reject) {
                 dataCollection
                     .isSync(true)
                     .applyOffline(false)
                     .create(resultingItemsForCreate)
-                    .then(function (res) {
-                        resultingItemsForCreate = _.map(resultingItemsForCreate, function (item, index) {
+                    .then(function(res) {
+                        resultingItemsForCreate = _.map(resultingItemsForCreate, function(item, index) {
                             item.Id = res.result[index].Id;
                             item.CreatedAt = item.ModifiedAt = res.result[index].CreatedAt;
-                            var resultingItem = _.find(contentTypeData.createdItems, function (createdItem) {
+                            var resultingItem = _.find(contentTypeData.createdItems, function(createdItem) {
                                 return createdItem.resultingItem.Id === item.Id;
                             });
 
@@ -20849,7 +20904,7 @@ module.exports = (function () {
 
                             return item;
                         });
-                    }, function (err) {
+                    }, function(err) {
                         throw {
                             type: offlineItemStates.created,
                             items: resultingItemsForCreate,
@@ -20858,17 +20913,17 @@ module.exports = (function () {
                             storage: syncLocation.server
                         };
                     })
-                    .then(function () {
+                    .then(function() {
                         return dataCollection
                             .isSync(true)
                             .useOffline(true)
                             .create(resultingItemsForCreate)
-                            .then(function () {
-                                _.each(resultingItemsForCreate, function (createdItem) {
+                            .then(function() {
+                                _.each(resultingItemsForCreate, function(createdItem) {
                                     self._onItemProcessed(createdItem, collectionName, syncLocation.server,
                                         offlineItemStates.created);
                                 });
-                            }, function (err) {
+                            }, function(err) {
                                 throw {
                                     type: offlineItemStates.created,
                                     items: resultingItemsForCreate,
@@ -20878,14 +20933,18 @@ module.exports = (function () {
                                 };
                             });
                     })
-                    .then(function () {
+                    .then(function() {
                         if (ids && ids.length) {
-                            var filter = {Id: {$in: ids}};
+                            var filter = {
+                                Id: {
+                                    $in: ids
+                                }
+                            };
                             return dataCollection
                                 .isSync(true)
                                 .useOffline(true)
                                 .destroy(filter)
-                                .catch(function (err) {
+                                .catch(function(err) {
                                     throw {
                                         type: offlineItemStates.created,
                                         items: resultingItemsForCreate,
@@ -20897,19 +20956,19 @@ module.exports = (function () {
                         }
                     })
                     .then(resolve)
-                    .catch(function (err) {
+                    .catch(function(err) {
                         reject(err);
                     });
             });
 
-            _.each(resultingItemsForCreate, function (item) {
+            _.each(resultingItemsForCreate, function(item) {
                 syncPromises[item.Id] = promise;
             });
 
             return resultingItemsForCreate;
         },
 
-        _addCreatedItemsForSync: function (contentTypeData, syncPromises, dataCollection) {
+        _addCreatedItemsForSync: function(contentTypeData, syncPromises, dataCollection) {
             var collectionName = dataCollection.collectionName;
 
             var resultingItemsForCreate = _.pluck(contentTypeData.createdItems, 'resultingItem');
@@ -20926,24 +20985,24 @@ module.exports = (function () {
             }
         },
 
-        _addUpdatedItemsForSync: function (contentTypeData, getFilterOperation, syncPromises, dataCollection, itemUpdateOperation) {
+        _addUpdatedItemsForSync: function(contentTypeData, getFilterOperation, syncPromises, dataCollection, itemUpdateOperation) {
             var self = this;
             var collectionName = dataCollection.collectionName;
             self._eachSyncItem(contentTypeData.modifiedItems, getFilterOperation, collectionName, itemUpdateOperation);
         },
 
-        _addDeletedItemsForSync: function (contentTypeData, getFilterOperation, syncPromises, dataCollection, itemDeleteOperation) {
+        _addDeletedItemsForSync: function(contentTypeData, getFilterOperation, syncPromises, dataCollection, itemDeleteOperation) {
             var self = this;
 
             var collectionName = dataCollection.collectionName;
             self._eachSyncItem(contentTypeData.deletedItems, getFilterOperation, collectionName, itemDeleteOperation);
         },
 
-        _onSyncResponse: function (res, item, collectionName, operation, isCustomItem) {
+        _onSyncResponse: function(res, item, collectionName, operation, isCustomItem) {
             var self = this;
 
             if (res.result !== 1) {
-                return new rsvp.Promise(function (resolve, reject) {
+                return new rsvp.Promise(function(resolve, reject) {
                     reject(_.extend({}, EverliveErrors.syncConflict, {
                         contentType: collectionName
                     }));
@@ -20966,9 +21025,9 @@ module.exports = (function () {
                     });
 
                     return this.processQuery(updateQuery)
-                        .then(function () {
+                        .then(function() {
                             if (isCustomItem) {
-                                var existingItem = _.find(self._syncResultInfo.syncedItems[collectionName], function (syncedItem) {
+                                var existingItem = _.find(self._syncResultInfo.syncedItems[collectionName], function(syncedItem) {
                                     return syncedItem.itemId === item.Id;
                                 });
 
@@ -20980,7 +21039,7 @@ module.exports = (function () {
                 } else if (operation === DataQuery.operations.Delete) {
                     self._onItemProcessed(item, collectionName, syncLocation.server, offlineItemStates.deleted);
                     return this._purgeById(collectionName, item.Id)
-                        .then(function () {
+                        .then(function() {
                             if (isCustomItem) {
                                 self._onItemProcessed(item, collectionName, syncLocation.client, offlineItemStates.deleted);
                             }
@@ -20989,37 +21048,37 @@ module.exports = (function () {
             }
         },
 
-        _purgeById: function (contentType, itemId) {
+        _purgeById: function(contentType, itemId) {
             var self = this;
 
             return this._queryProcessor._getCollection(contentType)
-                .then(function (collection) {
+                .then(function(collection) {
                     delete collection[itemId];
                     return self._queryProcessor._persistData(contentType);
                 });
         },
 
-        sync: function () {
+        sync: function() {
             var self = this;
             self._syncResultInfo = self._syncResultInfo || {
-                    syncedItems: {},
-                    syncedToServer: 0,
-                    syncedToClient: 0,
-                    failedItems: {},
-                    error: undefined // added for visibility
-                };
+                syncedItems: {},
+                syncedToServer: 0,
+                syncedToClient: 0,
+                failedItems: {},
+                error: undefined // added for visibility
+            };
 
             if (!this.isOnline()) {
                 throw new EverliveError('Cannot synchronize while offline');
             }
 
             self._fireSyncStart()
-                .then(function () {
+                .then(function() {
                     return self._applySync();
                 })
-                .then(function (syncResults) {
+                .then(function(syncResults) {
                     var conflictsWhileSync = [];
-                    _.each(syncResults, function (syncResult, itemId) {
+                    _.each(syncResults, function(syncResult, itemId) {
                         if (syncResult && syncResult.state === 'rejected') {
                             if (syncResult.reason && syncResult.reason.code === EverliveErrors.syncConflict.code) {
                                 conflictsWhileSync.push(syncResult);
@@ -21038,13 +21097,13 @@ module.exports = (function () {
                         self._fireSyncEnd();
                     }
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     self._syncResultInfo.error = err;
                     self._fireSyncEnd();
                 });
         },
 
-        _handleKeepServer: function (typeName, conflictingItem, offlineSyncOperations, contentTypeSyncData) {
+        _handleKeepServer: function(typeName, conflictingItem, offlineSyncOperations, contentTypeSyncData) {
             var self = this;
 
             var serverItem = conflictingItem.serverItem;
@@ -21081,9 +21140,9 @@ module.exports = (function () {
             }
 
             syncQuery.isSync = true;
-            offlineSyncOperations.push(new rsvp.Promise(function (resolve, reject) {
+            offlineSyncOperations.push(new rsvp.Promise(function(resolve, reject) {
                 self.processQuery(syncQuery)
-                    .then(function () {
+                    .then(function() {
                         switch (syncQuery.operation) {
                             case DataQuery.operations.Update:
                                 self._onItemProcessed(serverItem, typeName, syncLocation.client, offlineItemStates.modified);
@@ -21105,7 +21164,7 @@ module.exports = (function () {
                                 break;
                         }
                         resolve();
-                    }, function (err) {
+                    }, function(err) {
                         var itemId;
                         var operation;
                         switch (syncQuery.operation) {
@@ -21134,14 +21193,16 @@ module.exports = (function () {
             }));
         },
 
-        _handleKeepClient: function (conflictingItem, contentTypeSyncData) {
+        _handleKeepClient: function(conflictingItem, contentTypeSyncData) {
             var serverItem = conflictingItem.serverItem;
             var clientItem = conflictingItem.clientItem;
             var resultingItem;
             var collection;
 
             if (serverItem && clientItem) {
-                resultingItem = _.extend(clientItem, {ModifiedAt: new Date(serverItem.ModifiedAt)});
+                resultingItem = _.extend(clientItem, {
+                    ModifiedAt: new Date(serverItem.ModifiedAt)
+                });
                 collection = contentTypeSyncData.modifiedItems;
             } else if (serverItem && !clientItem) {
                 resultingItem = serverItem;
@@ -21160,7 +21221,7 @@ module.exports = (function () {
             });
         },
 
-        _handleCustom: function (conflictingItem, typeName, offlineSyncOperations, contentTypeSyncData) {
+        _handleCustom: function(conflictingItem, typeName, offlineSyncOperations, contentTypeSyncData) {
             var serverItem = conflictingItem.serverItem;
             var clientItem = conflictingItem.clientItem;
             var customItem = _.omit(conflictingItem.result.item, 'CreatedAt', 'ModifiedAt');
@@ -21220,13 +21281,13 @@ module.exports = (function () {
             }
         },
 
-        _mergeResolvedConflicts: function (conflicts, syncData) {
+        _mergeResolvedConflicts: function(conflicts, syncData) {
             var self = this;
 
             var offlineSyncOperations = [];
-            _.each(conflicts, function (conflict) {
+            _.each(conflicts, function(conflict) {
                 var typeName = conflict.contentTypeName;
-                _.each(conflict.conflictingItems, function (conflictingItem) {
+                _.each(conflict.conflictingItems, function(conflictingItem) {
                     var contentTypeSyncData = syncData[typeName];
                     switch (conflictingItem.result.resolutionType) {
                         case constants.ConflictResolution.KeepServer:
@@ -21252,14 +21313,16 @@ module.exports = (function () {
             return rsvp.all(offlineSyncOperations);
         },
 
-        _getSyncItemStates: function (contentType, offlineItems, serverItems) {
+        _getSyncItemStates: function(contentType, offlineItems, serverItems) {
             var self = this;
 
             var contentTypeSyncData = {
                 itemsForSync: {
                     createdItems: [],
                     modifiedItems: [],
-                    deletedItems: []
+                    modifiedItemsOnServer: [],
+                    deletedItems: [],
+                    deletedItemsOnServer: []
                 },
                 conflicts: {
                     contentTypeName: contentType,
@@ -21267,8 +21330,10 @@ module.exports = (function () {
                 }
             };
 
-            _.each(offlineItems, function (offlineItem) {
-                var serverItem = _.findWhere(serverItems, {Id: offlineItem.Id});
+            _.each(offlineItems, function(offlineItem) {
+                var serverItem = _.findWhere(serverItems, {
+                    Id: offlineItem.Id
+                });
                 if (serverItem) {
                     if (serverItem.Id === offlineItem.Id && offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.created) {
                         if (self.setup.conflicts.strategy === constants.ConflictResolutionStrategy.Custom) {
@@ -21299,8 +21364,7 @@ module.exports = (function () {
                     var hasUpdateConflict = false;
 
                     if (clientItemChanged) {
-                        hasUpdateConflict = serverItem.ModifiedAt.getTime() !== offlineItem.ModifiedAt.getTime()
-                            || offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.deleted;
+                        hasUpdateConflict = serverItem.ModifiedAt.getTime() !== offlineItem.ModifiedAt.getTime() || offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.deleted;
                         //TODO: when an item is removed offline its ModifiedAt field is not set, check if it needs to be set or we can use this
                     }
 
@@ -21318,10 +21382,17 @@ module.exports = (function () {
                                 remoteItem: serverItem,
                                 resultingItem: offlineItem
                             });
-                        } else {
+                        } else if (offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.modified) {
                             contentTypeSyncData.itemsForSync.modifiedItems.push({
                                 remoteItem: serverItem,
                                 resultingItem: offlineItem
+                            });
+                        } else if (offlineItem[constants.offlineItemsStateMarker] === undefined) {
+                            contentTypeSyncData.itemsForSync.modifiedItemsOnServer.push(serverItem);
+                        } else {
+                            contentTypeSyncData.itemsForSync.modifiedItems.push({
+                                remoteItem: serverItem,
+                                resultingItem: serverItem
                             });
                         }
                     }
@@ -21333,11 +21404,13 @@ module.exports = (function () {
                             serverItem: null,
                             result: {}
                         });
-                    } else {
+                    } else if (offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.created) {
                         contentTypeSyncData.itemsForSync.createdItems.push({
                             remoteItem: serverItem,
                             resultingItem: offlineItem
                         });
+                    } else {
+                        contentTypeSyncData.itemsForSync.deletedItemsOnServer.push(offlineItem);
                     }
                 }
 
@@ -21347,16 +21420,16 @@ module.exports = (function () {
             return contentTypeSyncData;
         },
 
-        _setResolutionTypeForItem: function (resolutionType, conflictingItem) {
+        _setResolutionTypeForItem: function(resolutionType, conflictingItem) {
             conflictingItem.result = {
                 resolutionType: resolutionType
             };
         },
 
-        _applyResolutionStrategy: function (conflicts) {
+        _applyResolutionStrategy: function(conflicts) {
             var self = this;
             var conflictResolutionStrategy = self.setup.conflicts.strategy;
-            return new rsvp.Promise(function (resolve, reject) {
+            return new rsvp.Promise(function(resolve, reject) {
                 var conflictResolutionPromises = [];
 
                 for (var i = 0; i < conflicts.length; i++) {
@@ -21374,7 +21447,7 @@ module.exports = (function () {
                                         'must be provided when set to Custom'));
                                 }
 
-                                conflictResolutionPromises.push(new rsvp.Promise(function (resolve) {
+                                conflictResolutionPromises.push(new rsvp.Promise(function(resolve) {
                                     customStrategy(conflicts, resolve)
                                 }));
                                 break;
@@ -21385,21 +21458,25 @@ module.exports = (function () {
                 }
 
                 rsvp.all(conflictResolutionPromises)
-                    .then(function () {
+                    .then(function() {
                         resolve();
                     });
             });
         },
 
-        _getSyncPromiseBatch: function (contentType, batchIds) {
+        _getSyncPromiseBatch: function(contentType, batchIds) {
             var self = this;
 
-            return new rsvp.Promise(function (resolve, reject) {
+            return new rsvp.Promise(function(resolve, reject) {
                 var dataQuery = new DataQuery({
                     collectionName: contentType,
-                    query: new Query({'Id': {'$in': batchIds}}),
+                    query: new Query({
+                        'Id': {
+                            '$in': batchIds
+                        }
+                    }),
                     operation: DataQuery.operations.Read,
-                    onSuccess: function (res) {
+                    onSuccess: function(res) {
                         resolve(res.result);
                     },
                     applyOffline: false,
@@ -21413,26 +21490,30 @@ module.exports = (function () {
             });
         },
 
-        _getDirtyItems: function (collection) {
-            return this._queryProcessor._getDirtyItems(collection);
+        _getPlainItemsForSync: function(collection, forceDirty) {
+            if (this.setup.syncUnmodified && !forceDirty) {
+                return _.values(collection);
+            } else {
+                return this._queryProcessor._getDirtyItems(collection);
+            }
         },
 
-        _getSyncPromiseForCollection: function (collection, contentType) {
-            var self = this;
-
-            var batches = [];
-            var batchSize = constants.syncBatchSize;
-
-            var offlineItemsToSync = self._getDirtyItems(collection);
-
-            var allIdsForSync;
+        _getIdsForSync: function(contentType, offlineItemsToSync) {
             if (this._shouldAutogenerateIdForContentType(contentType)) {
-                allIdsForSync = _.pluck(offlineItemsToSync, '_id');
+                return _.pluck(offlineItemsToSync, '_id');
             } else {
-                allIdsForSync = _.pluck(_.reject(offlineItemsToSync, function (offlineItem) {
+                return _.pluck(_.reject(offlineItemsToSync, function(offlineItem) {
                     return offlineItem[constants.offlineItemsStateMarker] === offlineItemStates.created;
                 }), '_id');
             }
+        },
+
+        _getSyncPromiseForCollection: function(collection, contentType) {
+            var batches = [];
+            var batchSize = constants.syncBatchSize;
+
+            var offlineItemsToSync = this._getPlainItemsForSync(collection);
+            var allIdsForSync = this._getIdsForSync(contentType, offlineItemsToSync);
 
             var batchCount = Math.ceil(allIdsForSync.length / batchSize);
 
@@ -21444,12 +21525,12 @@ module.exports = (function () {
             }
 
             return rsvp.all(batches)
-                .then(function (serverItemsSyncResponses) {
+                .then(function(serverItemsSyncResponses) {
                     var result = {
                         serverItems: []
                     };
 
-                    _.each(serverItemsSyncResponses, function (serverItems) {
+                    _.each(serverItemsSyncResponses, function(serverItems) {
                         result.serverItems = _.union(result.serverItems, serverItems);
                     });
 
@@ -21458,13 +21539,13 @@ module.exports = (function () {
                 });
         },
 
-        _onItemFailed: function (syncResult, itemId) {
+        _onItemFailed: function(syncResult, itemId) {
             var self = this;
 
             var results = syncResult.reason ? syncResult.reason : syncResult;
             var targetType = results.contentType;
 
-            var getFailedItem = function (id) {
+            var getFailedItem = function(id) {
                 var pickedObject = _.pick(results, 'storage', 'type', 'error');
                 return _.extend({
                     itemId: id,
@@ -21474,7 +21555,7 @@ module.exports = (function () {
 
             var failedItems = [];
             if (results.type === offlineItemStates.created && results.items) {
-                failedItems = _.map(results.items, function (item) {
+                failedItems = _.map(results.items, function(item) {
                     return getFailedItem(item.Id);
                 });
             } else {
@@ -21482,13 +21563,13 @@ module.exports = (function () {
             }
 
             self._syncResultInfo.failedItems[targetType] = self._syncResultInfo.failedItems[targetType] || [];
-            _.each(failedItems, function (failedItem) {
+            _.each(failedItems, function(failedItem) {
                 self._syncResultInfo.failedItems[targetType].push(failedItem);
                 self._fireItemProcessed(failedItem);
             });
         },
 
-        _onItemProcessed: function (item, contentType, syncStorage, syncType) {
+        _onItemProcessed: function(item, contentType, syncStorage, syncType) {
             var syncInfo = {
                 itemId: item.Id,
                 type: syncType,
@@ -21508,26 +21589,28 @@ module.exports = (function () {
             this._fireItemProcessed(syncInfo);
         },
 
-        _fireItemProcessed: function (syncInfo) {
+        _fireItemProcessed: function(syncInfo) {
             this._everlive._emitter.emit(constants.Events.ItemProcessed, syncInfo);
         },
 
-        _getClientWinsSyncData: function (collections) {
+        _getClientWinsSyncData: function(collections, forceDirty) {
             var self = this;
             var syncData = {};
-            _.each(collections, function (collection, typeName) {
+            _.each(collections, function(collection, typeName) {
                 if (!syncData[typeName]) {
                     syncData[typeName] = {
                         createdItems: [],
                         modifiedItems: [],
-                        deletedItems: []
+                        deletedItems: [],
+                        deletedItemsOnServer: [],
+                        modifiedItemsOnServer: []
                     };
                 }
 
-                var dirtyItems = self._getDirtyItems(collection);
-                var itemsForSync = offlineTransformations.idTransform(dirtyItems);
+                var plainItems = self._getPlainItemsForSync(collection, forceDirty);
+                var itemsForSync = offlineTransformations.idTransform(plainItems);
 
-                _.each(itemsForSync, function (itemForSync) {
+                _.each(itemsForSync, function(itemForSync) {
                     switch (itemForSync[constants.offlineItemsStateMarker]) {
                         case offlineItemStates.created:
                             syncData[typeName].createdItems.push({
@@ -21556,17 +21639,17 @@ module.exports = (function () {
             return syncData;
         },
 
-        _getModifiedFilesForSyncClientWins: function (itemId, item, collectionName) {
+        _getModifiedFilesForSyncClientWins: function(itemId, item, collectionName) {
             var self = this;
             var sdk = self._everlive;
 
-            return new rsvp.Promise(function (resolve, reject) {
+            return new rsvp.Promise(function(resolve, reject) {
                 var offlineFiles = self.files;
                 offlineFiles.getOfflineLocation(itemId)
-                    .then(function (location) {
+                    .then(function(location) {
                         if (location) {
                             return self._transferFile(true, item, location)
-                                .then(function (result) {
+                                .then(function(result) {
                                     if (result.Result === false) {
                                         reject({
                                             type: offlineItemStates.modified,
@@ -21580,7 +21663,7 @@ module.exports = (function () {
                                             result: result
                                         };
                                     }
-                                }, function (err) {
+                                }, function(err) {
                                     reject({
                                         type: offlineItemStates.modified,
                                         itemId: item.Id,
@@ -21594,9 +21677,9 @@ module.exports = (function () {
                                 .isSync(true)
                                 .applyOffline(false)
                                 .updateSingle(item)
-                                .then(function (response) {
+                                .then(function(response) {
                                     return response;
-                                }, function (err) {
+                                }, function(err) {
                                     reject({
                                         type: offlineItemStates.modified,
                                         itemId: item.Id,
@@ -21607,7 +21690,7 @@ module.exports = (function () {
                                 });
                         }
                     })
-                    .then(function (onlineResponse) {
+                    .then(function(onlineResponse) {
                         var onlineResult = onlineResponse.result;
                         item.ModifiedAt = onlineResult.ModifiedAt;
                         self._onItemProcessed(item, collectionName, syncLocation.server, offlineItemStates.modified);
@@ -21617,7 +21700,7 @@ module.exports = (function () {
                             .updateSingle(item);
                     })
                     .then(resolve)
-                    .catch(function (err) {
+                    .catch(function(err) {
                         reject({
                             type: offlineItemStates.modified,
                             itemId: item.Id,
@@ -21629,15 +21712,15 @@ module.exports = (function () {
             });
         },
 
-        _getModifiedItemForSyncClientWins: function (dataCollection, item, collectionName) {
+        _getModifiedItemForSyncClientWins: function(dataCollection, item, collectionName) {
             var self = this;
 
-            return new rsvp.Promise(function (resolve, reject) {
+            return new rsvp.Promise(function(resolve, reject) {
                 return dataCollection
                     .isSync(true)
                     .applyOffline(false)
                     .updateSingle(item)
-                    .then(function (res) {
+                    .then(function(res) {
                         self._onItemProcessed(item, collectionName, syncLocation.server, offlineItemStates.modified);
                         var updatedItem = _.extend({}, item, {
                             ModifiedAt: res.ModifiedAt
@@ -21654,7 +21737,7 @@ module.exports = (function () {
                         });
 
                         return self.processQuery(updateQuery);
-                    }, function (res) {
+                    }, function(res) {
                         reject({
                             storage: syncLocation.server,
                             type: offlineItemStates.modified,
@@ -21663,7 +21746,7 @@ module.exports = (function () {
                             error: res
                         });
                     })
-                    .then(resolve, function (err) {
+                    .then(resolve, function(err) {
                         reject({
                             storage: syncLocation.client,
                             type: offlineItemStates.modified,
@@ -21675,10 +21758,10 @@ module.exports = (function () {
             });
         },
 
-        _addModifiedItemsForSyncClientWins: function (contentTypeData, syncPromises, dataCollection) {
+        _addModifiedItemsForSyncClientWins: function(contentTypeData, syncPromises, dataCollection) {
             var self = this;
 
-            this._addUpdatedItemsForSync(contentTypeData, getSyncFilterNoModifiedAt, syncPromises, dataCollection, function (item) {
+            this._addUpdatedItemsForSync(contentTypeData, getSyncFilterNoModifiedAt, syncPromises, dataCollection, function(item) {
                 var itemId = item.Id;
                 if (!itemId) {
                     throw new EverliveError('When updating an item it must have an Id field.');
@@ -21693,13 +21776,13 @@ module.exports = (function () {
             });
         },
 
-        _addDeletedItemsForSyncClientWins: function (contentTypeData, syncPromises, dataCollection) {
+        _addDeletedItemsForSyncClientWins: function(contentTypeData, syncPromises, dataCollection) {
             var self = this;
 
             this._addDeletedItemsForSync(contentTypeData, getSyncFilterNoModifiedAt, syncPromises, dataCollection,
-                function (item, itemFilter) {
+                function(item, itemFilter) {
                     var collectionName = dataCollection.collectionName;
-                    syncPromises[item.Id] = new rsvp.Promise(function (resolve, reject) {
+                    syncPromises[item.Id] = new rsvp.Promise(function(resolve, reject) {
                         var itemId = item.Id;
                         if (!itemId) {
                             throw new EverliveError('When deleting an item it must have an Id field.');
@@ -21709,11 +21792,11 @@ module.exports = (function () {
                             .isSync(true)
                             .applyOffline(false)
                             .destroySingle(itemFilter)
-                            .then(function () {
+                            .then(function() {
                                 self._onItemProcessed(item, collectionName, syncLocation.server, offlineItemStates.deleted);
-                                return self._purgeById(collectionName, item.Id).then(function () {
+                                return self._purgeById(collectionName, item.Id).then(function() {
                                     resolve();
-                                }, function (err) {
+                                }, function(err) {
                                     reject(_.extend({}, {
                                         storage: syncLocation.client,
                                         type: offlineItemStates.deleted,
@@ -21722,7 +21805,7 @@ module.exports = (function () {
                                         error: err
                                     }));
                                 });
-                            }, function (err) {
+                            }, function(err) {
                                 reject(_.extend({}, {
                                     storage: syncLocation.server,
                                     type: offlineItemStates.deleted,
@@ -21735,12 +21818,12 @@ module.exports = (function () {
                 });
         },
 
-        _applyClientWins: function (collections) {
+        _applyClientWins: function(collections) {
             var self = this;
-            var syncData = this._getClientWinsSyncData(collections);
+            var syncData = this._getClientWinsSyncData(collections, true);
             var syncPromises = {};
 
-            _.each(syncData, function (contentTypeData, typeName) {
+            _.each(syncData, function(contentTypeData, typeName) {
                 var dataCollection = self._everlive.data(typeName);
                 if (contentTypeData.createdItems.length) {
                     self._addCreatedItemsForSync(contentTypeData, syncPromises, dataCollection);
@@ -21755,26 +21838,132 @@ module.exports = (function () {
                 }
             });
 
-            return rsvp.hashSettled(syncPromises);
+            var syncResult;
+
+            return rsvp.hashSettled(syncPromises)
+                .then(function(result) {
+                    syncResult = result;
+                    if (self.setup.syncUnmodified) {
+                        var promises = [];
+                        _.each(collections, function(collection, collectionName) {
+                            var allOfflineItems = self._getPlainItemsForSync(collection);
+                            var itemsToDownload = _.where(allOfflineItems, function(offlineItem) {
+                                return offlineItem[constants.offlineItemsStateMarker] !== undefined;
+                            });
+
+                            var DataCollection = self._everlive.data(collectionName);
+
+                            var itemIdsForSync = _.pluck(itemsToDownload, '_id');
+                            var downloadPromise = DataCollection
+                                .isSync(true)
+                                .useOffline(false)
+                                .get({
+                                    Id: {
+                                        $in: itemIdsForSync
+                                    }
+                                })
+                                .then(function(res) {
+                                    var serverItems = res.result;
+                                    var serverItemIds = _.pluck(serverItems, 'Id');
+                                    return self._unmodifiedClientWinsItemsDeletedOnServer(collectionName, serverItemIds, itemsToDownload)
+                                        .then(function() {
+                                            return self._unmodifiedClientWinsItemsUpdatedOnServer(collectionName, serverItems, itemsToDownload);
+                                        });
+                                });
+
+                            promises.push(downloadPromise);
+                        });
+
+                        return rsvp.all(promises);
+                    }
+                })
+                .then(function() {
+                    return syncResult;
+                });
         },
 
-        _modifyFileStandardSync: function (syncPromises, itemId, item, collectionName, resolutionType) {
+        _unmodifiedClientWinsItemsDeletedOnServer: function(collectionName, serverItemIds, clientItems) {
+            var self = this;
+            var itemsForDeleteIds = [];
+            var itemIdsForSync = _.pluck(clientItems, '_id');
+            _.each(itemIdsForSync, function(itemId) {
+                if (serverItemIds.indexOf(itemId) === -1) {
+                    itemsForDeleteIds.push(itemId);
+                }
+            });
+
+            return utils.successfulPromise()
+                .then(function() {
+                    if (itemsForDeleteIds.length !== 0) {
+                        var deleteQuery = new DataQuery({
+                            operation: DataQuery.operations.Delete,
+                            filter: {
+                                Id: {
+                                    $in: itemsForDeleteIds
+                                }
+                            },
+                            collectionName: collectionName,
+                            isSync: true
+                        });
+
+                        return self.processQuery(deleteQuery).then(function() {
+                            _.each(itemsForDeleteIds, function(itemsForDeleteId) {
+                                self._onItemProcessed({Id: itemsForDeleteId}, collectionName, syncLocation.client, offlineItemStates.deleted);
+                            });
+                        });
+                    }
+                });
+        },
+
+        _unmodifiedClientWinsItemsUpdatedOnServer: function(collectionName, serverItems, clientItems) {
+            var self = this;
+            var updatePromises = [];
+
+            _.each(serverItems, function(serverItem) {
+                var item = _.find(clientItems, function(clientItem) {
+                    return clientItem._id === serverItem.Id;
+                });
+
+                if (item) {
+                    var updateQuery = new DataQuery({
+                        operation: DataQuery.operations.Update,
+                        data: serverItem,
+                        additionalOptions: {
+                            id: item._id
+                        },
+                        collectionName: collectionName,
+                        isSync: true
+                    });
+
+                    var itemUpdatedPromise = self.processQuery(updateQuery)
+                        .then(function(res) {
+                            self._onItemProcessed(serverItem, collectionName, syncLocation.client, offlineItemStates.modified);
+                        });
+
+                    updatePromises.push(itemUpdatedPromise);
+                }
+            });
+
+            return rsvp.all(updatePromises);
+        },
+
+        _modifyFileStandardSync: function(syncPromises, itemId, item, collectionName, resolutionType) {
             var self = this;
 
             var filesCollection = self._everlive.files;
-            syncPromises[itemId] = new rsvp.Promise(function (resolve, reject) {
+            syncPromises[itemId] = new rsvp.Promise(function(resolve, reject) {
                 var offlineLocation;
                 self.files.getOfflineLocation(itemId)
-                    .then(function (locationOnDisk) {
+                    .then(function(locationOnDisk) {
                         offlineLocation = locationOnDisk;
                     })
-                    .then(function () {
+                    .then(function() {
                         return filesCollection
                             .isSync(true)
                             .applyOffline(false)
                             .getById(itemId);
                     })
-                    .then(function (response) {
+                    .then(function(response) {
                         var file = response.result;
                         if (file.ModifiedAt.getTime() !== item.ModifiedAt.getTime()) {
                             reject(_.extend({}, new EverliveError(EverliveErrors.syncConflict), {
@@ -21784,10 +21973,10 @@ module.exports = (function () {
                             if (offlineLocation) {
                                 if (resolutionType === constants.ConflictResolution.KeepServer) {
                                     return self.files._saveFile(item.Uri, item.Filename, item.Id)
-                                        .then(function () {
+                                        .then(function() {
                                             return self._offlineFilesProcessor.purge(offlineLocation);
                                         })
-                                        .then(function () {
+                                        .then(function() {
                                             return response;
                                         });
                                 } else if (resolutionType === constants.ConflictResolution.KeepClient) {
@@ -21796,7 +21985,7 @@ module.exports = (function () {
                             }
                         }
                     })
-                    .then(function () {
+                    .then(function() {
                         return self._everlive.files
                             .isSync(true)
                             .useOffline(true)
@@ -21807,17 +21996,17 @@ module.exports = (function () {
             });
         },
 
-        _modifyContentTypeStandardSync: function (syncPromises, itemId, dataCollection, item, itemFilter, collectionName, isCustom) {
+        _modifyContentTypeStandardSync: function(syncPromises, itemId, dataCollection, item, itemFilter, collectionName, isCustom) {
             var self = this;
 
             syncPromises[itemId] = dataCollection
                 .isSync(true)
                 .applyOffline(false)
                 .update(item, itemFilter)
-                .then(function (res) {
+                .then(function(res) {
                     return self._onSyncResponse(res, item, collectionName, DataQuery.operations.Update, isCustom);
-                }, function (err) {
-                    return new rsvp.Promise(function (resolve, reject) {
+                }, function(err) {
+                    return new rsvp.Promise(function(resolve, reject) {
                         reject({
                             type: offlineItemStates.modified,
                             itemId: item.Id,
@@ -21829,31 +22018,31 @@ module.exports = (function () {
                 });
         },
 
-        _applyStandardSync: function (collections) {
+        _applyStandardSync: function(collections) {
             var self = this;
 
             var promises = {};
-            _.each(collections, function (collection, contentType) {
+            _.each(collections, function(collection, contentType) {
                 promises[contentType] = self._getSyncPromiseForCollection(collection, contentType);
             });
 
             return rsvp.hash(promises)
-                .then(function (contentTypes) {
+                .then(function(contentTypes) {
                     return self._prepareSyncData(contentTypes);
                 })
-                .then(function (syncData) {
+                .then(function(syncData) {
                     return self._resolveConflicts(syncData);
                 })
-                .then(function (contentTypeSyncData) {
+                .then(function(contentTypeSyncData) {
                     var syncPromises = {};
-                    _.each(contentTypeSyncData, function (contentTypeData, collectionName) {
+                    _.each(contentTypeSyncData, function(contentTypeData, collectionName) {
                         var dataCollection = self._everlive.data(collectionName);
                         if (contentTypeData.createdItems.length) {
                             self._addCreatedItemsForSync(contentTypeData, syncPromises, dataCollection);
                         }
 
                         if (contentTypeData.modifiedItems.length) {
-                            self._addUpdatedItemsForSync(contentTypeData, getSyncFilterForItem, syncPromises, dataCollection, function (item, itemFilter, isCustom, resolutionType) {
+                            self._addUpdatedItemsForSync(contentTypeData, getSyncFilterForItem, syncPromises, dataCollection, function(item, itemFilter, isCustom, resolutionType) {
                                 var itemId = item.Id;
 
                                 if (utils.isContentType.files(collectionName)) {
@@ -21865,15 +22054,15 @@ module.exports = (function () {
                         }
 
                         if (contentTypeData.deletedItems.length) {
-                            self._addDeletedItemsForSync(contentTypeData, getSyncFilterForItem, syncPromises, dataCollection, function (item, itemFilter, isCustom) {
+                            self._addDeletedItemsForSync(contentTypeData, getSyncFilterForItem, syncPromises, dataCollection, function(item, itemFilter, isCustom) {
                                 syncPromises[item.Id] = dataCollection
                                     .isSync(true)
                                     .applyOffline(false)
                                     .destroy(itemFilter)
-                                    .then(function (res) {
+                                    .then(function(res) {
                                         return self._onSyncResponse(res, item, collectionName, DataQuery.operations.Delete, isCustom);
-                                    }, function (err) {
-                                        return new rsvp.Promise(function (resolve, reject) {
+                                    }, function(err) {
+                                        return new rsvp.Promise(function(resolve, reject) {
                                             reject({
                                                 type: offlineItemStates.deleted,
                                                 itemId: item.Id,
@@ -21885,17 +22074,59 @@ module.exports = (function () {
                                     });
                             });
                         }
+
+                        _.each(contentTypeData.deletedItemsOnServer, function(item) {
+                            syncPromises[item.Id] = dataCollection
+                                .isSync(true)
+                                .useOffline(true)
+                                .destroySingle({
+                                    Id: item.Id
+                                })
+                                .then(function(res) {
+                                    return self._onItemProcessed(item, collectionName, syncLocation.client, offlineItemStates.deleted);
+                                }, function(err) {
+                                    return new rsvp.Promise(function(resolve, reject) {
+                                        reject({
+                                            type: offlineItemStates.deleted,
+                                            itemId: item.Id,
+                                            contentType: collectionName,
+                                            error: err,
+                                            storage: syncLocation.client
+                                        });
+                                    });
+                                });
+                        });
+
+                        _.each(contentTypeData.modifiedItemsOnServer, function(item) {
+                            syncPromises[item.Id] = dataCollection
+                                .isSync(true)
+                                .useOffline(true)
+                                .update(item, {
+                                    Id: item.Id
+                                })
+                                .then(function(res) {
+                                    return self._onItemProcessed(item, collectionName, syncLocation.client, offlineItemStates.modified);
+                                }, function(err) {
+                                    return utils.rejectedPromise({
+                                        type: offlineItemStates.modified,
+                                        itemId: item.Id,
+                                        contentType: collectionName,
+                                        error: err,
+                                        storage: syncLocation.client
+                                    })
+                                })
+                        })
                     });
 
                     return rsvp.hashSettled(syncPromises);
                 });
         },
 
-        _applySync: function () {
+        _applySync: function() {
             var self = this;
 
             return this._queryProcessor._getAllCollections()
-                .then(function (collections) {
+                .then(function(collections) {
                     if (self.setup.conflicts.strategy === constants.ConflictResolutionStrategy.ClientWins) {
                         return self._applyClientWins(collections);
                     } else {
@@ -21919,15 +22150,15 @@ module.exports = (function () {
          * @memberOf OfflineModule.prototype
          * @returns {Promise}
          */
-        getItemsForSync: function (success, error) {
+        getItemsForSync: function(success, error) {
             var self = this;
-            var dirtyItemsForSync = {};
-            return buildPromise(function (successCb, errorCb) {
+            var plainItemsForSync = {};
+            return buildPromise(function(successCb, errorCb) {
                 self._queryProcessor._getAllCollections()
-                    .then(function (collections) {
-                        _.each(collections, function (collection, collectionName) {
-                            var dirtyItems = self._getDirtyItems(collection);
-                            dirtyItemsForSync[collectionName] = _.map(dirtyItems, function (item) {
+                    .then(function(collections) {
+                        _.each(collections, function(collection, collectionName) {
+                            var plainItems = self._getPlainItemsForSync(collection);
+                            plainItemsForSync[collectionName] = _.map(plainItems, function(item) {
                                 var itemForSync = {
                                     item: _.extend({}, item),
                                     action: item[constants.offlineItemsStateMarker]
@@ -21938,7 +22169,7 @@ module.exports = (function () {
                             });
                         });
 
-                        successCb(dirtyItemsForSync);
+                        successCb(plainItemsForSync);
                     }).catch(errorCb);
             }, success, error);
         }
@@ -21946,7 +22177,6 @@ module.exports = (function () {
 
     return OfflineModule;
 })();
-
 },{"../EverliveError":48,"../Request":53,"../common":59,"../constants":60,"../query/DataQuery":87,"../query/Query":89,"../query/RequestOptionsBuilder":91,"../utils":102,"./OfflineFilesModule":73,"./OfflineFilesProcessor":74,"./OfflineQueryProcessor":75,"./offlineTransformations":79,"path":3}],77:[function(require,module,exports){
 var constants = require('../constants');
 var persisters = require('./offlinePersisters');
@@ -21972,7 +22202,8 @@ var defaultOfflineStorageOptions = {
         name: '',
         provider: isNativeScript ? constants.StorageProvider.FileSystem : constants.StorageProvider.LocalStorage,
         implementation: null,
-        storagePath: constants.DefaultStoragePath
+        storagePath: constants.DefaultStoragePath,
+        requestedQuota: constants.DefaultFilesystemStorageQuota
     },
     typeSettings: {},
     encryption: {
@@ -22577,7 +22808,7 @@ module.exports = (function () {
     var CurrentDevice = function (pushHandler) {
 
         if (!window.cordova) {
-                throw new EverliveError('Error: currentDevice() can only be called from within a hybrid mobile app, after \'deviceready\' event has been fired.');
+            throw new EverliveError('Error: currentDevice() can only be called from within a hybrid mobile app, after \'deviceready\' event has been fired.');
         }
 
         this._pushHandler = pushHandler;
@@ -22595,12 +22826,12 @@ module.exports = (function () {
         this.emulatorMode = false;
     };
 
-    CurrentDevice.ensurePushIsAvailable = function() {
+    CurrentDevice.ensurePushIsAvailable = function () {
         var isPushNotificationPluginAvailable = (typeof window !== 'undefined' && window.plugins && window.plugins.pushNotification);
 
         if (!isPushNotificationPluginAvailable && !utils._inAppBuilderSimulator()) {
             throw new EverliveError('The push notification plugin is not available. Ensure that the pushNotification plugin is included ' +
-            'and use after `deviceready` event has been fired.');
+                'and use after `deviceready` event has been fired.');
         }
     };
 
@@ -22815,6 +23046,27 @@ module.exports = (function () {
             return buildPromise(function (successCb, errorCb) {
                 pushNotification.areNotificationsEnabled(successCb, errorCb, options);
             }, onSuccess, onError);
+        },
+
+        /**
+         * Currently available only for iOS
+         * Use this method in case you are working with iOS interactive push notifications in background mode, including TextInput, or iOS silent push notifications
+         * Call it once you are done with processing your push notification in notificationCallbackIOS.
+         * @method notificationProcessed
+         * @name notificationProcessed
+         * @memberOf Push.prototype
+         */
+        /**
+         * Currently available only for iOS
+         * Use this method in case you are working with iOS interactive push notifications in background mode, including TextInput, or iOS silent push notifications
+         * Call it once you are done with processing your push notification in notificationCallbackIOS.
+         * @method notificationProcessed
+         * @name notificationProcessed
+         * @memberOf Push.prototype
+         */
+        notificationProcessed: function () {
+            var pushPlugin = window.plugins.pushNotification;
+            pushPlugin.notificationProcessed();
         },
 
         _initializeInteractivePush: function (iOSSettings, success, error) {
@@ -23472,7 +23724,7 @@ module.exports = (function () {
          */
         areNotificationsEnabled: function (options, onSuccess, onError) {
             options = options || {};
-
+            
             return buildPromise(function (successCb, errorCb) {
                 tnsPushPluginLazy.tnsPushPlugin.areNotificationsEnabled(successCb, errorCb, options);
             }, onSuccess, onError);
@@ -23520,7 +23772,7 @@ module.exports = (function () {
                 tnsPushPluginLazy.tnsPushPlugin.register(
                     apnRegistrationOptions,
                     _.bind(this._successfulRegistrationAPN, this),
-                    _.bind(this._failedRegistrationAPN, this)
+                    _.bind(this._failedRegistrationAPN, this)                    
                 );
             } else if (platformType === Platform.Android) {
                 // Ensure the required fields are present in the Android Settings
@@ -23624,7 +23876,7 @@ module.exports = (function () {
         },
 
         _getLocaleName: function (success, error) {
-            return success(); // TODO
+            return success(); // TODO            
             /* TODO: Must translate somehow to NativeScript to get the current locale
             if (this.emulatorMode) {
                 success({value: 'en_US'});
@@ -23718,6 +23970,10 @@ module.exports = (function () {
         //Occurs when an error occured when sending registration request to GCM
         _errorSentRegistrationGCM: function (error) {
             this._deviceRegistrationFailed(error);
+        },
+
+        notificationProcessed: function () {
+            throw new Error('Not implemented');
         },
 
         //This function receives all notification events from APN
@@ -23987,9 +24243,9 @@ module.exports = (function () {
             var queryParams = {};
 
             if (this.operation === DataQuery.operations.ReadById) {
-                queryParams.filter = this.additionalOptions.id;
                 queryParams.expand = this.getHeaderAsJSON(Headers.expand);
-            } else {
+                queryParams.select = this.getHeaderAsJSON(Headers.select);
+            } else if (!this.additionalOptions || !this.additionalOptions.id) {
                 var sort = this.getHeaderAsJSON(Headers.sort);
                 var limit = this.getHeaderAsJSON(Headers.take);
                 var skip = this.getHeaderAsJSON(Headers.skip);
@@ -24049,16 +24305,21 @@ module.exports = (function () {
         },
 
         _applyEventQueryParams: function (eventQuery) {
-            if (eventQuery.filter && !this.query) {
-                this.query = {};
+            if (eventQuery.filter) {
+                this.query = this.query || {};
+                this.query.filter = eventQuery.filter;
             }
-            this.query.filter = eventQuery.filter;
+
+            if (eventQuery.aggregate) {
+                this.query = this.query || {};
+                this.query.aggregateExpression = eventQuery.aggregate;
+            }
+
             this.fields = eventQuery.select;
             this.sort = eventQuery.sort;
             this.skip = eventQuery.skip;
             this.take = eventQuery.take;
             this.expand = eventQuery.expand;
-            this.aggregate = eventQuery.aggregate;
         },
 
         _applyEventQuerySettings: function (eventQuery) {
@@ -24657,7 +24918,7 @@ module.exports = (function () {
 
     RequestOptionsBuilder._buildEndpointUrl = function (dataQuery) {
         var endpoint = dataQuery.collectionName;
-        if (dataQuery.additionalOptions && dataQuery.additionalOptions.id) {
+        if (dataQuery.additionalOptions && dataQuery.additionalOptions.id !== undefined) {
             endpoint += '/' + dataQuery.additionalOptions.id;
         }
 
@@ -24809,7 +25070,6 @@ module.exports = (function () {
         return RequestOptionsBuilder._build(dataQuery, {
             method: 'POST',
             endpoint: endpoint,
-            authHeaders: false,
             parse: Request.parsers.single
         });
     };
@@ -25549,7 +25809,7 @@ function WebFileStore(storagePath, options) {
 
     var filesDirectoryPath;
 
-    if (platform.isWindowsPhone) {
+    if (platform.isWindowsPhone || platform.isInAppBuilderSimulator()) {
         //windows phone does not handle leading or trailing slashes very well :(
         filesDirectoryPath = storagePath.replace(new RegExp('/', 'g'), '');
     } else {
@@ -25840,7 +26100,8 @@ var Everlive = require('../Everlive');
 var EverliveError = require('../EverliveError').EverliveError;
 var EverliveErrors = require('../EverliveError').EverliveErrors;
 var EventQuery = require('../query/EventQuery');
-var everlivePlatform = require('../everlive.platform').platform;
+var platform = require('../everlive.platform');
+var everlivePlatform = platform.platform;
 var _ = require('../common')._;
 var utils = require('../utils');
 var Query = require('../query/Query');
@@ -25923,6 +26184,7 @@ module.exports = (function () {
                 switch (query.operation) {
                     case DataQuery.operations.Read:
                     case DataQuery.operations.ReadById:
+                    case DataQuery.operations.FilesGetDownloadUrlById:
                         var syncReadQuery = new DataQuery(_.defaults({
                             data: requestResponse.result,
                             isSync: true,
@@ -26089,7 +26351,7 @@ module.exports = (function () {
             var self = this;
 
             if (!query.applyOffline) {
-                query.onError.call(this, new EverliveError('The applyOffline must be false when working offline.'));
+                query.onError.call(this, new EverliveError('The applyOffline must be true when working offline.'));
             } else {
                 self.offlineStorage.processQuery(query)
                     .then(function () {
@@ -26116,7 +26378,10 @@ module.exports = (function () {
                         .then(function () {
                             originalSuccess.apply(this, args);
                         }, function (err) {
-                            if (online && err.code === EverliveErrors.operationNotSupportedOffline.code) {
+                            var notSupported = EverliveErrors.operationNotSupportedOffline.code;
+                            var notFound = EverliveErrors.itemNotFound.code;
+
+                            if (online && (err.code === notSupported || err.code === notFound)) {
                                 originalSuccess.apply(this, args);
                             } else {
                                 query.onError.apply(this, arguments);
@@ -26155,7 +26420,7 @@ module.exports = (function () {
             requestOptions.headers[constants.Headers.sdk] = JSON.stringify(sdkHeaderValue);
         },
 
-        processDataQuery: function (query) {
+        processDataQuery: function (query) {            
             var self = this;
 
             var offlineStorageEnabled = this.everlive._isOfflineStorageEnabled();
@@ -26164,6 +26429,7 @@ module.exports = (function () {
             if (this.options) {
                 query = _.defaults(this.options, query);
             }
+            
             var isCachingEnabled = (this.everlive.setup.caching === true || (this.everlive.setup.caching && this.everlive.setup.caching.enabled));
             var isSupportedInOffline = utils.isQuerySupportedOffline(query);
 
@@ -26209,7 +26475,6 @@ module.exports = (function () {
                 }
             }
 
-
             if (_.contains(beforeExecuteAllowedOperations, query.operation)) {
                 var eventQuery = EventQuery.fromDataQuery(query);
                 this.everlive._emitter.emit(constants.Events.BeforeExecute, eventQuery);
@@ -26219,10 +26484,29 @@ module.exports = (function () {
 
                 query.applyEventQuery(eventQuery);
             }
-
+            
+            var canUseOffline = undefined;
+            if (utils.isContentType.files(query.collectionName) && platform.isDesktop) {
+                var op = query.operation;
+                
+                if (query.useOffline && query.applyOffline && (op === DataQuery.operations.Create || op === DataQuery.operations.Update)) {
+                    return query.onError.call(this, new EverliveError(EverliveErrors.filesNotSupportedInBrowser));
+                }
+                
+                var isDesktopFilesOpSupported = op === DataQuery.operations.Read ||
+                    op === DataQuery.operations.ReadById ||
+                    op === DataQuery.operations.FilesGetDownloadUrlById ||
+                    op === DataQuery.operations.Delete ||
+                    op === DataQuery.operations.DeleteById;
+                
+                canUseOffline = query.useOffline && isDesktopFilesOpSupported;
+            } else {
+                canUseOffline = query.useOffline;
+            }
+                  
             if ((!query.isSync && this.offlineStorage && this.offlineStorage.isSynchronizing())) {
                 query.onError.call(this, new EverliveError(EverliveErrors.syncInProgress));
-            } else if (query.useOffline) {
+            } else if (canUseOffline) {
                 this._applyQueryOffline(query);
             } else {
                 this._applyQueryOnline(query);
@@ -26397,7 +26681,6 @@ module.exports = (function () {
                     onError: error
                 });
 
-
                 return self.processDataQuery(dataQuery);
             }, success, error);
         },
@@ -26446,6 +26729,7 @@ module.exports = (function () {
                 var dataQuery = new DataQuery({
                     operation: DataQuery.operations.RawUpdate,
                     collectionName: self.collectionName,
+                    parse: Request.parsers.update,
                     query: filter,
                     data: attrs,
                     onSuccess: success,
@@ -26510,11 +26794,11 @@ module.exports = (function () {
 
         _validateIdForModel: function (model, isDestroy) {
             // validation for destroySingle('id-as-string') scenario
-            if ((typeof model === 'string' || typeof model === 'number') && isDestroy) {
+            if (((typeof model === 'string' && model !== '') || typeof model === 'number') && isDestroy) {
                 return;
             }
 
-            if (!model || model.Id === undefined || model.Id === null) {
+            if (!model || model.Id === undefined || model.Id === null || model.Id === '') {
                 return new EverliveError(EverliveErrors.invalidId)
             }
         },
@@ -26562,6 +26846,23 @@ module.exports = (function () {
             }, success, error);
         },
 
+        /**
+         * Deletes a single data item by ID.
+         * @memberOf Data.prototype
+         * @method destroySingle
+         * @name destroySingle
+         * @param {string} itemId The ID of the item to delete.
+         * @returns {Promise} The promise for the request.
+         */
+        /**
+         * Deletes a single data item by ID.
+         * @memberOf Data.prototype
+         * @method destroySingle
+         * @name destroySingle
+         * @param {string} itemId The ID of the item to delete.
+         * @param {Function} [success] A success callback.
+         * @param {Function} [error] An error callback.
+         */
         /**
          * Deletes a single data item by ID.
          * @memberOf Data.prototype
@@ -26793,6 +27094,7 @@ var buildPromise = require('../utils').buildPromise;
 var DataQuery = require('../query/DataQuery');
 var Request = require('../Request');
 var utils = require('../utils');
+var platform = require('../everlive.platform');
 
 module.exports.addFilesFunctions = function addFilesFunctions(ns) {
     /**
@@ -26883,6 +27185,12 @@ module.exports.addFilesFunctions = function addFilesFunctions(ns) {
         var self = this;
 
         return buildPromise(function (success, error) {
+            if (platform.isDesktop && !self.everlive.isOnline()) {
+                //while in offline we cannot get the url of the file, but we can generate one
+                var url = self.getDownloadUrl(fileId);
+                return success(url);
+            }
+
             var dataQuery = new DataQuery({
                 operation: DataQuery.operations.FilesGetDownloadUrlById,
                 collectionName: self.collectionName,
@@ -26990,7 +27298,7 @@ module.exports.addFilesFunctions = function addFilesFunctions(ns) {
         }, success, error);
     }
 };
-},{"../Request":53,"../query/DataQuery":87,"../utils":102}],101:[function(require,module,exports){
+},{"../Request":53,"../everlive.platform":62,"../query/DataQuery":87,"../utils":102}],101:[function(require,module,exports){
 /**
  * @class Users
  * @extends Data
@@ -27131,7 +27439,6 @@ module.exports.addUsersFunctions = function addUsersFunctions(ns, everlive) {
                 additionalOptions: {
                     keepTokens: keepTokens
                 },
-                skipAuth: true,
                 onSuccess: success,
                 onError: error
             });
@@ -27732,6 +28039,7 @@ var rsvp = common.rsvp;
 var Everlive = require('./Everlive');
 var platform = require('./everlive.platform');
 var path = require('path');
+var constants = require('./constants');
 
 var utils = {};
 
@@ -28129,6 +28437,12 @@ utils.isContentType = {
     },
     users: function (collectionName) {
         return utils._stringCompare(collectionName, 'users');
+    },
+    pushNotifications: function (collectionName) {
+        return utils._stringCompare(collectionName, constants.Push.NotificationsType.toLowerCase());
+    },
+    pushDevices: function (collectionName) {
+        return utils._stringCompare(collectionName, constants.Push.DevicesType.toLowerCase());
     }
 };
 
@@ -28196,6 +28510,6 @@ utils._inAppBuilderSimulator = function () {
 
 module.exports = utils;
 
-},{"./Everlive":47,"./EverliveError":48,"./common":59,"./everlive.platform":62,"path":3}]},{},[67])(67)
+},{"./Everlive":47,"./EverliveError":48,"./common":59,"./constants":60,"./everlive.platform":62,"path":3}]},{},[67])(67)
 });
 //# sourceMappingURL=everlive.map

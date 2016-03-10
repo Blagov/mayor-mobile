@@ -52,7 +52,9 @@
           "registerNameLabel": "Name",
           "registerLabel": "Register",
           "registerRedirect": "home",
-          "gotoSigninLabel": "Sign In"
+          "gotoSigninLabel": "Sign In",
+          "enableLogout": false,
+          "enableRememberme": false
         }
       ],
       "title": "sign in",

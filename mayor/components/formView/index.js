@@ -7,14 +7,25 @@ var items = {
 };
 var views = {
     default: "start-report-view",
-    views: ["start-report-view", "prev-next", "steps-view", "photos-view", "location-view","comment-view","user-info-view"],
+    views: ["start-report-view", "prev-next", "steps-view", "photos-view", "location-view", "comment-view", "user-info-view"],
     active: null
 }
+
 app.formView = kendo.observable({
     onShow: function () {
+        var location = new Geolocation();
         views.active = null;
         checkLogin();
         initializeViews();
+        location.getCityInfo(function (locationData) {
+            var locationInfo = new kendo.data.DataSource({
+                data: [locationData]
+            });
+            var t = $("#listView").data("kendoMobileListView");
+            t.setDataSource(locationInfo);
+            t.refresh();
+            console.log(locationData);
+        });
     },
     afterShow: function () {}
 });
@@ -29,8 +40,6 @@ app.formView = kendo.observable({
                 quality: 50,
                 destinationType: Camera.DestinationType.DATA_URL
             });
-            views.active = 3;
-            initializeViews();
         },
         prev: function () {
             if (!(views.active === 3)) {
@@ -75,10 +84,11 @@ function onSuccess(imageData) {
         img: imageData
     });
     items.pageSize = items.data.length;
-    console.log(items);
     var ds = new kendo.data.DataSource(items);
     var scrollView = $("#scrollview").data("kendoMobileScrollView");
     scrollView.setDataSource(ds);
+    views.active = 3;
+    initializeViews();
     scrollView.refresh();
     //var smallImage = document.getElementById('smallImage'); //<div data-role="page"><img style="width:100%" id="smallImage" src="" /></div>
     //smallImage.src = "data:image/jpeg;base64," + imageData;
@@ -105,7 +115,7 @@ function initializeViews() {
 }
 
 function loadMap() {
-    var l = new geolocation();
+    var l = new Geolocation();
     var center, map, mapProp, mark;
     var infowindow = new google.maps.InfoWindow({
         content: "Hello World!"

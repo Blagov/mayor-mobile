@@ -1,20 +1,56 @@
-<div style="background-color: rgb(225, 225, 225);" data-role="view" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow" data-after-show="app.formView.afterShow">
+<div data-role="view" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow" data-after-show="app.formView.afterShow">
     <div class="start-report-view">
-        <div class="middle">
-            <a class="circle-button" data-role="button" id="capturePhotoButton" data-bind="events: { click: formViewModel.takePhoto }">
-                <p>Start new report</p>
-            </a>
+        <div class="row" style="margin-top: 10%;">
+            <div class="col-xs-4">
+            </div>
+            <div class="col-xs-4" data-bind="events: { click: formViewModel.takePhoto }">
+                <a class="circle-button" data-role="button" id="capturePhotoButton">
+                    <p>Start new report</p>
+                </a>
+            </div>
+            <div class="col-xs-4">
+            </div>
         </div>
-        <div>
-            Sponsor images
+        <div class="row" style="margin-top: 10%;">
+            <div class="col-xs-12">
+                <p style="text-align: center;">
+                    Authorities in your current location
+                </p>
+                <div id="listView" data-role="listview" data-template="locationInfo">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10%;">
+            <div class="col-xs-12">
+                <p style="text-align: center;">
+                    Sponsored by
+                </p>
+            </div>
+            <div class="row" style="display: table;">
+                <div class="col-xs-3" style="float: none; display: table-cell;">
+                    <img style="width: 100%; height:auto;" src="images/temp/lukoil.jpg" />
+                </div>
+                <div class="col-xs-3" style="float: none; display: table-cell;">
+                    <img style="width: 100%; height:auto;" src="images/temp/billa.jpg" />
+                </div>
+                <div class="col-xs-3" style="float: none; display: table-cell;">
+                    <img style="width: 100%; height:auto;" src="images/temp/vivacom.png" />
+                </div>
+            </div>
         </div>
     </div>
-    <div class="steps-view" data-role="navbar">
-        <div data-role="tabstrip" id="navigation-container">
-            <a data-icon="camera"></a>
-            <a data-icon="downloads"></a>
-            <a data-icon="info"></a>
-            <a data-icon="bookmarks"></a>
+    <div class="steps-view row" style="height: 35px;">
+        <div class="col-xs-3" style="height: 100%; padding-top: 7px; text-align:center;">
+            Camera
+        </div>
+        <div class="col-xs-3" style="height: 100%; padding-top: 7px; text-align:center">
+            Location
+        </div>
+        <div class="col-xs-3" style="height: 100%; padding-top: 7px; text-align:center">
+            Category
+        </div>
+        <div class="col-xs-3" style="height: 100%; padding-top: 7px; text-align:center">
+            Info
         </div>
     </div>
     <div class="photos-view">
@@ -56,7 +92,7 @@
                     <label class="k-radio-label" for="engine6">Категория 6</label>
                 </li>
             </ul>
-             <textarea style="width:100%;resize: none;" name="test"  rows="10" id="test"> This is a long line of text this is a long line of text this is a long line of text</textarea>
+            <textarea style="width:100%;resize: none;" name="test" rows="10" id="test"> This is a long line of text this is a long line of text this is a long line of text</textarea>
         </div>
     </div>
     <div class="user-info-view">
@@ -75,4 +111,8 @@
     <div data-role="page">
         <img class="photo" style="width:100%;height:auto" src="data:image/jpeg;base64,#=img#">
     </div>
+</script>
+<script type="text/x-kendo-template" id="locationInfo">
+    <h5>State: #= state #</h5>
+    <h6>City: #= city #</h6>
 </script>

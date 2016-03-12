@@ -6,10 +6,12 @@
     <meta charset="utf-8">
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
     <script src="cordova.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?region=bg&language=bg&key=AIzaSyB7QM5gFOw8bFuJK-0En1i7XF695rohbdo&libraries=places"></script>
     <script src="js/location.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
+    <!--     <script src="js/bootstrap.min.js"></script> -->
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <script src="app.js"></script>
     <script src="bower_components/everlive/min/everlive.all.min.js"></script>
@@ -26,15 +28,11 @@
     <div data-role="layout" data-id="main">
         <header data-role="header">
             <div data-role="tabstrip" id="navigation-container">
-                <a href="components/home/view.html" data-icon="home">Home</a>
-                <a href="components/formView/view.html" data-icon="camera">report</a>
-                <a href="components/profileView/view.html" data-icon="contacts">profile</a>
-                <a href="components/authenticationView/view.html" data-icon="contacts">sign in</a>
+                <a href="components/home/view.html" data-icon="home"></a>
+                <a href="components/formView/view.html" data-icon="camera"></a>
+                <a href="components/profileView/view.html" data-icon="contacts"></a>
             </div>
         </header>
-        <!-- application views will be rendered here -->
-        <footer data-role="footer">
-        </footer>
     </div>
     <div data-role="layout" data-id="main-nonav">
         <header data-role="header">

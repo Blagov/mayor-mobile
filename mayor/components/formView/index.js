@@ -75,16 +75,21 @@ app.formView = kendo.observable({
                 function (data) {
                     var images = app.data.mayorMobile.data('Images');
                     sendData.files.forEach(function (img) {
+                        var file = {
+                            "ContentType": "image/jpeg",
+                            "base64": "data:image/jpeg;base64," + img
+                        };
+
                         images.create({
-                                Image: img,
-                            	Problem: data.result.Id
+                                Image: file,
+                                Problem: data.result.Id
                             },
                             function (data) {
                                 console.log(data);
                             },
                             function (error) {
                                 console(error);
-                            }); 
+                            });
                     })
                 },
                 function (error) {

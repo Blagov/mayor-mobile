@@ -1,8 +1,14 @@
 'use strict';
-
 app.home = kendo.observable({
-    onShow: function() {},
-    afterShow: function() {}
+    onShow: function () {
+        var template = kendo.template("<div id='box'>#= firstName #</div>");
+        var data = {
+            firstName: "Todd"
+        }; 
+        var result = template(data);
+        $("#example").html(result); 
+    },
+    afterShow: function () {}
 });
 
 // START_CUSTOM_CODE_home

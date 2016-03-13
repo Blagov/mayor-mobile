@@ -15,7 +15,6 @@ class Geolocation {
         };
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                console.log(navigator);
                 cb(position, null);
             },
             function (error) {

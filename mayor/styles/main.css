@@ -179,3 +179,23 @@
 .km-nova .km-tabstrip .km-button.km-state-active {
     background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);
 }
+#kendoUiMobileApp .active-step {
+    background-color: #48DA38;
+}
+#kendoUiMobileApp .photo {
+    width: 60%;
+    height: auto
+}
+.km-arrow-n:after,
+.km-arrow-n:before {
+    content: "\e317";
+}
+.km-arrow-p:after,
+.km-arrow-p:before {
+    content: "\e317";
+    transform: rotate(180deg);
+}
+.km-send:after,
+.km-send:before {
+    content: "\e069";
+}

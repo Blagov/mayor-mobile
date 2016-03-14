@@ -74,7 +74,8 @@ app.formView = kendo.observable({
                 },
                 function (data) {
                     var images = app.data.mayorMobile.data('Images');
-                    sendData.files.forEach(function (img) {
+                    sendData.files.forEach(function (img, i) {
+
                         var file = {
                             "ContentType": "image/jpeg",
                             "base64": "data:image/jpeg;base64," + img
@@ -85,7 +86,26 @@ app.formView = kendo.observable({
                                 Problem: data.result.Id
                             },
                             function (data) {
-                                console.log(data);
+                                if (i == sendData.files.length - 1) {
+                                    alert("Успех!");
+                                    app.mobileApp.navigate('components/home/view.html');
+                                    items = {
+                                        data: [],
+                                        pageSize: 0
+                                    };
+                                    sendData = {
+                                        userId: null,
+                                        state: null,
+                                        location: {
+                                            longitude: null,
+                                            latitude: null
+                                        },
+                                        pcategory: null,
+                                        comment: null,
+                                        files: []
+                                    }
+
+                                }
                             },
                             function (error) {
                                 console(error);

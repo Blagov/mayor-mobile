@@ -1,14 +1,10 @@
 <div data-role="view" id="test" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow" data-after-show="app.formView.afterShow">
     <div class="start-report-view">
         <div class="container">
-            <div class="col-xs-4">
-            </div>
-            <div class="col-xs-4" data-bind="events: { click: formViewModel.takePhoto }">
+            <div class="col-xs-12" data-bind="events: { click: formViewModel.takePhoto }" style="text-align:center;">
                 <a class="circle-button" data-role="button" id="capturePhotoButton">
                     <p>Start new report</p>
                 </a>
-            </div>
-            <div class="col-xs-4">
             </div>
         </div>
         <div class="container">

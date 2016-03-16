@@ -14,6 +14,7 @@ var views = {
 var sendData = {
     userId: null,
     state: null,
+    address: null,
     location: {
         longitude: null,
         latitude: null
@@ -69,46 +70,54 @@ app.formView = kendo.observable({
                     Latitude: sendData.location.latitude,
                     Longitude: sendData.location.longitude,
                     Status: 0,
-                    Owner: sendData.userId
+                    Owner: sendData.userId,
+                    Address: sendData.address
 
                 },
                 function (data) {
                     var images = app.data.mayorMobile.data('Images');
                     sendData.files.forEach(function (img, i) {
-
                         var file = {
+                            "Filename": "image.jpg",
                             "ContentType": "image/jpeg",
-                            "base64": "data:image/jpeg;base64," + img
-                        };
+                            "base64": img
+                        }
+                        app.data.mayorMobile.files.create(file,
+                            function (f) {
+                                images.create({
+                                        Problem: data.result.Id,
+                                    	Url: f.result.Uri
+                                    },
+                                    function (img) {
+                                        if (i == sendData.files.length - 1) {  
+                                            alert("Успех!");
+                                            app.mobileApp.navigate('components/home/view.html');
+                                            items = {
+                                                data: [],
+                                                pageSize: 0
+                                            };
+                                            sendData = {
+                                                userId: null,
+                                                state: null,
+                                                location: {
+                                                    longitude: null,
+                                                    latitude: null
+                                                },
+                                                pcategory: null,
+                                                comment: null,
+                                                files: [],
+                                                address: null
+                                            }
 
-                        images.create({
-                                Image: file,
-                                Problem: data.result.Id
-                            },
-                            function (data) {
-                                if (i == sendData.files.length - 1) {
-                                    alert("Успех!");
-                                    app.mobileApp.navigate('components/home/view.html');
-                                    items = {
-                                        data: [],
-                                        pageSize: 0
-                                    };
-                                    sendData = {
-                                        userId: null,
-                                        state: null,
-                                        location: {
-                                            longitude: null,
-                                            latitude: null
-                                        },
-                                        pcategory: null,
-                                        comment: null,
-                                        files: []
-                                    }
+                                        }
+                                    },
+                                    function (error) {
+                                        console.log(error);
+                                    });
 
-                                }
                             },
                             function (error) {
-                                console(error);
+                                console.log(error);
                             });
                     })
                 },
@@ -195,7 +204,7 @@ function loadMap() {
         content: "Добре Дошли!"
     });
 
-    location.getLocation(function (locData) {
+    location.getCityInfo(function (locData) {
         center = new google.maps.LatLng(locData.coords.latitude, locData.coords.longitude);
         mapProp = {
             center: center,
@@ -211,12 +220,11 @@ function loadMap() {
         google.maps.event.addListener(mark, 'click', function () {
             infowindow.open(map, mark);
         });
-        geocode(center, function (results) {
-            infowindow.content = results[0].formatted_address;
-        });
+        infowindow.content = locData.address;
         $("#map").height(height - $('.steps-view').height());
         sendData.location.latitude = locData.coords.latitude;
         sendData.location.longitude = locData.coords.longitude;
+        sendData.address = locData.address;
     })
 }
 

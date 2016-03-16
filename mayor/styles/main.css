@@ -280,6 +280,10 @@
     top: 3px;
 }
 .profile-image {
-    padding-top: 10px;
-    padding-left: 10px;
+    display: inline-block;
+    border-radius: 3px;
+    position: absolute;
+    top: 1%;
+    left: 2%;
+
 }

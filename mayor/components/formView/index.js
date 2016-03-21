@@ -41,7 +41,8 @@ app.formView = kendo.observable({
         cancel: function () {},
         takePhoto: function () {
             navigator.camera.getPicture(onSuccess, onFail, {
-                quality: 50,
+                quality: 30,
+                correctOrientation : true,  
                 destinationType: Camera.DestinationType.DATA_URL
             });
         },
@@ -66,7 +67,6 @@ app.formView = kendo.observable({
                     Comment: sendData.comment,
                     Region: sendData.state,
                     Category: sendData.pcategory,
-                    Followers: 0,
                     Latitude: sendData.location.latitude,
                     Longitude: sendData.location.longitude,
                     Status: 0,

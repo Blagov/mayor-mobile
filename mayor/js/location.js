@@ -52,7 +52,7 @@ class Geolocation {
                                         break;
                                 }
                             };
-                            var index = results[0].formatted_address.indexOf(',', results[0].formatted_address.indexOf(',') + 1);
+                            var index = results[0].formatted_address.indexOf(',', results[0].formatted_address.indexOf(','));
                             var substring = results[0].formatted_address.slice(0, index);
                             location.address = substring;
                             location.coords = position.coords;

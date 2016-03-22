@@ -183,7 +183,7 @@
     background-color: #48DA38;
 }
 #kendoUiMobileApp .photo {
-    width: 60%;
+    width: 100%;
     height: auto
 }
 #kendoUiMobileApp .km-arrow-n:after,
@@ -255,7 +255,8 @@
 .report-date img {
     display: inline-block;
     position: relative;
-    top: 4px;
+    top: 2px;
+    margin-right: 2px;
 }
 .report-followers {
     display: inline-block;

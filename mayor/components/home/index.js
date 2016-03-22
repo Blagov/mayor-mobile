@@ -21,7 +21,6 @@ app.home = kendo.observable({
 
 function showAroundReports(event) {
 
-
     var location = new Geolocation();
 
     location.getCityInfo(function (lData) {
@@ -29,7 +28,7 @@ function showAroundReports(event) {
         $(".around-reports").height(h);
 
         var filter = new Everlive.Query();
-        filter.where().eq('Region', lData.state);
+        filter.orderDesc('CreatedAt').where().eq('Region', lData.state);
         var el = app.data.mayorMobile;
         var data = el.data('Problems');
         data.withHeaders({
@@ -73,7 +72,7 @@ function showAroundReports(event) {
                             +     '<div class="report-followers">' 
                             +         '<img src="images/temp/gnome_stock_person.png" width="15">' 
                             +         '<p style="margin-left: 0rem;margin-right: 0.2rem;">' 
-                            +             '#= getFollowers(data[i].Followers) #' 
+                            +             '#= getFollowers(data[i]) #' 
                             +         '</p>' 
                             +     '</div>' 
                             +     '<div class="ad-category-info">' 
@@ -93,7 +92,7 @@ function showAroundReports(event) {
                     var result = template(data.result);
                     var scroller = $("#import-reports").data("kendoMobileScroller");
                     scroller.scrollElement.html(result);
-                    $(".item").height(h / 1.95);
+                    $(".item").height(h / 1.955555);
                 },
                 function (error) {
                     console.log("err", error);
@@ -130,10 +129,13 @@ function dateFormat(date) {
     return string;
 }
 
-function getFollowers(followers){
-    return followers.length;
+function getFollowers(f){
+    var r;
+    f.Followers != null ? r = f.Followers.length : r = 0;
+    return r;
+	
 }
 
 function onSelect(i) {
-    console.log(app.reports[i]);
+    app.mobileApp.navigate('components/selectedReport/view.html?id='+i);
 }

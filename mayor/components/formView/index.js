@@ -23,7 +23,6 @@ var sendData = {
     comment: null,
     files: []
 }
-
 app.formView = kendo.observable({
     onShow: function (e) {
         height = e.view.content[0].clientHeight;
@@ -42,8 +41,9 @@ app.formView = kendo.observable({
         takePhoto: function () {
             navigator.camera.getPicture(onSuccess, onFail, {
                 quality: 30,
-                correctOrientation : true,  
-                destinationType: Camera.DestinationType.DATA_URL
+                destinationType: Camera.DestinationType.DATA_URL,
+                encodingType: Camera.EncodingType.JPEG,
+                correctOrientation: true
             });
         },
         prev: function () {
@@ -86,10 +86,10 @@ app.formView = kendo.observable({
                             function (f) {
                                 images.create({
                                         Problem: data.result.Id,
-                                    	Url: f.result.Uri
+                                        Url: f.result.Uri
                                     },
                                     function (img) {
-                                        if (i == sendData.files.length - 1) {  
+                                        if (i == sendData.files.length - 1) {
                                             alert("Успех!");
                                             app.mobileApp.navigate('components/home/view.html');
                                             items = {
@@ -135,7 +135,7 @@ function checkLogin() {
             var username = data.result.DisplayName;
             //alert(username + " is logged in!");
         } else {
-            app.mobileApp.navigate('components/authenticationView/view.html');
+            app.mobileApp.navigate('components/authenticationVjpegUrliew/view.html');
         }
     }, function (err) {
         alert(err.message + " Please log in.");
@@ -143,8 +143,11 @@ function checkLogin() {
 };
 
 function onSuccess(imageData) {
+
+    var i = rotateImage(imageData);
+    
     items.data.push({
-        img: imageData
+        img: i
     });
     items.pageSize = items.data.length;
     var ds = new kendo.data.DataSource(items);
@@ -153,7 +156,7 @@ function onSuccess(imageData) {
     views.active = 3;
     initializeViews();
     scrollView.refresh();
-    sendData.files.push(imageData);
+    sendData.files.push(i);
 }
 
 function onFail(message) {
@@ -288,4 +291,29 @@ function steps() {
             $(this).removeClass("active-step");
         }
     })
+}
+
+function rotateImage(i) {
+    var image = new Image();
+    image.src = "data:image/jpeg;base64," + i;
+
+    if (image.height > image.width) {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.height;
+        canvas.height = image.width;
+        var cw = canvas.width * 0.5;
+        var ch = canvas.height * 0.5;
+        var ctx = canvas.getContext("2d");
+        ctx.translate(cw, ch);
+        ctx.rotate(90 * Math.PI / 180);
+        ctx.translate(-image.width * 0.5, -image.height * 0.5);
+        ctx.drawImage(image, 0, 0);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        var jpegUrl = canvas.toDataURL("image/jpeg");
+        jpegUrl = jpegUrl.slice(23, jpegUrl.length);
+        return jpegUrl
+    }
+
+    return i;
+
 }

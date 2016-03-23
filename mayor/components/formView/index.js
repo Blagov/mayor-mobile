@@ -135,7 +135,7 @@ function checkLogin() {
             var username = data.result.DisplayName;
             //alert(username + " is logged in!");
         } else {
-            app.mobileApp.navigate('components/authenticationVjpegUrliew/view.html');
+            app.mobileApp.navigate('components/authenticationView/view.html');
         }
     }, function (err) {
         alert(err.message + " Please log in.");

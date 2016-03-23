@@ -17,13 +17,15 @@ function dateFormat(date) {
     var days = Math.floor((now - then) / msDay),
         hours = Math.floor(((now - then) % msDay) / mshours),
         minutes = Math.floor(((now - then) % msDay) / msMinutes);
-    if (days > 0) {
-        days == 1 ? string += days + " ден," : string += days + " дни,";
+    if (days > 0 && hours == 0) {
+        days == 1 ? string += days + " ден" : string += days + " дни";
+    }else if(days > 0 && hours > 0){
+        days == 1 ? string += days + " ден, " : string += days + " дни, ";
     }
-    if (mshours > 0) {
+    if (hours > 0) {
         hours == 1 ? string += hours + " час" : string += hours + " часа";
     }
-    if (minutes > 0 && minutes < 60) {
+    if (minutes > 0 && minutes < 60 && days == 0) {
         minutes == 1 ? string = minutes + " минута" : string = minutes + " минути";
     }
     if (days == 0 && hours == 0 && minutes == 0) {

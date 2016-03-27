@@ -59,6 +59,7 @@ app.formView = kendo.observable({
             }
         },
         send: function () {
+            $(".spinner").show();
             sendData.pcategory = $("input[type=radio]:checked").val();
             sendData.comment = $(".comment").val();
             //console.log(sendData);

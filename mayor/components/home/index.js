@@ -13,6 +13,8 @@ app.home = kendo.observable({
         showAroundReports(event, scroller)
         $("#reports").kendoMobileButtonGroup({
             select: function (e) {
+                count = 0;
+                scrollBool = true;
                 if (e.index == 0) {
                     showAroundReports(event, scroller)
                     switchView = e.index;

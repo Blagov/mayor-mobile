@@ -134,6 +134,7 @@ function checkLogin() {
     el.Users.currentUser(function (data) {
         if (data.result) {
             var username = data.result.DisplayName;
+            //console.log(data);
             //alert(username + " is logged in!");
         } else {
             app.mobileApp.navigate('components/authenticationView/view.html');

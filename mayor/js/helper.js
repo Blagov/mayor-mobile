@@ -35,3 +35,14 @@ function dateFormat(date) {
 
     return string;
 }
+
+function getUrlParams(url){
+    var params = {};
+    url = url.slice(url.indexOf("?") + 1, url.length);
+    var prmarr = url.split("&");
+    for (var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
+}

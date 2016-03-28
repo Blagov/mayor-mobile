@@ -18,6 +18,83 @@ app.selectedView = kendo.observable({
         var result = template(report);
         var scroller = $("#reportInfo").data("kendoMobileScroller");
         scroller.scrollElement.html(result);
+
+        var el = app.data.mayorMobile;
+        el.Users.withHeaders({
+            'X-Everlive-Expand': {
+                "Followers.Owner": {
+                    "ReturnAs": "FollowedProblems",
+                    "Fields": {
+                        "Problem": 1
+                    }
+                }
+            }
+        }).currentUser(function (data) {
+            if (data.result) {
+                var bool = false;
+                var id = '';
+                if (data.result.FollowedProblems != null) {
+                    data.result.FollowedProblems.forEach(function (item) {
+                        if (item.Problem == report.Id) {
+                            id = item.Id;
+                            bool = true;
+                            return false;
+                        } else {
+                            bool = false;
+                        }
+                    })
+                }
+                renderFollowerButton(bool, id);
+            } else {
+                app.mobileApp.navigate('components/authenticationView/view.html');
+            }
+        }, function (err) {
+            console.log(err.message + " Please log in.");
+        });
     },
-    afterShow: function () {}
+    afterShow: function () {},
 });
+
+function renderFollowerButton(bool, id) {
+    if (bool) {
+        $('#follow').html('<a data-id="' + id + '" onclick="unFollow();">UnFollow</a>');
+    } else {
+        $('#follow').html('<a onclick="follow();">Follow</a>');
+
+    }
+}
+
+function follow() {
+    var params = getUrlParams(window.location.href);
+    var report = app.reports[params.id];
+    var el = app.data.mayorMobile;
+    var data = el.data('Followers');
+    data.create({
+            'Problem': report.Id
+        },
+        function (data) {
+            console.log('suc create');
+            $('#follow').html('<a data-id="' + data.result.Id + '" onclick="unFollow();">UnFollow</a>');
+        },
+        function (error) {
+            console.log(error);
+        });
+}
+
+function unFollow() {
+    var params = getUrlParams(window.location.href);
+    var report = app.reports[params.id];
+    var data = el.data('Followers');
+    var id = $("#follow a").data("id");
+    data.destroySingle({
+            'Id': id
+        },
+        function () {
+        	console.log('suc delete');
+            $('#follow').html('<a onclick="follow();">Follow</a>');
+        },
+        function (error) {
+            console.log(error);
+        });
+
+}

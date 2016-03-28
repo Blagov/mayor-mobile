@@ -59,7 +59,7 @@ function onSelect(i) {
 
 function initializeReportView(event, scroller, data){
     var h = event.view.content[0].clientHeight - $("#reports").height() - 10;
-    var html = reportView();
+    var html = reportView(0);
     var template = kendo.template(html);
     var result = template(data.result);
     $("#import-reports").height(h);
@@ -74,30 +74,30 @@ function initializeReportView(event, scroller, data){
   	});
 }
 
-function reportView(items=0){
+function reportView(items){
     var s = '';
      if(switchView==0){
-        s = '#=data[i - ' + Number(items) + ' ].Address#';
+        s = '#=data[i-' + Number(items) + '].Address#';
     }else{
-        s = '#=data[i - ' + Number(items) + ' ].Address#, #=data[i - ' + Number(items) + ' ].Region#';
+        s = '#=data[i-' + Number(items) + '].Address#, #=data[i-' + Number(items) + '].Region#';
     }
     var html =
-    '# for (var i = ' + Number(items) + '; i < data.length + ' + Number(items)  + ' ; i++) { #' 
+    '# for (var i=' + Number(items) + '; i < data.length +' + Number(items)  + '; i++) { #' 
         + '<div id=#=i# onclick="onSelect(this.id)"  class="item" style="overflow:hidden;position: relative;">' 
-        +	  '<img width="100%" style="position: absolute;" src="#=data[i - ' + Number(items) + '].Images[0].Url#">' 
+        +	  '<img width="100%" style="position: absolute;" src="#=data[i-' + Number(items) + '].Images[0].Url#">' 
         +     '<div class="profile-image">' 
         +         '<img src="images/temp/user_profile_img.png" width="50">' 
         +     '</div>' 
         +     '<div class="report-date">' 
         +         '<img src="images/temp/clock-icon-300x300.png" width="14">' 
         +         '<p style="margin-left: 0.2rem;">' 
-        +             '#=dateFormat(data[i - ' + Number(items) + ' ].CreatedAt)#' 
+        +             '#=dateFormat(data[i-' + Number(items) + '].CreatedAt)#' 
         +         '</p>' 
         +     '</div>' 
         +     '<div class="report-followers">' 
         +         '<img src="images/temp/gnome_stock_person.png" width="15">' 
         +         '<p style="margin-left: 0rem;margin-right: 0.2rem;">' 
-        +             '#= getFollowers(data[i - ' + Number(items) + ' ]) #' 
+        +             '#= getFollowers(data[i-' + Number(items) + ']) #' 
         +         '</p>' 
         +     '</div>' 
         +     '<div class="ad-category-info">' 
@@ -106,7 +106,7 @@ function reportView(items=0){
     	+ s
         +         '</p>' 
         +         '<a style="display:inline-block;border-radius:30px;float:right;top:5px;" class="km-widget km-button km-state-active">' 
-        +             '<span class="km-text">#=data[i - ' + Number(items) + ' ].Category.Name #</span>' 
+        +             '<span class="km-text">#=data[i-' + Number(items) + '].Category.Name #</span>' 
         +         '</a>' 
         +     '</div>' 
         + '</div>' 

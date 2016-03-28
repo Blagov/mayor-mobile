@@ -159,6 +159,7 @@ function onSuccess(imageData) {
     initializeViews();
     scrollView.refresh();
     sendData.files.push(i);
+    scrollView.refresh();
 }
 
 function onFail(message) {
@@ -298,8 +299,8 @@ function steps() {
 function rotateImage(i) {
     var image = new Image();
     image.src = "data:image/jpeg;base64," + i;
-
     if (image.height > image.width) {
+        console.log('in');
         var canvas = document.createElement("canvas");
         canvas.width = image.height;
         canvas.height = image.width;

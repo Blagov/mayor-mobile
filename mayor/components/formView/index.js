@@ -25,6 +25,7 @@ var sendData = {
 }
 app.formView = kendo.observable({
     onShow: function (e) {
+        startReportView(e);
         height = e.view.content[0].clientHeight;
         views.active = null;
         checkLogin();
@@ -38,14 +39,6 @@ app.formView = kendo.observable({
         fields: {},
         submit: function () {},
         cancel: function () {},
-        takePhoto: function () {
-            navigator.camera.getPicture(onSuccess, onFail, {
-                quality: 30,
-                destinationType: Camera.DestinationType.DATA_URL,
-                encodingType: Camera.EncodingType.JPEG,
-                correctOrientation: true
-            });
-        },
         prev: function () {
             if (!(views.active === 3)) {
                 views.active--;
@@ -146,20 +139,22 @@ function checkLogin() {
 
 function onSuccess(imageData) {
 
-    var i = rotateImage(imageData);
-    
-    items.data.push({
-        img: i
+    rotateImage(imageData, function (i) {
+        items.data.push({
+            img: i
+        });
+        items.pageSize = items.data.length;
+        var ds = new kendo.data.DataSource(items);
+        var scrollView = $("#scrollview").data("kendoMobileScrollView");
+        scrollView.setDataSource(ds);
+        views.active = 3;
+        initializeViews();
+        //console.log(scrollView);
+        sendData.files.push(i);
+        setTimeout(function () {
+            scrollView.refresh();
+        }, 500);
     });
-    items.pageSize = items.data.length;
-    var ds = new kendo.data.DataSource(items);
-    var scrollView = $("#scrollview").data("kendoMobileScrollView");
-    scrollView.setDataSource(ds);
-    views.active = 3;
-    initializeViews();
-    scrollView.refresh();
-    sendData.files.push(i);
-    scrollView.refresh();
 }
 
 function onFail(message) {
@@ -170,6 +165,9 @@ function initializeViews() {
     var view;
     views.active ? view = views.active : view = 0;
     switch (views.active) {
+        case 3:
+            removeStartReportView();
+            break;
         case 4:
             loadMap();
             break;
@@ -254,7 +252,7 @@ function geocode(coords, cb) {
 function cityInfo(v) {
     var location = new Geolocation();
     location.getCityInfo(function (locationData) {
-        var template = kendo.template("<h5>Област: #= state #</h5><h6>Град: #= city #</h6>");
+        var template = kendo.template("<h3>#= state #</h3>");
         var result = template(locationData);
         $("#" + v).html(result);
         sendData.state = locationData.state;
@@ -296,27 +294,45 @@ function steps() {
     })
 }
 
-function rotateImage(i) {
+function rotateImage(i, cb) {
     var image = new Image();
     image.src = "data:image/jpeg;base64," + i;
-    if (image.height > image.width) {
-        console.log('in');
-        var canvas = document.createElement("canvas");
-        canvas.width = image.height;
-        canvas.height = image.width;
-        var cw = canvas.width * 0.5;
-        var ch = canvas.height * 0.5;
-        var ctx = canvas.getContext("2d");
-        ctx.translate(cw, ch);
-        ctx.rotate(90 * Math.PI / 180);
-        ctx.translate(-image.width * 0.5, -image.height * 0.5);
-        ctx.drawImage(image, 0, 0);
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        var jpegUrl = canvas.toDataURL("image/jpeg");
-        jpegUrl = jpegUrl.slice(23, jpegUrl.length);
-        return jpegUrl
-    }
+    setTimeout(function () {
+        if (image.height > image.width) {
+            //alert('in');
+            var canvas = document.createElement("canvas");
+            canvas.width = image.height;
+            canvas.height = image.width;
+            var cw = canvas.width * 0.5;
+            var ch = canvas.height * 0.5;
+            var ctx = canvas.getContext("2d");
+            ctx.translate(cw, ch);
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.translate(-image.width * 0.5, -image.height * 0.5);
+            ctx.drawImage(image, 0, 0);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            var jpegUrl = canvas.toDataURL("image/jpeg");
+            jpegUrl = jpegUrl.slice(23, jpegUrl.length);
+            cb(jpegUrl);
+        } else {
+            cb(i);
+        }
+    }, 500);
+}
 
-    return i;
+function takePhoto() {
+    navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 30,
+        destinationType: Camera.DestinationType.DATA_URL,
+        encodingType: Camera.EncodingType.JPEG,
+        correctOrientation: true
+    });
+}
 
+function startReportView(e) {
+    $('#report-view').css('background', 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/temp/2110273938.jpg")');
+    $('header .km-tabstrip').css('background-image', 'linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(199, 199, 199, 0.06) 100%)');
+    $('.km-nova .km-tabstrip .km-button.km-state-active').css('background-image', 'linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 250, 250, 0) 100%)');
+    $('.km-nova .km-tabstrip .km-button').css('color', 'rgba(255, 255, 255, 0.85)');
+    $('*[data-role="content"]').css('background-color', 'rgba(199, 199, 199, 0.06)');
 }

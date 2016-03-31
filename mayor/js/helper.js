@@ -19,7 +19,7 @@ function dateFormat(date) {
         minutes = Math.floor(((now - then) % msDay) / msMinutes);
     if (days > 0 && hours == 0) {
         days == 1 ? string += days + " ден" : string += days + " дни";
-    }else if(days > 0 && hours > 0){
+    } else if (days > 0 && hours > 0) {
         days == 1 ? string += days + " ден, " : string += days + " дни, ";
     }
     if (hours > 0) {
@@ -36,7 +36,7 @@ function dateFormat(date) {
     return string;
 }
 
-function getUrlParams(url){
+function getUrlParams(url) {
     var params = {};
     url = url.slice(url.indexOf("?") + 1, url.length);
     var prmarr = url.split("&");
@@ -45,4 +45,11 @@ function getUrlParams(url){
         params[tmparr[0]] = tmparr[1];
     }
     return params;
+}
+
+function removeStartReportView() {
+    $('#report-view').css('background', 'rgb(255, 255, 255)');
+    $('header .km-tabstrip').css('background-image', 'linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);');
+    $('.km-nova .km-tabstrip .km-button').css('color', '#202C31');
+    $('*[data-role="content"]').css('background-color', 'rgb(255, 255, 255)');
 }

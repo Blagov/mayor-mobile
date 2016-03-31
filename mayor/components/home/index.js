@@ -1,5 +1,5 @@
 'use strict';
-
+var problemStatus = ["В процес на одобрение", "В процес на работа", "Завършен"];
 var switchView = 0;
 var scrollBool = true;
 var count, loc;
@@ -7,6 +7,7 @@ app.reports = {};
 
 app.home = kendo.observable({
     onShow: function (event) {
+        removeStartReportView();
         count = 0;
         $(".spinner").hide();
         var scroller = $("#import-reports").data("kendoMobileScroller");
@@ -72,6 +73,7 @@ function initializeReportView(event, scroller, data){
        		appendItems(event, scroller)
         }
   	});
+    scroller.scrollTo(0, 0);
 }
 
 function reportView(items){
@@ -106,7 +108,7 @@ function reportView(items){
     	+ s
         +         '</p>' 
         +         '<a style="display:inline-block;border-radius:30px;float:right;top:5px;" class="km-widget km-button km-state-active">' 
-        +             '<span class="km-text">#=data[i-' + Number(items) + '].Category.Name #</span>' 
+        +             '<span class="km-text">&num;#=data[i-' + Number(items) + '].Category.Name #</span>' 
         +         '</a>' 
         +     '</div>' 
         + '</div>' 

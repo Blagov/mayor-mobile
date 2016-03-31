@@ -1,7 +1,9 @@
 'use strict';
 
 app.profileView = kendo.observable({
-    onShow: function() {},
+    onShow: function() {
+        removeStartReportView();
+    },
     afterShow: function() {}
 });
 

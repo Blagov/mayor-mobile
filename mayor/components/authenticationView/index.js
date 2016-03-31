@@ -1,7 +1,9 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {},
+    onShow: function () {
+		removeStartReportView();
+    },
     afterShow: function () {}
 });
 

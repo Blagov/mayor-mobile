@@ -142,17 +142,47 @@
     word-break: break-word;
 }
 #kendoUiMobileApp .circle-button {
-    height: 170px;
-    width: 170px;
+    height: 200px;
+    width: 200px;
     border-radius: 50%;
-    text-align: center;
-    background-color: #fff;
-    border: solid 2px #676565;
+    border: solid 2px rgba(255, 255, 255, 0);
+    background-color: rgba(29, 132, 49, 0.3);
+    position: relative;
+    margin: 10% auto;
 }
-#kendoUiMobileApp .circle-button span {
-    top: 37%;
-    left: 13%;
-    position: absolute;
+#kendoUiMobileApp .circle2-button {
+    height: 160px;
+    width: 160px;
+    background-color: rgba(251, 252, 251, 0.47);
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0);
+    margin: 1.1em auto;
+}
+#kendoUiMobileApp .circle3-button {
+    height: 120px;
+    width: 120px;
+    background-color: rgba(183, 19, 19, 0.75);
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0);
+    margin: 1.1em auto;
+}
+#kendoUiMobileApp .circle4-button {
+    height: 75px;
+    width: 75px;
+    background-color: rgba(0, 0, 0, 0.95);
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0);
+    margin: 1.3em auto;
+}
+#kendoUiMobileApp .circle4-button p {
+    color: #fff;
+    font-size: 60px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bolder;
 }
 #kendoUiMobileApp .middle {
     position: relative;
@@ -180,7 +210,7 @@
     background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);
 }
 #kendoUiMobileApp .active-step {
-    background-color: #48DA38;
+    background-color: #5CC251;
 }
 #kendoUiMobileApp .photo {
     width: 100%;
@@ -202,6 +232,30 @@
 #kendoUiMobileApp .km-location:after,
 #kendoUiMobileApp .km-location:before {
     content: "\e0b4"
+}
+#kendoUiMobileApp .km-settings:after,
+#kendoUiMobileApp .km-settings:before {
+    content: "\e0a4";
+}
+#kendoUiMobileApp .km-camera:after,
+#kendoUiMobileApp .km-camera:before {
+    content: "\e305";
+}
+#kendoUiMobileApp .km-flash:after,
+#kendoUiMobileApp .km-flash:before {
+    content: "\e0c1";
+}
+#kendoUiMobileApp .km-report:after,
+#kendoUiMobileApp .km-report:before {
+    content: "\e320";
+}
+#kendoUiMobileApp .km-coment:after,
+#kendoUiMobileApp .km-coment:before {
+    content: "\e093";
+}
+#kendoUiMobileApp .km-plus:after,
+#kendoUiMobileApp .km-plus:before {
+    content: "\e039"
 }
 #reports .km-state-active {
     background-color: #4C4C4C;
@@ -298,4 +352,80 @@
     background-color: #302929;
     opacity: 0.3;
     z-index: 3;
+}
+.km-nova .km-tabstrip .km-state-active .km-icon {
+    font-size: 2rem;
+}
+.km-nova .km-tabstrip .km-icon {
+    font-size: 1.2rem;
+}
+.reportHeader h3 {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-right: 22%;
+    margin-left: 22%;
+    color: #fff;
+    font-weight: 500;
+    font-family: initial;
+    font-size: 18px;
+    font-style: normal;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-top-right-radius: 15%;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    border-bottom-left-radius: 15%;
+}
+#cityInfo h3 {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-right: 22%;
+    margin-left: 22%;
+    color: #fff;
+    font-weight: 500;
+    font-family: initial;
+    font-size: 18px;
+    font-style: normal;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-top-right-radius: 15%;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    border-bottom-left-radius: 15%;
+    text-align: center;
+    margin-top: 40%;
+}
+.reportState h3 {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-right: 30%;
+    margin-left: 30%;
+    color: #fff;
+    font-weight: 500;
+    font-family: initial;
+    font-size: 18px;
+    font-style: normal;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-top-right-radius: 15%;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    border-bottom-left-radius: 15%;
+}
+.photos-view h3 {
+    text-align: center;
+    height: 2em;
+    margin: 1em uto;
+    margin-top: 1em;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 500;
+}
+.km-pages {
+    display: none;
+}
+.another-photo {
+    color: #C9C9C9;
+    height: 4em;
+    width: 4em;
+    border-radius: 50%;
+    border: solid 2px #C9C9C9;
+    margin: 1em auto;
 }

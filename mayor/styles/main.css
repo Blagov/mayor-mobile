@@ -257,6 +257,42 @@
 #kendoUiMobileApp .km-plus:before {
     content: "\e039"
 }
+#kendoUiMobileApp .km-add-report:after,
+#kendoUiMobileApp .km-add-report:before {
+    content: "\e30a";
+}
+#kendoUiMobileApp .km-pollution:after,
+#kendoUiMobileApp .km-pollution:before {
+    content: "\e221"
+}
+#kendoUiMobileApp .km-pavement:after,
+#kendoUiMobileApp .km-pavement:before {
+    content: "\e0c5"
+}
+#kendoUiMobileApp .km-noise:after,
+#kendoUiMobileApp .km-noise:before {
+    content: "\e0b5"
+}
+#kendoUiMobileApp .km-parking:after,
+#kendoUiMobileApp .km-parking:before {
+    content: "\e036"
+}
+#kendoUiMobileApp .km-malfunction:after,
+#kendoUiMobileApp .km-malfunction:before {
+    content: "\e0fa"
+}
+#kendoUiMobileApp .km-animals:after,
+#kendoUiMobileApp .km-animals:before {
+    content: "\e30d"
+}
+#kendoUiMobileApp .km-criminal:after,
+#kendoUiMobileApp .km-criminal:before {
+    content: "\e100"
+}
+#kendoUiMobileApp .km-others:after,
+#kendoUiMobileApp .km-others:before {
+    content: "\e082"
+}
 #reports .km-state-active {
     background-color: #4C4C4C;
 }
@@ -428,4 +464,48 @@
     border-radius: 50%;
     border: solid 2px #C9C9C9;
     margin: 1em auto;
+}
+.comment-view h3 {
+    text-align: center;
+    font-size: 18px;
+    font-family: inherit;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+#categories .km-icon:after,
+#categories .km-icon:before {
+    height: 40%;
+}
+.upCategory {
+    border-bottom: double 0.1em #656565;
+    border-right: double 0.1em #656565;
+}
+.downCategory {
+    border-right: double 0.1em #656565;
+}
+.lastCategory {
+    border-bottom: double 0.1em #656565;
+}
+#categories div {
+    padding: 10px;
+    background-color: rgb(31, 31, 31);
+    height: 5.5em;
+}
+#categories span {
+    color: white;
+    text-align: center;
+}
+#categories h5 {
+    margin-top: -0.3em;
+    color: white;
+    text-align: center;
+}
+#categories div.activeCategory {
+    background-color: rgb(207, 32, 32);
+}
+#categories div.activeCategory span {
+    color: black;
+}
+#categories div.activeCategory h5 {
+    color: black;
 }

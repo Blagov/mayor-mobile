@@ -53,9 +53,8 @@ app.formView = kendo.observable({
         },
         send: function () {
             $(".spinner").show();
-            sendData.pcategory = $("input[type=radio]:checked").val();
+            sendData.pcategory = $(".activeCategory").data('id');
             sendData.comment = $(".comment").val();
-            //console.log(sendData);
             var data = app.data.mayorMobile.data('Problems');
             data.create({
                     Comment: sendData.comment,
@@ -138,7 +137,9 @@ function checkLogin() {
 };
 
 function onSuccess(imageData) {
-
+    views.active = 3;
+    initializeViews();
+    $(".spinner").show();
     rotateImage(imageData, function (i) {
         items.data.push({
             img: i
@@ -147,12 +148,10 @@ function onSuccess(imageData) {
         var ds = new kendo.data.DataSource(items);
         var scrollView = $("#scrollview").data("kendoMobileScrollView");
         scrollView.setDataSource(ds);
-        views.active = 3;
-        initializeViews();
-        //console.log(scrollView);
         sendData.files.push(i);
         setTimeout(function () {
             scrollView.refresh();
+            $(".spinner").hide();
         }, 500);
     });
 }
@@ -169,14 +168,23 @@ function initializeViews() {
             removeStartReportView();
             break;
         case 4:
+            $(".spinner").show();
             loadMap();
             break;
         case 5:
+            $(".spinner").show();
             getCategories();
             break;
         case 6:
-            cityInfo("city");
-            userInfo();
+            if ($(".activeCategory").data('id') == null) {
+                views.active = views.active - 1;
+                view = views.active;
+                alert("Изберете категория!");
+            } else {
+                $(".spinner").show();
+                cityInfo("city");
+                userInfo();
+            }
             break;
     }
     views.views.forEach(function (e, i) {
@@ -229,6 +237,7 @@ function loadMap() {
         sendData.location.latitude = locData.coords.latitude;
         sendData.location.longitude = locData.coords.longitude;
         sendData.address = locData.address;
+        $(".spinner").hide();
     })
 }
 
@@ -256,16 +265,21 @@ function cityInfo(v) {
         var result = template(locationData);
         $("#" + v).html(result);
         sendData.state = locationData.state;
+        $(".spinner").hide();
     });
 }
 
 function getCategories() {
     var data = el.data('Categories');
-    data.get()
+    var filter = new Everlive.Query();
+    filter.orderDesc('CreatedAt');
+    data.get(filter)
         .then(function (data) {
-                var template = kendo.template("# for (var i = 0; i < data.length; i++) { #<li class='col-xs-6'><div class='radio'><label><input style='margin-left: -35px;margin-top: -5px;' type='radio' name='category' value='#= data[i].Id #'>#= data[i].Name #</label></div></li># } #");
+
+                var template = kendo.template('# for (var i = 0; i < data.length; i++) { #<div data-id="#=data[i].Id#" onclick="selectCategory(this);" class="col-xs-3  #=categoryClass(i)#"><span class="km-icon km-#= data[i].Class #"></span><h5>#=data[i].Name #</h5></div># } #')
                 var result = template(data.result);
                 $("#categories").html(result);
+                $(".spinner").hide();
             },
             function (error) {
                 console.log("err", error);
@@ -286,7 +300,7 @@ function userInfo() {
 function steps() {
     var steps = $('.steps-view').children();
     steps.each(function (i) {
-        if (i === views.active - 3) {
+        if (i <= views.active - 3) {
             $(this).addClass("active-step");
         } else {
             $(this).removeClass("active-step");
@@ -335,4 +349,27 @@ function startReportView(e) {
     $('.km-nova .km-tabstrip .km-button.km-state-active').css('background-image', 'linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 250, 250, 0) 100%)');
     $('.km-nova .km-tabstrip .km-button').css('color', 'rgba(255, 255, 255, 0.85)');
     $('*[data-role="content"]').css('background-color', 'rgba(199, 199, 199, 0.06)');
+}
+
+function categoryClass(i) {
+    if ((i + 1) % 4 != 0 && i < 3) {
+        return "upCategory";
+    }
+    if ((i + 1) % 4 != 0 && i > 3 && i < 7) {
+        return "downCategory";
+    }
+    if (i == 3) {
+        return "lastCategory";
+    }
+}
+
+function selectCategory(e) {
+    var cat = $('#categories div');
+    $.each(cat, function (i) {
+        if (i == $(e).index()) {
+            $(this).addClass('activeCategory');
+        } else {
+            $(this).removeClass('activeCategory');
+        }
+    })
 }

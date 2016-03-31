@@ -48,7 +48,7 @@
             <span class="km-icon km-coment" style="font-size:22px;"></span>
         </div>
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center">
-            <span class="km-icon km-report" style="font-size:22px;"></span>
+            <span class="km-icon km-add-report" style="font-size:22px;"></span>
         </div>
     </div>
     <div class="photos-view" style="margin-top:10px;">
@@ -59,7 +59,7 @@
         </div>
         <div class="col-xs-12" style="text-align:center;background-color: #000;height: 8em;" onclick="takePhoto();">
             <div class="another-photo">
-                 <span class="km-icon km-plus" style="font-size:40px;top: 0.1em;"></span>
+                <span class="km-icon km-plus" style="font-size:40px;top: 0.1em;"></span>
             </div>
             <h3 style="color: #C9C9C9;">Добави друга снимка</h3>
         </div>
@@ -68,8 +68,15 @@
         <div id="map" style="width:100%;height:auto"></div>
     </div>
     <div class="comment-view">
-        <ul id="categories" style="list-style-type: none;">
-        </ul>
+        <h3>
+            Посочи категория на инцидента
+        </h3>
+        <div id="categories" style="height:11em;">
+        </div>
+        <h3 style="margin-top:3%;margin-bottom:3%;">
+            <span style="display: inline-block;margin-right: 0.5em;" class="km-icon km-bookmarks"></span>
+            Добави коментар
+        </h3>
         <textarea class="comment" style="width:100%;resize: none;" name="test" rows="10" placeholder="Моля, напишете коментар..."></textarea>
     </div>
     <div class="user-info-view">

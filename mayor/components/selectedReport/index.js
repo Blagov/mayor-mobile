@@ -13,7 +13,6 @@ app.selectedView = kendo.observable({
         var scrollView = $("#selectedReportView").data("kendoMobileScrollView");
         scrollView.setDataSource(ds);
         scrollView.refresh();
-		console.log(problemStatus);
         var html = "<h5> Време: #=dateFormat(data.CreatedAt)#</h5><h5>Категория: #=data.Category.Name# </h5><h5>Статус: #=status(data.Status)# </h5><h5>Последователи: #=getFollowers(data) #</h5><h5>Адрес: #=data.Address#</h5><h5>Потребител: #=data.Owner.DisplayName#</h5><h5>Организация:  #=data.Region#</h5><h5> Коментар: #=data.Comment#</h5>";
         var template = kendo.template(html);
         var result = template(report);
@@ -47,6 +46,7 @@ app.selectedView = kendo.observable({
                 }
                 renderFollowerButton(bool, id);
             }
+            changeStatusView(data.result.IsAdmin);
         }, function (err) {
             console.log(err.message + " Please log in.");
         });
@@ -73,7 +73,6 @@ function follow() {
             'Problem': report.Id
         },
         function (data) {
-            console.log('suc create');
             $('#follow').html('<a data-id="' + data.result.Id + '" onclick="unFollow();">UnFollow</a>');
         	$(".spinner").hide();
         },
@@ -81,7 +80,6 @@ function follow() {
             console.log(error);
         });
 }
-
 function unFollow() {
     $(".spinner").show();
     var params = getUrlParams(window.location.href);
@@ -92,7 +90,6 @@ function unFollow() {
             'Id': id 
         },
         function () {
-        	console.log('suc delete');
             $('#follow').html('<a onclick="follow();">Follow</a>');
         	$(".spinner").hide();
         },
@@ -102,4 +99,36 @@ function unFollow() {
 }
 function status(s){
     return problemStatus[s];
+}
+function changeStatusView(b){
+    if(b){
+        var params = getUrlParams(window.location.href);
+    	var report = app.reports[params.id];
+        var html = '<select onchange="changeStatus()">';
+        problemStatus.forEach(function(el, i){
+            if(report.Status == i){
+                 html += '<option value="'+ i +'" selected>'+ el +'</option>';
+            }else{
+                 html += '<option value="'+ i +'">'+ el +'</option>';
+            }
+           
+        });
+        html += '</select>';
+        $('#changeStatus').html(html);
+    }
+}
+function changeStatus(){
+    $(".spinner").show();
+    var i = $('#changeStatus select').val();
+    var el = app.data.mayorMobile;
+    var params = getUrlParams(window.location.href);
+    var report = app.reports[params.id];
+    var data = el.data('Problems');
+    data.updateSingle({ Id: report.Id, 'Status': i },
+    function(data){
+        $(".spinner").hide();
+    },
+    function(error){
+        console.log(error);
+    });
 }

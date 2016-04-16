@@ -8,7 +8,7 @@
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                transition: 'overlay',
+                transition: 'none',
                 skin: 'nova',
                 initial: 'components/home/view.html'
             });
@@ -28,7 +28,7 @@
 
     app.keepActiveState = function _keepActiveState(item) {
         var currentItem = item;
-        $('#navigation-container li.active').removeClass('active');
+        $('#navigation-container li a.active').removeClass('active');
         currentItem.addClass('active');
     };
 
@@ -42,8 +42,3 @@
         }
     };
 }());
-
-// START_CUSTOM_CODE_kendoUiMobileApp
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_kendoUiMobileApp

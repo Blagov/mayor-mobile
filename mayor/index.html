@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Mayor App</title>
     <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin,cyrillic,cyrillic-ext' rel='stylesheet' type='text/css'>
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet">
     <link href="styles/grid.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet">
@@ -29,9 +29,12 @@
     <div data-role="layout" data-id="main">
         <header data-role="header">
             <div data-role="tabstrip" id="navigation-container" data-select="selectMenu">
-                <a href="components/home/view.html" data-icon="flash"></a>
-                <a href="components/formView/view.html" data-icon="report"></a>
-                <a href="components/profileView/view.html" data-icon="settings"></a>
+                <a href="components/home/view.html" data-icon="icon-construction"></a>
+                <!--data-icon="flash"-->
+                <a href="components/formView/view.html" data-icon="icon-people"></a>
+                <!-- data-icon="report"-->
+                <a href="components/profileView/view.html" data-icon="icon-tool"></a>
+                <!--data-icon="settings"-->
             </div>
         </header>
     </div>
@@ -45,8 +48,8 @@
         <footer data-role="footer">
         </footer>
     </div>
-        <div class="spinner" style="display:none;">
-        <img style="position: absolute;top: 40%;left: 44%;"  width="60" height="60" src="images/temp/spinner.gif" alt="Loading" />
+    <div class="spinner" style="display:none;">
+        <img style="position: absolute;top: 40%;left: 44%;" width="60" height="60" src="images/temp/spinner.gif" alt="Loading" />
     </div>
 </body>
 

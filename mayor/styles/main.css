@@ -93,23 +93,6 @@
     color: #828282;
     margin-top: 0.5em;
 }
-#kendoUiMobileApp #navigation-container.km-tabstrip .km-button {
-    vertical-align: top;
-}
-#kendoUiMobileApp #navigation-container.km-tabstrip .km-button .km-text {
-    max-width: 100%;
-    word-wrap: break-word;
-}
-#kendoUiMobileApp #navigation-container .active {
-    background: #10c4b2;
-    color: #fff;
-}
-#kendoUiMobileApp #navigation-container .active:after {
-    color: #fff;
-}
-#kendoUiMobileApp.km-nova #navigation-container.km-tabstrip .km-button {
-    vertical-align: middle;
-}
 #kendoUiMobileApp.km-nova p {
     margin-left: 1rem;
     margin-right: 1rem;
@@ -141,49 +124,6 @@
     float: right;
     word-break: break-word;
 }
-#kendoUiMobileApp .circle-button {
-    height: 200px;
-    width: 200px;
-    border-radius: 50%;
-    border: solid 2px rgba(255, 255, 255, 0);
-    background-color: rgba(29, 132, 49, 0.3);
-    position: relative;
-    margin: 10% auto;
-}
-#kendoUiMobileApp .circle2-button {
-    height: 160px;
-    width: 160px;
-    background-color: rgba(251, 252, 251, 0.47);
-    position: relative;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0);
-    margin: 1.1em auto;
-}
-#kendoUiMobileApp .circle3-button {
-    height: 120px;
-    width: 120px;
-    background-color: rgba(183, 19, 19, 0.75);
-    position: relative;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0);
-    margin: 1.1em auto;
-}
-#kendoUiMobileApp .circle4-button {
-    height: 75px;
-    width: 75px;
-    background-color: rgba(0, 0, 0, 0.95);
-    position: relative;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0);
-    margin: 1.3em auto;
-}
-#kendoUiMobileApp .circle4-button p {
-    color: #fff;
-    font-size: 60px;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-weight: bolder;
-}
 #kendoUiMobileApp .middle {
     position: relative;
     margin-left: 27%;
@@ -203,9 +143,6 @@
 .km-nova .km-tabstrip {
     background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);
 }
-.km-nova .km-tabstrip .km-button {
-    color: #202C31;
-}
 .km-nova .km-tabstrip .km-button.km-state-active {
     background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);
 }
@@ -216,6 +153,477 @@
     width: 100%;
     height: auto
 }
+.spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #302929;
+    opacity: 0.3;
+    z-index: 3;
+}
+
+.photos-view h3 {
+    text-align: center;
+    height: 2em;
+    margin: 1em uto;
+    margin-top: 1em;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 500;
+}
+.km-pages {
+    display: none;
+}
+.another-photo {
+    color: #C9C9C9;
+    height: 4em;
+    width: 4em;
+    border-radius: 50%;
+    border: solid 2px #C9C9C9;
+    margin: 1em auto;
+}
+.comment-view h3 {
+    text-align: center;
+    font-size: 18px;
+    font-family: inherit;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+#categories .km-icon:after,
+#categories .km-icon:before {
+    height: 40%;
+}
+.upCategory {
+    border-bottom: double 0.1em #656565;
+    border-right: double 0.1em #656565;
+}
+.downCategory {
+    border-right: double 0.1em #656565;
+}
+.lastCategory {
+    border-bottom: double 0.1em #656565;
+}
+#categories div {
+    padding: 10px;
+    background-color: rgb(31, 31, 31);
+    height: 5.5em;
+}
+#categories span {
+    color: white;
+    text-align: center;
+}
+#categories h5 {
+    margin-top: -0.3em;
+    color: white;
+    text-align: center;
+}
+#categories div.activeCategory {
+    background-color: rgb(207, 32, 32);
+}
+#categories div.activeCategory span {
+    color: black;
+}
+#categories div.activeCategory h5 {
+    color: black;
+}
+
+
+
+
+
+
+/* START_CUSTOM_CODE_kendoUiMobileApp */
+
+/* Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes */
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+body {
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*LAYOUT*/
+#navigation-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#navigation-container,
+.reports-nav {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.reports-nav {
+    padding-top: 10px;
+}
+/*end LAYOUT*/
+
+
+/*NAV*/
+#navigation-container .km-button,
+#navigation-container .km-button .km-icon {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+#navigation-container .km-button .km-icon,
+#navigation-container .km-button.km-state-active .km-icon {
+    font-size: 64px;
+}
+#navigation-container .km-button .km-icon {
+    color: #7b7b7b;
+}
+#navigation-container .km-button.km-state-active .km-icon {
+    color: #000000;
+}
+/*end NAV*/
+
+
+/*HOME VIEW*/
+.reports-nav {
+    width: 100%;
+}
+#reports.km-buttongroup {
+    margin: 0 auto 20px auto;
+    padding: 0;
+    width: 100%;
+}
+#reports.km-buttongroup .km-button {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    height: 70px;
+    border: 1px solid #333333;
+    color: #333333;
+    font-size: 2em;
+    line-height: 1em;
+    letter-spacing: 1px;
+}
+#reports.km-buttongroup .km-button:first-child {
+    border-top-left-radius: 43%;
+    border-bottom-left-radius: 43%;
+}
+#reports.km-buttongroup .km-button:last-child {
+    border-top-right-radius: 43%;
+    border-bottom-right-radius: 43%;
+}
+#reports .km-state-active {
+    background-color: #333333;
+}
+#reports .km-state-active .km-text {
+    color: #ffffff;
+}
+#import-reports {}
+.listview-item {
+    position: relative;
+    overflow: hidden;
+}
+.listview-item .item-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.listview-item .profile-img {
+    z-index: 1;
+    position: absolute;
+    top: 20px;
+    left: 2%;
+    width: 78px;
+    height: 78px;
+    overflow: hidden;
+    background-color: #ffffff;
+    border: 3px solid #ffffff;
+    -webkit-border-radius: 78px;
+    -moz-border-radius: 78px;
+    -ms-border-radius: 78px;
+    -o-border-radius: 78px;
+    border-radius: 78px;
+}
+.listview-item .profile-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.listview-item .box-top-right {
+    z-index: 1;
+    position: absolute;
+    top: 20px;
+    right: 2%;
+}
+.listview-item .report-date,
+.listview-item .report-followers {
+    float: right;
+    white-space: nowrap;
+    clear: both;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    color: #ffffff;
+    line-height: 1.2em;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+}
+.listview-item .report-date {
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+.listview-item .report-date .km-icon-clock {
+    margin-right: 10px;
+    line-height: 1em;
+    vertical-align: top;
+}
+.listview-item .report-followers {
+    font-size: 1.5em;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.listview-item .report-followers .icon-follower {
+    margin-right: 10px;
+}
+.listview-item .ad-category-info {
+    z-index: 1;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    min-height: 78px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0px 2%;
+}
+.listview-item .ad-category-info .address {
+    float: left;
+    color: #ffffff;
+    font-size: 1.6em;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 35px 85px 35px 0;
+}
+.listview-item .ad-category-info .address .km-icon-pinmap {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    padding-right: 10px;
+}
+.listview-item .ad-category-info .category {
+    position: absolute;
+    right: 2%;
+    top: 10px;
+}
+.listview-item .ad-category-info .category .km-button {
+    display: block;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    background-color: #ff6b6b;
+    width: 78px;
+    height: 78px;
+    border: 3px solid #ffffff;
+    color: #000000;
+    text-align: center;
+    -webkit-border-radius: 78px;
+    -moz-border-radius: 78px;
+    -ms-border-radius: 78px;
+    -o-border-radius: 78px;
+    border-radius: 78px;
+}
+.listview-item .ad-category-info .category .km-icon {
+    top: -2px;
+    display: block;
+    margin: auto;
+    color: #000000;
+    font-size: 78px;
+}
+/*end HOME VIEW*/
+
+
+/*FORM VIEW*/
+.start-report-view {text-align:center;}
+.start-report-view .fullscreen {}
+.start-report-view .fullscreen .fullscr-top {}
+.start-report-view .fullscreen .fullscr-middle {}
+.start-report-view .fullscreen .fullscr-bottom {}
+
+.start-report-view h3 {
+    display:inline-block;
+    width:auto;
+    margin: 0 auto 1em auto;
+    padding: 5px 5px 10px 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align:center;
+    font-size: 2em;
+    line-height:1em;
+    font-weight: normal;
+    border-top-right-radius: 15%;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    border-bottom-left-radius: 15%;
+}
+.start-report-view .circle-button {
+    position: relative;
+    display: block;
+    margin: auto;
+    height: 410px;
+    width: 410px;
+    text-align: center;
+    border-radius: 100%;
+    border: 0px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#dcdcdd+0,dcdcdd+48,aebfaf+49,aebfaf+100&0.75+0,0.75+100 */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(211, 212, 217, 0.75) 0%, rgba(211, 212, 217, 0.75) 52.9%, rgba(48, 107, 52, 0.30) 53%, rgba(48, 107, 52, 0.30) 100%);
+    /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(211, 212, 217, 0.75) 0%, rgba(211, 212, 217, 0.75) 52.9%, rgba(48, 107, 52, 0.75) 53%, rgba(48, 107, 52, 0.30) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(211, 212, 217, 0.75) 0%, rgba(211, 212, 217, 0.75) 52.9%, rgba(48, 107, 52, 0.30) 53%, rgba(48, 107, 52, 0.30) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#bfdcdcdd', endColorstr='#bfaebfaf', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+}
+.start-report-view .circle-button div {
+    position:absolute;top:25%;left:0;right:0;
+    margin: auto;
+    display: block;
+    height: 50%;
+    width: 50%;
+    border-radius: 100%;
+    text-align: center;
+    font-size:2em;
+    line-height: 100%;
+    vertical-align: middle;
+    color: #ffffff;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+25,b2162a+25,b2162a+100 */
+    background: rgb(0, 0, 0);
+    /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 37.9%, rgba(178, 22, 42, 1) 38%, rgba(178, 22, 42, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 37.9%, rgba(178, 22, 42, 1) 38%, rgba(178, 22, 42, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 37.9%, rgba(178, 22, 42, 1) 38%, rgba(178, 22, 42, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#b2162a', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+}
+
+
+.steps-view {
+    height: 3em;
+    display: block;
+    background-color: rgb(137, 137, 137);
+}
+
+
+
+/*end FORM VIEW*/
+
+
+
+
+@media screen and (max-width: 480px) {
+    .listview-item .profile-img {}
+}
+
+
+
+
+
+
+/*FONT ICONS*/
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?5irnf1');
+    src: url('fonts/icomoon.eot?5irnf1#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?5irnf1') format('truetype'), url('fonts/icomoon.woff?5irnf1') format('woff'), url('fonts/icomoon.svg?5irnf1#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.km-icon {
+    display: inline;
+    width: auto;
+    height: auto;
+}
+.km-icon:after,
+.km-icon:before {
+    font: 1em/1em "icomoon";
+    text-align: center;
+    display: inline;
+}
+.km-icon:before {
+    display: none;
+}
+.km-icon-animals:after {
+    content: "\e904";
+}
+.km-icon-criminal:after {
+    content: "\e908";
+}
+.km-icon-malfunction:after {
+    content: "\e909";
+}
+.km-icon-noise:after {
+    content: "\e90a";
+}
+.km-icon-others:after {
+    content: "\e90b";
+}
+.km-icon-parking:after {
+    content: "\e90c";
+}
+.km-icon-photo:after {
+    content: "\e90d";
+}
+.km-icon-pollution:after {
+    content: "\e90e";
+}
+.km-icon-back:after {
+    content: "\e900";
+}
+.km-icon-construction:after {
+    content: "\e901";
+}
+.km-icon-people:after {
+    content: "\e902";
+}
+.km-icon-pin:after {
+    content: "\e903";
+}
+.km-icon-tool:after {
+    content: "\e905";
+}
+.km-icon-transport:after {
+    content: "\e906";
+}
+.km-icon-write:after {
+    content: "\e907";
+}
+.km-icon-comment:after {
+    content: "\e90f";
+}
+.km-icon-clock:after {
+    content: "\e910";
+}
+.km-icon-pinmap:after {
+    content: "\e911";
+}
+.km-icon-plus:after {
+    content: "\e912";
+}
+.km-icon-arrow-left:after {
+    content: "\e913";
+}
+.km-icon-arrow-right:after {
+    content: "\e914";
+}
+.km-icon-circle-plus:after {
+    content: "\e915";
+}
+
+
+/*
+
 #kendoUiMobileApp .km-arrow-n:after,
 #kendoUiMobileApp .km-arrow-n:before {
     content: "\e317";
@@ -293,219 +701,8 @@
 #kendoUiMobileApp .km-others:before {
     content: "\e082"
 }
-#reports .km-state-active {
-    background-color: #4C4C4C;
-}
-#reports .km-button {
-    width: 10em;
-    height: 2.7em;
-}
-.ad-category-info {
-    background-color: rgba(27, 27, 27, 0.5);
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    bottom: 0px;
-    display: inline-block;
-}
-.report-info {
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    position: relative;
-}
-.ad-category-info img {
-    margin-top: 15px;
-    margin-left: 10px;
-    display: inline-block;
-    margin-right: 3px;
-}
-.ad-category-info p {
-    display: inline-block;
-    color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    font-family: sans-serif;
-}
-.report-date {
-    position: absolute;
-    display: inline-block;
-    right: 0px;
-    top: 3px;
-}
-.report-date p {
-    display: inline-block;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: sans-serif;
-    font-style: normal;
-}
-.report-date img {
-    display: inline-block;
-    position: relative;
-    top: 2px;
-    margin-right: 2px;
-}
-.report-followers {
-    display: inline-block;
-    height: 26px;
-    width: 50px;
-    background-color: rgba(27, 27, 27, 0.5);
-    border-radius: 3px;
-    text-align: center;
-    position: absolute;
-    right: 10px;
-    top: 13%;
-}
-.report-followers p {
-    display: inline-block;
-    color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    font-family: sans-serif;
-}
-.report-followers img {
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    margin-right: 3px;
-}
-.profile-image {
-    display: inline-block;
-    border-radius: 3px;
-    position: absolute;
-    top: 1%;
-    left: 2%;
-}
-.spinner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #302929;
-    opacity: 0.3;
-    z-index: 3;
-}
-.km-nova .km-tabstrip .km-state-active .km-icon {
-    font-size: 2rem;
-}
-.km-nova .km-tabstrip .km-icon {
-    font-size: 1.2rem;
-}
-.reportHeader h3 {
-    background-color: rgba(0, 0, 0, 0.5);
-    margin-right: 22%;
-    margin-left: 22%;
-    color: #fff;
-    font-weight: 500;
-    font-family: initial;
-    font-size: 18px;
-    font-style: normal;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    border-top-right-radius: 15%;
-    border-top-left-radius: 15%;
-    border-bottom-right-radius: 15%;
-    border-bottom-left-radius: 15%;
-}
-#cityInfo h3 {
-    background-color: rgba(0, 0, 0, 0.5);
-    margin-right: 22%;
-    margin-left: 22%;
-    color: #fff;
-    font-weight: 500;
-    font-family: initial;
-    font-size: 18px;
-    font-style: normal;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    border-top-right-radius: 15%;
-    border-top-left-radius: 15%;
-    border-bottom-right-radius: 15%;
-    border-bottom-left-radius: 15%;
-    text-align: center;
-    margin-top: 40%;
-}
-.reportState h3 {
-    background-color: rgba(0, 0, 0, 0.5);
-    margin-right: 30%;
-    margin-left: 30%;
-    color: #fff;
-    font-weight: 500;
-    font-family: initial;
-    font-size: 18px;
-    font-style: normal;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    border-top-right-radius: 15%;
-    border-top-left-radius: 15%;
-    border-bottom-right-radius: 15%;
-    border-bottom-left-radius: 15%;
-}
-.photos-view h3 {
-    text-align: center;
-    height: 2em;
-    margin: 1em uto;
-    margin-top: 1em;
-    font-family: inherit;
-    font-style: normal;
-    font-weight: 500;
-}
-.km-pages {
-    display: none;
-}
-.another-photo {
-    color: #C9C9C9;
-    height: 4em;
-    width: 4em;
-    border-radius: 50%;
-    border: solid 2px #C9C9C9;
-    margin: 1em auto;
-}
-.comment-view h3 {
-    text-align: center;
-    font-size: 18px;
-    font-family: inherit;
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-#categories .km-icon:after,
-#categories .km-icon:before {
-    height: 40%;
-}
-.upCategory {
-    border-bottom: double 0.1em #656565;
-    border-right: double 0.1em #656565;
-}
-.downCategory {
-    border-right: double 0.1em #656565;
-}
-.lastCategory {
-    border-bottom: double 0.1em #656565;
-}
-#categories div {
-    padding: 10px;
-    background-color: rgb(31, 31, 31);
-    height: 5.5em;
-}
-#categories span {
-    color: white;
-    text-align: center;
-}
-#categories h5 {
-    margin-top: -0.3em;
-    color: white;
-    text-align: center;
-}
-#categories div.activeCategory {
-    background-color: rgb(207, 32, 32);
-}
-#categories div.activeCategory span {
-    color: black;
-}
-#categories div.activeCategory h5 {
-    color: black;
-}
+*/
+/*end FONT ICONS*/
+
+
+/* END_CUSTOM_CODE_kendoUiMobileApp */

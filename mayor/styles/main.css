@@ -442,9 +442,9 @@ body {
 
 
 /*FORM VIEW*/
-.start-report-view {text-align:center;}
-.start-report-view .fullscreen {}
-.start-report-view .fullscreen .fullscr-top {}
+.start-report-view {}
+.start-report-view .fullscreen {text-align:center;}
+.start-report-view .fullscreen .fullscr-top {padding:4% 2% 2% 2%; }
 .start-report-view .fullscreen .fullscr-middle {}
 .start-report-view .fullscreen .fullscr-bottom {}
 

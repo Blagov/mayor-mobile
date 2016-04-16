@@ -1,38 +1,30 @@
 <div id="report-view" data-role="view" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow" data-after-show="app.formView.afterShow">
-    
     <div class="start-report-view">
         <div class="fullscreen">
-            
-            <div class="fullscr-top">
-                <h3>Докладвай нередност</h3>
+            <div class="fullscr-row">
+                <div class="fullscr-top">
+                    <h3>Докладвай нередност</h3>
+                </div>
             </div>
-            <div class="fullscr-middle">
-                <div class="circle-button" onclick="takePhoto();">
-                    <div>
-                        <span class="km-icon km-icon-plus"></span>
+            <div class="fullscr-row">
+                <div class="fullscr-middle">
+                    <div class="circle-button" onclick="takePhoto();">
+                        <div>
+                            <span class="km-icon km-icon-plus"></span>
+                        </div>
                     </div>
-                    <!--div class="circle2-button">
-                            <div class="circle3-button">
-                                <div class="circle4-button">
-                                    <p>
-                                        +
-                                    </p>
-                                </div>
-                            </div>
-                        </div-->
                 </div>
             </div>
-            <div class="fullscr-bottom">
-                <h3>Отговорен орган:</h3>
-                <div>
+            <div class="fullscr-row">
+                <div class="fullscr-bottom">
+                    <h3>Отговорен орган:</h3>
                     <img src="images/temp/sofia.png">
-                </div>
-                <div id="cityInfo">
+                    <div id="cityInfo">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
     <div class="steps-view">
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center;">
             <span class="km-icon km-camera"></span>

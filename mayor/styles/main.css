@@ -443,15 +443,16 @@ body {
 
 /*FORM VIEW*/
 .start-report-view {}
-.start-report-view .fullscreen {text-align:center;}
-.start-report-view .fullscreen .fullscr-top {padding:4% 2% 2% 2%; }
+.start-report-view .fullscreen {text-align:center;display:table;height:100px;width:100%;border:1px solid lime;}
+.start-report-view .fullscreen .fullscr-row {display:table-row;}
+.start-report-view .fullscreen .fullscr-top {padding:4% 2% 6% 2%; }
 .start-report-view .fullscreen .fullscr-middle {}
 .start-report-view .fullscreen .fullscr-bottom {}
 
 .start-report-view h3 {
     display:inline-block;
     width:auto;
-    margin: 0 auto 1em auto;
+    margin: 0 auto;
     padding: 5px 5px 10px 5px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
@@ -507,6 +508,9 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#b2162a', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
 }
+
+#cityInfo {}
+
 
 
 .steps-view {

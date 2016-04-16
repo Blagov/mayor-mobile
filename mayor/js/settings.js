@@ -1,7 +1,3 @@
-/**
- * Application Settings
- */
-
 var appSettings = {
 
     everlive: {

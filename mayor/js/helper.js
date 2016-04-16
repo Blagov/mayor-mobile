@@ -20,7 +20,7 @@ function dateFormat(date) {
     if (days > 0 && hours == 0) {
         days == 1 ? string += days + " ден" : string += days + " дни";
     } else if (days > 0 && hours > 0) {
-        days == 1 ? string += days + " ден, " : string += days + " дни, ";
+        days == 1 ? string += days + " ден, " : string += days + " дни, "; 
     }
     if (hours > 0) {
         hours == 1 ? string += hours + " час" : string += hours + " часа";

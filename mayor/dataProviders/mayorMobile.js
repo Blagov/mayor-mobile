@@ -1,9 +1,10 @@
+
 'use strict';
 
 (function() {
     var provider = app.data.mayorMobile = new Everlive({
             offlineStorage: true,
-            appId: 'phzo3e68n6fw2umk',
+            appId: '33yxnxr2hb8476xc',
             scheme: 'https',
             authentication: {
                 persist: true
@@ -96,8 +97,3 @@
     window.setTimeout(_readyTimeout, 2000);
 
 }());
-
-// START_CUSTOM_CODE_mayorMobile
-// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-
-// END_CUSTOM_CODE_mayorMobile

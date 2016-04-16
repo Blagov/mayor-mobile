@@ -1,22 +1,20 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {
-		removeStartReportView();
-    },
-    afterShow: function () {}
+    onShow: function() {},
+    afterShow: function() {}
 });
 
 // START_CUSTOM_CODE_authenticationView
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
 
 // END_CUSTOM_CODE_authenticationView
-(function (parent) {
+(function(parent) {
     var provider = app.data.mayorMobile,
         mode = 'signin',
-        registerRedirect = 'formView',
-        signinRedirect = 'formView',
-        init = function (error) {
+        registerRedirect = 'home',
+        signinRedirect = 'home',
+        init = function(error) {
             if (error) {
                 if (error.message) {
                     alert(error.message);
@@ -31,13 +29,24 @@ app.authenticationView = kendo.observable({
             } else {
                 $(activeView).show().siblings().hide();
             }
+
         },
-        successHandler = function (data) {
-            var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
+        successHandler = function(data) {
+            var redirect = mode === 'signin' ? signinRedirect : registerRedirect,
+                model = parent.authenticationViewModel || {},
+                logout = model.logout;
+
+            if (logout) {
+                model.set('logout', null);
+            }
             if (data && data.result) {
+                if (logout) {
+                    provider.Users.logout(init, init);
+                    return;
+                }
                 app.user = data.result;
 
-                setTimeout(function () {
+                setTimeout(function() {
                     app.mobileApp.navigate('components/' + redirect + '/view.html');
                 }, 0);
             } else {
@@ -48,7 +57,7 @@ app.authenticationView = kendo.observable({
             displayName: '',
             email: '',
             password: '',
-            validateData: function (data) {
+            validateData: function(data) {
                 if (!data.email) {
                     alert('Missing email');
                     return false;
@@ -61,7 +70,7 @@ app.authenticationView = kendo.observable({
 
                 return true;
             },
-            signin: function () {
+            signin: function() {
                 var model = authenticationViewModel,
                     email = model.email.toLowerCase(),
                     password = model.password;
@@ -71,7 +80,7 @@ app.authenticationView = kendo.observable({
                 }
                 provider.Users.login(email, password, successHandler, init);
             },
-            register: function () {
+            register: function() {
                 var model = authenticationViewModel,
                     email = model.email.toLowerCase(),
                     password = model.password,
@@ -85,63 +94,24 @@ app.authenticationView = kendo.observable({
                     return false;
                 }
 
-                //provider.Users.register(email, password, attrs, successHandler, init);
-
-                provider.Users.register(email,
-                    password,
-                    attrs,
-                    function (data) {
-                        //alert(JSON.stringify(data));
-                        el.authentication.login(email, // username
-                            password, // password
-                            function (data) {
-                                //alert(JSON.stringify(data));
-                                app.mobileApp.navigate('components/formView/view.html');
-                            },
-                            function (error) {
-                                //alert(JSON.stringify(error));
-                            });
-                    },
-                    function (error) {
-                        //alert(JSON.stringify(error));
-                    });
+                provider.Users.register(email, password, attrs, successHandler, init);
             },
-            toggleView: function () {
+            toggleView: function() {
                 mode = mode === 'signin' ? 'register' : 'signin';
                 init();
-            },
-            loginWithFacebook: function () {
-                var facebookConfig = {
-                    name: 'Facebook',
-                    loginMethodName: 'loginWithFacebook',
-                    endpoint: 'https://www.facebook.com/dialog/oauth',
-                    response_type: 'token',
-                    client_id: appSettings.facebook.appId,
-                    redirect_uri: appSettings.facebook.redirectUri,
-                    access_type: 'online',
-                    scope: 'email',
-                    display: 'touch'
-                };
-
-                var facebook = new IdentityProvider(facebookConfig);
-
-                facebook.getAccessToken(function (accessToken) {
-                    Everlive.$.Users.loginWithFacebook(accessToken,
-                        function (success) {
-                            //alert(JSON.stringify(data));
-                            app.mobileApp.navigate('components/formView/view.html');
-                        },
-                        function (error) {
-                            //alert(JSON.stringify(error));
-                        }
-                    );
-
-                });
             }
         });
 
     parent.set('authenticationViewModel', authenticationViewModel);
-    parent.set('afterShow', function () {
+    parent.set('afterShow', function(e) {
+        if (e && e.view && e.view.params && e.view.params.logout) {
+            authenticationViewModel.set('logout', true);
+        }
         provider.Users.currentUser().then(successHandler, init);
     });
 })(app.authenticationView);
+
+// START_CUSTOM_CODE_authenticationViewModel
+// Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
+
+// END_CUSTOM_CODE_authenticationViewModel

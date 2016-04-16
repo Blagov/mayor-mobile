@@ -3,7 +3,7 @@
 (function() {
     var provider = app.data.mayorMobile = new Everlive({
             offlineStorage: true,
-            appId: '33yxnxr2hb8476xc',
+            appId: 'phzo3e68n6fw2umk',
             scheme: 'https',
             authentication: {
                 persist: true

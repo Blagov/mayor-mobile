@@ -76,5 +76,9 @@
   "navigation": "tabstrip",
   "view": "home",
   "transition": "overlay",
-  "skin": "nova"
+  "showMoreTab": false,
+  "skin": "nova",
+  "skinMainColor": "#32364c",
+  "skinTextColor": "#ffffff",
+  "skinAccentColor": "#ff4350"
 }

@@ -8,7 +8,7 @@
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
-                transition: 'none',
+                transition: 'overlay',
                 skin: 'nova',
                 initial: 'components/home/view.html'
             });
@@ -28,7 +28,7 @@
 
     app.keepActiveState = function _keepActiveState(item) {
         var currentItem = item;
-        $('#navigation-container li a.active').removeClass('active');
+        $('#navigation-container li.active').removeClass('active');
         currentItem.addClass('active');
     };
 

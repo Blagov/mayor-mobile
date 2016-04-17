@@ -1,42 +1,54 @@
 <div id="report-view" data-role="view" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow" data-after-show="app.formView.afterShow">
     <div class="start-report-view">
-        <div class="fullscreen">
-            <div class="fullscr-row">
-                <div class="fullscr-top">
-                    <h3>Докладвай нередност</h3>
-                </div>
+        <div class="container">
+            <div class="col-xs-12 reportHeader" style="text-align:center;">
+                <h3>
+                      Докладвай нередност
+                </h3>
             </div>
-            <div class="fullscr-row">
-                <div class="fullscr-middle">
-                    <div class="circle-button" onclick="takePhoto();">
-                        <div>
-                            <span class="km-icon km-icon-plus"></span>
+            <div class="col-xs-12" style="text-align:center;">
+                <div class="circle-button" onclick="takePhoto();">
+                    <div class="circle2-button">
+                        <div class="circle3-button">
+                            <div class="circle4-button">
+                                <p>
+                                    +
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="fullscr-row">
-                <div class="fullscr-bottom">
-                    <h3>Отговорен орган:</h3>
-                    <img src="images/temp/sofia.png">
-                    <div id="cityInfo">
-                    </div>
-                </div>
+        </div>
+        <div class="container" style="">
+            <div class="col-xs-12 reportState" style="text-align:center;">
+                <h3>
+                      Отговорен орган:
+                </h3>
+            </div>
+        </div>
+        <div class="container" style="">
+            <div class="col-xs-4">
+                <img src="images/temp/sofia.png" width="100%" style="margin-left: 2em;margin-top: 15%;">
+            </div>
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-6" id="cityInfo">
             </div>
         </div>
     </div>
-    <div class="steps-view">
+    <div class="steps-view" style="height: 3em;display: block;background-color: rgb(137, 137, 137);">
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center;">
-            <span class="km-icon km-camera"></span>
+            <span class="km-icon km-camera" style="font-size:22px;"></span>
         </div>
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center">
-            <span class="km-icon km-location"></span>
+            <span class="km-icon km-location" style="font-size:22px;"></span>
         </div>
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center">
-            <span class="km-icon km-coment"></span>
+            <span class="km-icon km-coment" style="font-size:22px;"></span>
         </div>
         <div class="col-xs-3" style="height: 100%; padding-top: 0.6em; text-align:center">
-            <span class="km-icon km-add-report"></span>
+            <span class="km-icon km-add-report" style="font-size:22px;"></span>
         </div>
     </div>
     <div class="photos-view" style="margin-top:10px;">

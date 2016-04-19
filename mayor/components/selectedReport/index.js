@@ -45,8 +45,8 @@ app.selectedView = kendo.observable({
                     })
                 }
                 renderFollowerButton(bool, id);
+                changeStatusView(data.result.IsAdmin);
             }
-            changeStatusView(data.result.IsAdmin);
         }, function (err) {
             console.log(err.message + " Please log in.");
         });
@@ -114,21 +114,23 @@ function changeStatusView(b){
            
         });
         html += '</select>';
-        $('#changeStatus').html(html);
+        $('#ts-changeStatus').html(html);
     }
 }
 function changeStatus(){
     $(".spinner").show();
-    var i = $('#changeStatus select').val();
+    var i = $('#ts-changeStatus select').val();
     var el = app.data.mayorMobile;
     var params = getUrlParams(window.location.href);
     var report = app.reports[params.id];
     var data = el.data('Problems');
     data.updateSingle({ Id: report.Id, 'Status': i },
     function(data){
+        //alert(JSON.stringify(data));
         $(".spinner").hide();
     },
     function(error){
+        //alert(JSON.stringify(error));
         console.log(error);
     });
 }

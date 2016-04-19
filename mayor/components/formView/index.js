@@ -56,6 +56,7 @@ app.formView = kendo.observable({
             sendData.pcategory = $(".activeCategory").data('id');
             sendData.comment = $(".comment").val();
             var data = app.data.mayorMobile.data('Problems');
+            var loc  = sendData.state;
             data.create({
                     Comment: sendData.comment,
                     Region: sendData.state,
@@ -69,6 +70,7 @@ app.formView = kendo.observable({
                 },
                 function (data) {
                     var images = app.data.mayorMobile.data('Images');
+                	$(".comment").val('');
                     sendData.files.forEach(function (img, i) {
                         var file = {
                             "Filename": "image.jpg",
@@ -116,6 +118,49 @@ app.formView = kendo.observable({
                 },
                 function (error) {
                     console.log(error);
+                });
+			
+            var query = new Everlive.Query();
+            query.where()
+                 .and()
+                 .eq('Location', loc)
+                 .eq('IsAdmin', true)
+                 .done();
+            app.data.mayorMobile.Users.get(query) // filter
+                .then(function(data){
+                   var mail = [];
+                   var res  = data.result;
+                   res.forEach(function(e){
+                       mail.push(e.Email);
+                   })	
+                   if(mail.length > 0){
+                   	var attributes = {
+                        "Recipients": mail,
+                        "Context": {
+                            "CustomSubject": "Събщение1",
+                            "PromoCode": "Събщение2",
+                            "SpecialOffer": "Събщение3"
+                        }
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: 'http://api.everlive.com/v1/Metadata/Applications/33yxnxr2hb8476xc/EmailTemplates/c5d931f0-061e-11e6-80ea-91fe95cad1d9/send',
+                        contentType: "application/json",
+                        headers: {
+                            "Authorization": "Masterkey hLWn4GL3doUyLxdDLVwrfAmsU7GML6xg"
+                        },
+                        data: JSON.stringify(attributes),
+                        success: function(data) {
+                            alert("Email successfully sent.");
+                        },
+                        error: function(error) {
+                            alert(JSON.stringify(error));
+                        }
+                    })
+                   }
+                },
+                function(error){
+                    alert(JSON.stringify(error));
                 });
         }
     });

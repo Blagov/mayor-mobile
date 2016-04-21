@@ -1,5 +1,12 @@
-var appSettings = {
-
+var user    = {};
+var reports = {
+    arround: [],
+    last:	[]
+};
+var problemStatus = ["В процес на одобрение", "В процес на работа", "Завършен"];
+var switchView = 0;
+var scrollBool = true;
+var appSettings   = {
     everlive: {
         appId: app.data.mayorMobile.appId, // Put your Backend Services API key here
         scheme: 'http'

@@ -28,7 +28,6 @@ app.formView = kendo.observable({
         startReportView(e);
         height = e.view.content[0].clientHeight;
         views.active = null;
-        checkLogin();
         initializeViews();
         cityInfo("cityInfo");
     }
@@ -85,8 +84,6 @@ app.formView = kendo.observable({
                                     },
                                     function (img) {
                                         if (i == sendData.files.length - 1) {
-                                            alert("Успех!");
-                                            app.mobileApp.navigate('components/home/view.html');
                                             items = {
                                                 data: [],
                                                 pageSize: 0
@@ -103,6 +100,45 @@ app.formView = kendo.observable({
                                                 files: [],
                                                 address: null
                                             }
+                                            app.mobileApp.navigate('components/home/view.html');
+                                            // setTimeout(function(data,switchView, reports, app)
+                                            // {    
+                                            //     var filter = new Everlive.Query();
+                                            //     var el = app.data.mayorMobile;
+                                            //     var query = el.data('Problems');
+                                            //     filter.where().eq('Id', data.result.Id);
+                                            //     query.withHeaders({
+                                            //             'X-Everlive-Expand': {
+                                            //                 "Category": {
+                                            //                     "TargetTypeName": "Problems"
+                                            //                 },
+                                            //                 "Owner": {
+                                            //                     "TargetTypeName": "Problems"
+                                            //                 },
+                                            //                 "Followers.Problem": {
+                                            //                     "ReturnAs": "Followers"
+                                            //                 },
+                                            //                 "Images.Problem": {
+                                            //                     "ReturnAs": "Images",
+                                            //                     "Fields": {
+                                            //                         "Url": 1,
+                                            //                         "Problem": 0
+                                            //                     }
+                                            //                 }
+
+                                            //             }
+                                            //         })
+                                            //         .get(filter)
+                                            //         .then(function (data) {
+                                            //                 reports.arround.unshift(data.result[0]);
+                                            //                 reports.arround.unshift(data.result[0]);
+                                            //                 app.mobileApp.navigate('components/home/view.html');
+                                            //             },
+                                            //             function (error) {
+                                            //                 console.log(error, null);
+                                            //             });
+
+                                            // }, 500, data, switchView, reports, app);
 
                                         }
                                     },
@@ -167,13 +203,14 @@ app.formView = kendo.observable({
     parent.set('formViewModel', formViewModel);
 })(app.formView);
 
-function checkLogin() {
+function checkLogin(e) {
     el.Users.currentUser(function (data) {
         if (data.result) {
             var username = data.result.DisplayName;
             //console.log(data);
             //alert(username + " is logged in!");
         } else {
+            e.preventDefault();
             app.mobileApp.navigate('components/authenticationView/view.html');
         }
     }, function (err) {

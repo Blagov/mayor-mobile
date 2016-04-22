@@ -8,11 +8,7 @@ class Geolocation {
 
     getLocation(cb) {
 
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 6 * 1000,
-            maximumAge: 0
-        };
+        var options = { maximumAge: 30000, timeout: 500000, enableHighAccuracy: true };
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 cb(position, null);

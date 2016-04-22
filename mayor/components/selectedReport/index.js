@@ -14,7 +14,6 @@ app.selectedView = kendo.observable({
             data: report.Images,
             pageSize: 0
         };
-        
         var height = screen.width;
    		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/33yxnxr2hb8476xc/resize=w:'+height+'/'+items.data[0].Url;
         
@@ -39,6 +38,7 @@ app.selectedView = kendo.observable({
                 }
             }
         }).currentUser(function (data) {
+            console.log(data);
             if (data.result != null) {
                 var bool = false;
                 var id = '';

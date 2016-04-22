@@ -1,6 +1,6 @@
 'use strict';
 
-var height;
+var height, city;
 var el = app.data.mayorMobile;
 var items = {
     data: [],
@@ -25,10 +25,11 @@ var sendData = {
 }
 app.formView = kendo.observable({
     onShow: function (e) {
+        city = null;
         startReportView(e);
         height = e.view.content[0].clientHeight;
         views.active = null;
-        initializeViews();
+        initializeViews(); 
         cityInfo("cityInfo");
     }
 });
@@ -52,6 +53,8 @@ app.formView = kendo.observable({
         },
         send: function () {
             $(".spinner").show();
+            $(".comment").val('');
+            city = null;
             sendData.pcategory = $(".activeCategory").data('id');
             sendData.comment = $(".comment").val();
             var data = app.data.mayorMobile.data('Problems');
@@ -69,7 +72,6 @@ app.formView = kendo.observable({
                 },
                 function (data) {
                     var images = app.data.mayorMobile.data('Images');
-                	$(".comment").val('');
                     sendData.files.forEach(function (img, i) {
                         var file = {
                             "Filename": "image.jpg",
@@ -101,45 +103,6 @@ app.formView = kendo.observable({
                                                 address: null
                                             }
                                             app.mobileApp.navigate('components/home/view.html');
-                                            // setTimeout(function(data,switchView, reports, app)
-                                            // {    
-                                            //     var filter = new Everlive.Query();
-                                            //     var el = app.data.mayorMobile;
-                                            //     var query = el.data('Problems');
-                                            //     filter.where().eq('Id', data.result.Id);
-                                            //     query.withHeaders({
-                                            //             'X-Everlive-Expand': {
-                                            //                 "Category": {
-                                            //                     "TargetTypeName": "Problems"
-                                            //                 },
-                                            //                 "Owner": {
-                                            //                     "TargetTypeName": "Problems"
-                                            //                 },
-                                            //                 "Followers.Problem": {
-                                            //                     "ReturnAs": "Followers"
-                                            //                 },
-                                            //                 "Images.Problem": {
-                                            //                     "ReturnAs": "Images",
-                                            //                     "Fields": {
-                                            //                         "Url": 1,
-                                            //                         "Problem": 0
-                                            //                     }
-                                            //                 }
-
-                                            //             }
-                                            //         })
-                                            //         .get(filter)
-                                            //         .then(function (data) {
-                                            //                 reports.arround.unshift(data.result[0]);
-                                            //                 reports.arround.unshift(data.result[0]);
-                                            //                 app.mobileApp.navigate('components/home/view.html');
-                                            //             },
-                                            //             function (error) {
-                                            //                 console.log(error, null);
-                                            //             });
-
-                                            // }, 500, data, switchView, reports, app);
-
                                         }
                                     },
                                     function (error) {
@@ -204,18 +167,10 @@ app.formView = kendo.observable({
 })(app.formView);
 
 function checkLogin(e) {
-    el.Users.currentUser(function (data) {
-        if (data.result) {
-            var username = data.result.DisplayName;
-            //console.log(data);
-            //alert(username + " is logged in!");
-        } else {
-            e.preventDefault();
-            app.mobileApp.navigate('components/authenticationView/view.html');
-        }
-    }, function (err) {
-        alert(err.message + " Please log in.");
-    });
+    if(_user.login == null){
+         e.preventDefault();
+         app.mobileApp.navigate('components/authenticationView/view.html');
+    }
 };
 
 function onSuccess(imageData) {
@@ -294,33 +249,32 @@ function initializeViews() {
 function loadMap() {
     var center, map, mapProp, mark;
     var location = new Geolocation();
-    var infowindow = new google.maps.InfoWindow({
-        content: "Добре Дошли!"
-    });
 
     location.getCityInfo(function (locData) {
+        var infowindow = new google.maps.InfoWindow({
+        	content: locData.address
+   		});
         center = new google.maps.LatLng(locData.coords.latitude, locData.coords.longitude);
         mapProp = {
             center: center,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        map = new google.maps.Map(document.getElementById("map"), mapProp);
+        map = new google.maps.Map(document.getElementById("locationMap"), mapProp);
         mark = new google.maps.Marker({
             position: center,
         });
         mark.setMap(map);
-
         google.maps.event.addListener(mark, 'click', function () {
             infowindow.open(map, mark);
         });
-        infowindow.content = locData.address;
-        $("#map").height(height - $('.steps-view').height());
+        $("#locationMap").height(height - $('.steps-view').height());
         sendData.location.latitude = locData.coords.latitude;
         sendData.location.longitude = locData.coords.longitude;
         sendData.address = locData.address;
         $(".spinner").hide();
     })
+
 }
 
 function geocode(coords, cb) {
@@ -341,14 +295,23 @@ function geocode(coords, cb) {
 }
 
 function cityInfo(v) {
-    var location = new Geolocation();
-    location.getCityInfo(function (locationData) {
+    if(city == null){
+        var location = new Geolocation();
+    	location.getCityInfo(function (locationData) {
+            var template = kendo.template("<h3>#= state #</h3>");
+            var result = template(locationData);
+            $("#" + v).html(result);
+            sendData.state = locationData.state;
+            $(".spinner").hide();
+            city = locationData;
+    	});
+    }else{
         var template = kendo.template("<h3>#= state #</h3>");
-        var result = template(locationData);
+        var result = template(city);
         $("#" + v).html(result);
-        sendData.state = locationData.state;
+        sendData.state = city.state;
         $(".spinner").hide();
-    });
+    }
 }
 
 function getCategories() {
@@ -369,14 +332,10 @@ function getCategories() {
 }
 
 function userInfo() {
-    el.Users.currentUser(function (data) {
-        var template = kendo.template("<li>Username:#= DisplayName #</li><li>Email:#= Email #</li>");
-        var result = template(data.result);
-        $("#userInfo").html(result);
-        sendData.userId = data.result.Id;
-    }, function (err) {
-        alert(err.message + " Please log in.");
-    });
+    var template = kendo.template("<li>Username:#= DisplayName #</li><li>Email:#= Email #</li>");
+    var result = template(_user.login);
+    $("#userInfo").html(result);
+    sendData.userId = _user.login.Id;
 }
 
 function steps() {

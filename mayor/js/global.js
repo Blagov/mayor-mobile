@@ -1,4 +1,4 @@
-var user    = {};
+var _user    = {};
 var reports = {
     arround: [],
     last:	[]

@@ -1,5 +1,5 @@
 'use strict';
-//test
+
 (function() {
     var provider = app.data.mayorMobile = new Everlive({
             offlineStorage: true,

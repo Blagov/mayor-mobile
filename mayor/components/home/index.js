@@ -2,6 +2,7 @@
 
 app.home = kendo.observable({
     onShow: function (event) {
+        User.test();
         $(".spinner").show();
         removeStartReportView();
         var scroller = $("#import-reports").data("kendoMobileScroller");
@@ -77,7 +78,11 @@ function initializeReportView(event, scroller){
     scroller.scrollElement.html(result);
     $(".item").height(h / 1.955555);
     scroller.bind("scroll", function(e) {
-    	if(e.scrollTop + e.sender.scrollElement.context.clientHeight == e.sender.scrollElement.context.scrollHeight && scrollBool) {
+        // console.log('e.scrollTop:',e.scrollTop);
+        // console.log('e.sender.scrollElement.context.clientHeight:',e.sender.scrollElement.context.clientHeight);
+        // console.log('e.sender.scrollElement.context.scrollHeight:',e.sender.scrollElement.context.scrollHeight);
+   		var eqh = $("#import-reports").data("kendoMobileScroller").scrollHeight()
+        if(e.scrollTop + e.sender.scrollElement.context.clientHeight == eqh && scrollBool) {
             scrollBool = false;
        		appendItems(event, scroller)
         }

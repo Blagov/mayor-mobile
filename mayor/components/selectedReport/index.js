@@ -2,6 +2,7 @@
 
 app.selectedView = kendo.observable({
     onShow: function (event) {
+        //alert(JSON.stringify(User.getUserLocation()));
         removeStartReportView();
         var id = event.view.params.id;
         var report;
@@ -15,7 +16,7 @@ app.selectedView = kendo.observable({
             pageSize: 0
         };
         var height = screen.width;
-   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/33yxnxr2hb8476xc/resize=w:'+height+'/'+items.data[0].Url;
+   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/gjs88abpgto1g5gv/resize=w:'+height+'/'+items.data[0].Url;
         
         var ds = new kendo.data.DataSource(items);
         var scrollView = $("#selectedReportView").data("kendoMobileScrollView");
@@ -38,7 +39,6 @@ app.selectedView = kendo.observable({
                 }
             }
         }).currentUser(function (data) {
-            console.log(data);
             if (data.result != null) {
                 var bool = false;
                 var id = '';

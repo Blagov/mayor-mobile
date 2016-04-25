@@ -2,18 +2,19 @@
 
 app.home = kendo.observable({
     onShow: function (event) {
-        User.test();
         $(".spinner").show();
         removeStartReportView();
         var scroller = $("#import-reports").data("kendoMobileScroller");
-        showAroundReports(event, scroller);
         $("#reports").kendoMobileButtonGroup({
             select: function (e) {
+                $(".spinner").show();
                 scrollBool = true;
-                if (e.index == 0) {
+                if (e.index == 0 && fastSelect) {
+                    fastSelect = false;
                     switchView = 0;
                     showAroundReports(event, scroller)
-                } else if(e.index == 1){
+                } else if(e.index == 1 && fastSelect){
+                    fastSelect = false;
                     switchView = 1;
                     showLastReports(event, scroller)
                 }
@@ -22,25 +23,35 @@ app.home = kendo.observable({
         });
         var buttongroup = $("#reports").data("kendoMobileButtonGroup");
         buttongroup.select(switchView);
-        if(_user.login == null){
-           userLogin();
+        var user = User.getUser();
+        if(user == null){
+            User.login(function(err){
+                showAroundReports(event, scroller);
+                if(err == null){
+                   // console.log();
+                }else{
+                   console.log(err);
+                }
+        	});
+        }else{
+            if (switchView == 0) {
+                showAroundReports(event, scroller)
+            } else if(switchView == 1){
+                showLastReports(event, scroller)
+            }
         }
     }
 });
 
 function showAroundReports(event, scroller) {
     if(reports.arround.length == 0){
-        var l = new Geolocation();
-        l.getCityInfo(function (lData) {
-           _user.location = lData;
-           getData(function(err){
-                if(err == null){
-                    initializeReportView(event, scroller);
-                }else{
-                    console.log(err);
-                }
-            });    
-        })
+       getData(function(err){
+            if(err == null){
+                initializeReportView(event, scroller);
+            }else{
+                console.log(err);
+            }
+        });    
     }else{
         updateView(event, scroller);
     }
@@ -78,9 +89,6 @@ function initializeReportView(event, scroller){
     scroller.scrollElement.html(result);
     $(".item").height(h / 1.955555);
     scroller.bind("scroll", function(e) {
-        // console.log('e.scrollTop:',e.scrollTop);
-        // console.log('e.sender.scrollElement.context.clientHeight:',e.sender.scrollElement.context.clientHeight);
-        // console.log('e.sender.scrollElement.context.scrollHeight:',e.sender.scrollElement.context.scrollHeight);
    		var eqh = $("#import-reports").data("kendoMobileScroller").scrollHeight()
         if(e.scrollTop + e.sender.scrollElement.context.clientHeight == eqh && scrollBool) {
             scrollBool = false;
@@ -89,12 +97,13 @@ function initializeReportView(event, scroller){
   	});
     scroller.scrollTo(0, 0);
     $(".spinner").hide();
+    fastSelect = true;
 }
 
 function reportView(items){
     var s = '';
     var height = screen.width;
-    var img = 'https://bs1.cdn.telerik.com/image/v1/33yxnxr2hb8476xc/resize=w:'+height+'/';
+    var img = 'https://bs1.cdn.telerik.com/image/v1/gjs88abpgto1g5gv/resize=w:'+height+'/';
      if(switchView==0){
         s = '#=data[i].Address#';
     }else{
@@ -121,10 +130,10 @@ function reportView(items){
         +     '</div>' 
         +     '<div class="ad-category-info">' 
         +         '<img src="images/temp/map-marker-256-white.png" width="15" class="marker-report">' 
-        +         '<p style="margin-left: 0rem;margin-right: 0.2rem;font-size:12px;">' 
+        +         '<p style="margin-left: 0rem;margin-right: 0.2rem;font-size:10px;">' 
     	+ s
         +         '</p>' 
-        +         '<a style="display:inline-block;border-radius:30px;float:right;top:7px;font-size:14px;" class="km-widget km-button km-state-active">' 
+        +         '<a style="display:inline-block;border-radius:30px;float:right;top:10px;font-size:12px;" class="km-widget km-button km-state-active">' 
         +             '<span class="km-text">&num;#=data[i].Category.Name #</span>' 
         +         '</a>' 
         +     '</div>' 
@@ -138,7 +147,8 @@ function getData(cb){
     var el = app.data.mayorMobile;
     var data = el.data('Problems');
     if(switchView==0){
-        filter.skip(reports.arround.length).take(5).orderDesc('CreatedAt').where().eq('Region', _user.location.state);
+    	var loc = User.getUserLocation();
+        filter.skip(reports.arround.length).take(5).orderDesc('CreatedAt').where().eq('Region', loc.state);
     }else if(switchView==1){
         filter.skip(reports.last.length).take(5).orderDesc('CreatedAt');
     }
@@ -165,12 +175,16 @@ function getData(cb){
         })
         .get(filter)
         .then(function (data) {
-        		if(switchView == 0){
-                    reports.arround = reports.arround.concat(data.result);
-                }else if(switchView == 1){
-                    reports.last = reports.last.concat(data.result);
+        		if(data.result.length > 0){
+                    if(switchView == 0){
+                        reports.arround = reports.arround.concat(data.result);
+                    }else if(switchView == 1){
+                        reports.last = reports.last.concat(data.result);
+                    }
+                    cb(null, data.result.length);
+                }else{
+                    cb("No results", null);
                 }
-                cb(null);
             },
             function (error) {
                 cb(error, null);
@@ -178,32 +192,40 @@ function getData(cb){
 }
 
 function appendItems(event, scroller){
-    $(".spinner").show();
-    getData(function(err){
-        if(err == null){
-            var h = event.view.content[0].clientHeight - $("#reports").height() - 10;
-            var html;
-            var template;
-            var result;
-            if(switchView == 0){
-                 html = reportView(reports.arround.length-5);
-           		 template = kendo.template(html);
-                 result = template(reports.arround);
-            }else if(switchView == 1){
-                 html = reportView(reports.last.length-5);
-           		 template = kendo.template(html);
-                 result = template(reports.last);
-            }
-            scroller.scrollElement.append(result);
-            $("#import-reports").height(h);
-            $(".item").height(h / 1.955555);
-            $(".spinner").hide();
-            scrollBool = true;
-        }else{
-            console.log(err);
-        }                        
-    });
-    
+    var reps;
+    if(switchView == 0){
+         reps = reports.arround;
+    }else if(switchView == 1){
+         reps = reports.last;
+    }
+    if(reps.length >= 5){
+        $(".spinner").show();
+        getData(function(err, count){
+            if(err == null){
+                var h = event.view.content[0].clientHeight - $("#reports").height() - 10;
+                var html;
+                var template;
+                var result;
+                if(switchView == 0){
+                     html = reportView(reports.arround.length-count);
+                     template = kendo.template(html);
+                     result = template(reports.arround);
+                }else if(switchView == 1){
+                     html = reportView(reports.last.length-count);
+                     template = kendo.template(html);
+                     result = template(reports.last);
+                }
+                scroller.scrollElement.append(result);
+                $("#import-reports").height(h);
+                $(".item").height(h / 1.955555);
+                $(".spinner").hide();
+                scrollBool = true;
+            }else{
+                console.log(err);
+                $(".spinner").hide();
+            }                        
+        });
+    }
 }
 
 function updateView(event, scroller){
@@ -216,7 +238,6 @@ function updateView(event, scroller){
     updateData(date, function(err){
         if(err == null){
             initializeReportView(event, scroller);
-            console.log('suc');
         }else{
             if(err.code == 618){
                if(switchView==0){
@@ -237,7 +258,8 @@ function updateData(date, cb){
     var el = app.data.mayorMobile;
     var data = el.data('Problems');
     if(switchView==0){
-        filter.skip(0).take(reports.arround.length).orderDesc('CreatedAt').where().and().gte('CreatedAt', date).eq('Region', _user.location.state);
+        var loc = User.getUserLocation();
+        filter.skip(0).take(reports.arround.length).orderDesc('CreatedAt').where().and().gte('CreatedAt', date).eq('Region', loc.state);
     }else if(switchView==1){
         filter.skip(0).take(reports.last.length).orderDesc('CreatedAt').where().gte('CreatedAt', date);
     }
@@ -274,16 +296,4 @@ function updateData(date, cb){
          function (error) {
             cb(error);
          });
-}
-function userLogin(){
-    var el = app.data.mayorMobile;
-    el.Users.currentUser(function (data) {
-        if (data.result) {
-			_user.login = data.result;
-        } else {
-         
-        }
-    }, function (err) {
-       
-    });
 }

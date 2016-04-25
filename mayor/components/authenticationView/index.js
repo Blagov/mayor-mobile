@@ -35,10 +35,13 @@ app.authenticationView = kendo.observable({
         successHandler = function (data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
             if (data && data.result) {
-				_user.login = data.result;
-                setTimeout(function () {
-                    app.mobileApp.navigate('components/' + redirect + '/view.html');
-                }, 0);
+            	User.login(function(err){
+                    if(err == null){
+                       app.mobileApp.navigate('components/' + redirect + '/view.html');
+                    }else{
+                       console.log(err);
+                    }
+                });
             } else {
                 init();
             }
@@ -127,15 +130,13 @@ app.authenticationView = kendo.observable({
                 facebook.getAccessToken(function (accessToken) {
                     Everlive.$.Users.loginWithFacebook(accessToken,
                         function (success) {
-                            provider.Users.currentUser(function (data) {
-                                if (data.result) {
-                                    _user.login = data.result;
-                                    app.mobileApp.navigate('components/formView/view.html');
-                                } else {
-
+                            User.login(function(err){
+                                if(err == null){
+                                   var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
+                                   app.mobileApp.navigate('components/' + redirect + '/view.html');
+                                }else{
+                                   console.log(err);
                                 }
-                            }, function (err) {
-
                             });
                         },
                         function (error) {

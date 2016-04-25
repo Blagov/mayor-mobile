@@ -143,10 +143,10 @@ app.formView = kendo.observable({
                     };
                     $.ajax({
                         type: "POST",
-                        url: 'http://api.everlive.com/v1/Metadata/Applications/33yxnxr2hb8476xc/EmailTemplates/c5d931f0-061e-11e6-80ea-91fe95cad1d9/send',
+                        url: 'http://api.everlive.com/v1/Metadata/Applications/gjs88abpgto1g5gv/EmailTemplates/b5cb67a0-0a1b-11e6-8014-e316a678fae0/send',
                         contentType: "application/json",
                         headers: {
-                            "Authorization": "Masterkey hLWn4GL3doUyLxdDLVwrfAmsU7GML6xg"
+                            "Authorization": "Masterkey g569s2eEesXOXkoe9tnRG79MDTDBFRH5"
                         },
                         data: JSON.stringify(attributes),
                         success: function(data) {
@@ -167,7 +167,8 @@ app.formView = kendo.observable({
 })(app.formView);
 
 function checkLogin(e) {
-    if(_user.login == null){
+    var user = User.getUser();
+    if(user == null){
          e.preventDefault();
          app.mobileApp.navigate('components/authenticationView/view.html');
     }
@@ -332,10 +333,11 @@ function getCategories() {
 }
 
 function userInfo() {
-    var template = kendo.template("<li>Username:#= DisplayName #</li><li>Email:#= Email #</li>");
-    var result = template(_user.login);
+    var user = User.getUser();
+    var template = kendo.template("<li>Username:#= Email #</li><li>Email:#= Email #</li>");
+    var result = template(user);
     $("#userInfo").html(result);
-    sendData.userId = _user.login.Id;
+    sendData.userId = user.Id;
 }
 
 function steps() {

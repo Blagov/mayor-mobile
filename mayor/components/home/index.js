@@ -49,6 +49,7 @@ function showAroundReports(event, scroller) {
             if(err == null){
                 initializeReportView(event, scroller);
             }else{
+                 $(".spinner").hide();
                 console.log(err);
             }
         });    
@@ -63,6 +64,7 @@ function showLastReports(event, scroller) {
         if(err == null){
             initializeReportView(event, scroller);
         }else{
+            $(".spinner").hide();
             console.log(err);
         }
    	   });   
@@ -103,7 +105,7 @@ function initializeReportView(event, scroller){
 function reportView(items){
     var s = '';
     var height = screen.width;
-    var img = 'https://bs1.cdn.telerik.com/image/v1/gjs88abpgto1g5gv/resize=w:'+height+'/';
+    var img = 'https://bs1.cdn.telerik.com/image/v1/ju62wz48onyx8zei/resize=w:'+height+'/';
      if(switchView==0){
         s = '#=data[i].Address#';
     }else{

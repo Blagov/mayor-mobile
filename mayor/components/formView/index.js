@@ -143,10 +143,10 @@ app.formView = kendo.observable({
                     };
                     $.ajax({
                         type: "POST",
-                        url: 'http://api.everlive.com/v1/Metadata/Applications/gjs88abpgto1g5gv/EmailTemplates/b5cb67a0-0a1b-11e6-8014-e316a678fae0/send',
+                        url: 'http://api.everlive.com/v1/Metadata/Applications/ju62wz48onyx8zei/EmailTemplates/72f13680-0ae8-11e6-9c49-41c60c75b824/send',
                         contentType: "application/json",
                         headers: {
-                            "Authorization": "Masterkey g569s2eEesXOXkoe9tnRG79MDTDBFRH5"
+                            "Authorization": "Masterkey MXZbAedFOTKflGFBHKo4EPhuTjPUM1QK"
                         },
                         data: JSON.stringify(attributes),
                         success: function(data) {

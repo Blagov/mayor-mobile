@@ -16,7 +16,7 @@ app.selectedView = kendo.observable({
             pageSize: 0
         };
         var height = screen.width;
-   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/gjs88abpgto1g5gv/resize=w:'+height+'/'+items.data[0].Url;
+   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/ju62wz48onyx8zei/resize=w:'+height+'/'+items.data[0].Url;
         
         var ds = new kendo.data.DataSource(items);
         var scrollView = $("#selectedReportView").data("kendoMobileScrollView");

@@ -10,13 +10,14 @@ app.profileView = kendo.observable({
 
 // START_CUSTOM_CODE_profileView
 // Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes
-function logout() {     
-    el.Users.logout().then(function () {
-        	_user.login = null;
-        	app.mobileApp.navigate('components/home/view.html');
-        }, // success
-        function () {
-            alert('Failed logout');
-        });  
+function logout() {
+    User.logout(function(err){
+        console.log('logout');
+        if(err == null){
+            app.mobileApp.navigate('components/home/view.html');
+        }else{
+            console.log(err);
+        }
+    });
 }
 // END_CUSTOM_CODE_profileView

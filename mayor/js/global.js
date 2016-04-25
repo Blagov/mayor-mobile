@@ -3,6 +3,7 @@ var reports = {
     arround: [],
     last:	[]
 };
+var fastSelect = true;
 var problemStatus = ["В процес на одобрение", "В процес на работа", "Завършен"];
 var switchView = 0;
 var scrollBool = true;

@@ -2,6 +2,15 @@
 
 app.home = kendo.observable({
     onShow: function (event) {
+        // var el = new Everlive('ju62wz48onyx8zei');
+        // var data = el.data('Followers');
+        // data.updateSingle({ Id: '89e1a2f0-0af5-11e6-9c65-c38c2b5ab509'},
+        //     function(data){
+        //         alert(JSON.stringify(data));
+        //     },
+        //     function(error){
+        //         alert(JSON.stringify(error));
+        // });
         $(".spinner").show();
         removeStartReportView();
         var scroller = $("#import-reports").data("kendoMobileScroller");
@@ -261,9 +270,9 @@ function updateData(date, cb){
     var data = el.data('Problems');
     if(switchView==0){
         var loc = User.getUserLocation();
-        filter.skip(0).take(reports.arround.length).orderDesc('CreatedAt').where().and().gte('CreatedAt', date).eq('Region', loc.state);
+        filter.skip(0).take(reports.arround.length+1).orderDesc('CreatedAt').where().and().gte('CreatedAt', date).eq('Region', loc.state);
     }else if(switchView==1){
-        filter.skip(0).take(reports.last.length).orderDesc('CreatedAt').where().gte('CreatedAt', date);
+        filter.skip(0).take(reports.last.length+1).orderDesc('CreatedAt').where().gte('CreatedAt', date);
     }
     data.withHeaders({
             'X-Everlive-Expand': {

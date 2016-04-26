@@ -1,9 +1,11 @@
 {
+  "CordovaPluginVariables": {},
   "CorePlugins": [
+    "com.phonegap.plugins.barcodescanner@2.1.2",
+    "com.telerik.LivePatch",
     "cordova-plugin-battery-status",
     "cordova-plugin-camera",
     "cordova-plugin-contacts",
-    "cordova-plugin-crosswalk-webview@1.5.0",
     "cordova-plugin-device",
     "cordova-plugin-device-motion",
     "cordova-plugin-device-orientation",
@@ -19,6 +21,7 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "cordova-plugin-vibration",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    "de.appplant.cordova.plugin.local-notification@0.8.4"
   ]
 }

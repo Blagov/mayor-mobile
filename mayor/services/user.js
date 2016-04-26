@@ -53,6 +53,32 @@ class User{
         }
     }
     
+    static getFollowedProblems(callback){
+        var user = this.getUser();
+        if(user != null){
+            var id = user.Id;
+            var providers = app.data.mayorMobile.data('Followers');
+            var filter = new Everlive.Query();
+            filter.select('Problem','ModifiedAt').where().eq('Owner', id);
+            providers.withHeaders({
+                     "X-Everlive-Expand": {
+                        "Problem": {
+                            "TargetTypeName": "Problems",
+                        },
+                    }
+                })
+                .get(filter)
+                .then(function (data) {
+                    callback(null, data.result);
+                },
+                function (error) {
+                    callback(error, null);
+            });
+        }else{
+             callback("User not authenticated");
+        }
+    }
+    
     static getUser(){
         return this.user;
     }

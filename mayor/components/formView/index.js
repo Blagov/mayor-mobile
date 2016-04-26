@@ -53,10 +53,10 @@ app.formView = kendo.observable({
         },
         send: function () {
             $(".spinner").show();
-            $(".comment").val('');
             city = null;
             sendData.pcategory = $(".activeCategory").data('id');
             sendData.comment = $(".comment").val();
+            $(".comment").val('');
             var data = app.data.mayorMobile.data('Problems');
             var loc  = sendData.state;
             data.create({

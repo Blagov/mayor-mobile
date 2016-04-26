@@ -4,6 +4,22 @@ var el = app.data.mayorMobile;
 app.profileView = kendo.observable({
     onShow: function() {
         removeStartReportView();
+        User.getFollowedProblems(function(err, problems){
+            if(err == null){
+                var counter = 0;
+                problems.forEach(function(problem){
+                    var fdate = problem.ModifiedAt;
+                    var pdate = problem.Problem.ModifiedAt;
+                    if(pdate.getTime() > fdate.getTime()){
+                        counter++;
+                    }
+                });
+                var html = "<p>You have " + counter + " changed problems</p>";
+                $('#changed-reports').html(html);
+            }else{
+                console.log(err);
+            }
+        });
     },
     afterShow: function() {}
 });

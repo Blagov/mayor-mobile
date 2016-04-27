@@ -46,10 +46,11 @@ function getUrlParams(url) {
     }
     return params;
 }
-
+/*
 function removeStartReportView() {
     $('#report-view').css('background', 'rgb(255, 255, 255)');
     $('header .km-tabstrip').css('background-image', 'linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);');
     $('.km-nova .km-tabstrip .km-button').css('color', '#202C31');
-    $('*[data-role="content"]').css('background-color', 'rgb(255, 255, 255)');
+    $('*[data-role="content"]').css('background-color', 'rgb(255, 255, 255)'); 
 }
+*/

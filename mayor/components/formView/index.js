@@ -143,10 +143,10 @@ app.formView = kendo.observable({
                     };
                     $.ajax({
                         type: "POST",
-                        url: 'http://api.everlive.com/v1/Metadata/Applications/ju62wz48onyx8zei/EmailTemplates/72f13680-0ae8-11e6-9c49-41c60c75b824/send',
+                        url: 'http://api.everlive.com/v1/Metadata/Applications/33yxnxr2hb8476xc/EmailTemplates/c5d931f0-061e-11e6-80ea-91fe95cad1d9/send',
                         contentType: "application/json",
                         headers: {
-                            "Authorization": "Masterkey MXZbAedFOTKflGFBHKo4EPhuTjPUM1QK"
+                            "Authorization": "Masterkey hLWn4GL3doUyLxdDLVwrfAmsU7GML6xg"
                         },
                         data: JSON.stringify(attributes),
                         success: function(data) {
@@ -334,7 +334,7 @@ function getCategories() {
 
 function userInfo() {
     var user = User.getUser();
-    var template = kendo.template("<li>Username:#= Email #</li><li>Email:#= Email #</li>");
+    var template = kendo.template("<div><label>Име</label>#= DisplayName #</div><div><label>Телефон</label>#= Phone #</div><div><label>Ел. поща</label>#= Email #</div>");
     var result = template(user);
     $("#userInfo").html(result);
     sendData.userId = user.Id;
@@ -387,11 +387,14 @@ function takePhoto() {
 }
 
 function startReportView(e) {
-    $('#report-view').css('background', 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/temp/2110273938.jpg")');
-    $('header .km-tabstrip').css('background-image', 'linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(199, 199, 199, 0.06) 100%)');
-    $('.km-nova .km-tabstrip .km-button.km-state-active').css('background-image', 'linear-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 250, 250, 0) 100%)');
-    $('.km-nova .km-tabstrip .km-button').css('color', 'rgba(255, 255, 255, 0.85)');
-    $('*[data-role="content"]').css('background-color', 'rgba(199, 199, 199, 0.06)');
+    $('.km-nova .km-content').css({'background':'rgba(0, 0, 0, 0.7)'});
+    $('.km-nova header .km-tabstrip').css({'background':'rgba(0, 0, 0, 0.7)'});
+    $('.km-nova header .km-tabstrip .km-button').css({'background':'transparent'});
+}
+function removeStartReportView() {
+    $('.km-nova .km-content').css({'background':'rgba(243, 243, 243, 1)'});
+    $('.km-nova header .km-tabstrip').css({'background':'rgba(255, 255, 255, 1)'});
+    $('.km-nova header .km-tabstrip .km-button').css({'background':'rgba(255, 255, 255, 1)'});
 }
 
 function categoryClass(i) {

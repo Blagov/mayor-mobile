@@ -52,6 +52,8 @@ app.home = kendo.observable({
     }
 });
 
+
+
 function showAroundReports(event, scroller) {
     if(reports.arround.length == 0){
        getData(function(err){
@@ -122,35 +124,36 @@ function reportView(items){
     }
     var html =
     '# for (var i=' + Number(items) + '; i < data.length; i++) { #' 
-        + '<div id=#=i# onclick="onSelect(this.id)"  class="item" style="overflow:hidden;position: relative;">' 
-        +	  '<img width="100%" style="position: absolute;" src='+img+'#=data[i].Images[0].Url#>' 
+        + '<div id=#=i# onclick="onSelect(this.id)"  class="listview-item item" >' 
+        +	  '<img class="item-img" src='+img+'#=data[i].Images[0].Url#>' 
         +     '<div class="profile-image">' 
-        +         '<img src="images/temp/user_profile_img.png" width="50">' 
+        +         '<img src="images/temp/user_profile_img.png">' 
         +     '</div>' 
-        +     '<div class="report-date">' 
-        +         '<img src="images/temp/clock-icon-300x300.png" width="14">' 
-        +         '<p style="margin-left: 0.2rem;">' 
-        +             '#=dateFormat(data[i].CreatedAt)#' 
-        +         '</p>' 
-        +     '</div>' 
-        +     '<div class="report-followers">' 
-        +         '<img src="images/temp/gnome_stock_person.png" width="15">' 
-        +         '<p style="margin-left: 0rem;margin-right: 0.2rem;">' 
-        +             '#= getFollowers(data[i]) #' 
-        +         '</p>' 
-        +     '</div>' 
-        +     '<div class="ad-category-info">' 
-        +         '<img src="images/temp/map-marker-256-white.png" width="15" class="marker-report">' 
-        +         '<p style="margin-left: 0rem;margin-right: 0.2rem;font-size:10px;">' 
-    	+ s
-        +         '</p>' 
-        +         '<a style="display:inline-block;border-radius:30px;float:right;top:10px;font-size:12px;" class="km-widget km-button km-state-active">' 
-        +             '<span class="km-text">&num;#=data[i].Category.Name #</span>' 
-        +         '</a>' 
-        +     '</div>' 
-        + '</div>' 
+    		+ '<div class="box-top-right">'
+		    + 	'<div class="report-date">' 
+    		+ 		'<span class="km-icon km-icon-clock"></span>' 
+    		+ 		'#= getFollowers(data[i]) #' 
+    		+ 	'</div>' 
+    		+ 	'<div class="report-followers">' 
+    		+ 		'<span class="km-icon km-icon-follower"></span>' 
+    		+ 		'#= getFollowers(data[i]) #' 
+    		+ 	'</div>'
+    		+ '</div>' 
+    		+ '<div class="ad-category-info">' 
+    		+ 	'<div class="address">'
+    		+ 		'<span class="km-icon km-icon-pinmap"></span>' 
+    	    + 		s
+        	+ 	'</div>' 
+    		+ 	'<div class="category">'
+    		+ 		'<a class="km-widget km-button">' 
+    		+ 			'<span class="km-text km-icon km-icon-#=data[i].Category.IconName #"><!--&num;#=data[i].Category.Name #--></span>' 
+    		+ 		'</a>'
+    		+ 	'</div>'
+    		+ '</div>'
+   		+ '</div>'
     + '# } #'
     return html;
+	
 }
 
 function getData(cb){
@@ -240,6 +243,7 @@ function appendItems(event, scroller){
 }
 
 function updateView(event, scroller){
+
     var date;
     if(switchView==0){
         date = reports.arround[reports.arround.length - 1].CreatedAt;

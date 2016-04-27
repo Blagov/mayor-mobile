@@ -30,12 +30,12 @@
                 </li>
                 <li>
                     <label>Password
-                        <input type="password" data-bind="value: authenticationViewModel.password">
+                        <input type="password" data-bind="value: authenticationViewModel.password" required>
                     </label>
                 </li>
                 <li>
                     <label>Name
-                        <input type="text" data-bind="value: authenticationViewModel.displayName">
+                        <input type="text" data-bind="value: authenticationViewModel.displayName" required>
                     </label>
                 </li>
             </ul>
@@ -46,7 +46,7 @@
         </form>
     </div>
     <div class="offline" align="center" style="display:none;">
-        You are currently offline. Before using this app in offline mode you must initialize it while you are online
+        <p>You are currently offline. Before using this app in offline mode you must initialize it while you are online</p>
     </div>
     <!-- START_CUSTOM_CODE_authenticationViewModel -->
     <!-- Add custom code here. For more information about custom code, see http://docs.telerik.com/platform/screenbuilder/troubleshooting/how-to-keep-custom-code-changes -->

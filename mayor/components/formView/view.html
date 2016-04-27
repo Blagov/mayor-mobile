@@ -1,4 +1,5 @@
 <div id="report-view" data-role="view" data-title="report" data-layout="main" data-model="app.formView" data-show="app.formView.onShow"  data-before-show="checkLogin">
+
     <div class="start-report-view">
         <div class="fullscreen">
             <div class="fullscr-row">
@@ -33,6 +34,7 @@
             </div>
         </div>        
     </div>
+
     <div class="steps-view">
 		<div class="col-3">
             <span class="km-icon km-icon-photo"></span>
@@ -47,6 +49,7 @@
             <span class="km-icon km-icon-back"></span>
         </div>
     </div>
+	
     <div class="photos-view">
         <h1>Добави снимка от инцидента</h1>
         <div class="scrolview-photos" id="scrollview" data-role="scrollview" data-template="photos" data-items-per-page="1">
@@ -58,9 +61,11 @@
             <h4> Добави друга снимка</h4>
         </div>
     </div>
+
     <div class="location-view">
         <div id="locationMap" style="width:100%;height:100%"></div>
     </div>
+
     <div class="comment-view">
         <h1>Посочи категория на инцидента</h1>
         <div id="categories">
@@ -73,6 +78,7 @@
             <textarea class="comment" name="test" rows="10" placeholder="Моля, напишете коментар..."></textarea>
         </div>
     </div>
+
     <div class="user-info-view">
         <div class="container">
            <h1>Репортажът ще бъде изпратен до:</h1>
@@ -90,9 +96,9 @@
             <h2>Добави данни за контакт (по избор)</h2>
             <div id="userInfo">
             </div>
-            
         </div>
     </div>
+	
     <footer class="prev-next" data-role="footer">
         <div data-role="tabstrip" class="navigation">
             <a data-icon="icon-arrow-left" data-bind="events: { click: formViewModel.prev }"></a>

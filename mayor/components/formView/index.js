@@ -143,10 +143,10 @@ app.formView = kendo.observable({
                     };
                     $.ajax({
                         type: "POST",
-                        url: 'http://api.everlive.com/v1/Metadata/Applications/33yxnxr2hb8476xc/EmailTemplates/c5d931f0-061e-11e6-80ea-91fe95cad1d9/send',
+                        url: 'http://api.everlive.com/v1/Metadata/Applications/ju62wz48onyx8zei/EmailTemplates/72f13680-0ae8-11e6-9c49-41c60c75b824/send',
                         contentType: "application/json",
                         headers: {
-                            "Authorization": "Masterkey hLWn4GL3doUyLxdDLVwrfAmsU7GML6xg"
+                            "Authorization": "Masterkey MXZbAedFOTKflGFBHKo4EPhuTjPUM1QK"
                         },
                         data: JSON.stringify(attributes),
                         success: function(data) {
@@ -321,15 +321,14 @@ function getCategories() {
     filter.orderDesc('CreatedAt');
     data.get(filter)
         .then(function (data) {
-
-                var template = kendo.template('# for (var i = 0; i < data.length; i++) { #<div data-id="#=data[i].Id#" onclick="selectCategory(this);" class="col-xs-3  #=categoryClass(i)#"><span class="km-icon km-#= data[i].Class #"></span><h5>#=data[i].Name #</h5></div># } #')
-                var result = template(data.result);
-                $("#categories").html(result);
-                $(".spinner").hide();
-            },
-            function (error) {
-                console.log("err", error);
-            });
+            var template = kendo.template('# for (var i = 0; i < data.length; i++) { #<div data-id="#=data[i].Id#" onclick="selectCategory(this);" class="col-3  #=categoryClass(i)#"><span class="km-icon km-icon-#=data[i].IconName #"></span><h5>#=data[i].Name #</h5></div># } #');
+            var result = template(data.result);
+            $("#categories").html(result);
+            $(".spinner").hide();
+        },
+        function (error) {
+            console.log("err", error);
+        });
 }
 
 function userInfo() {

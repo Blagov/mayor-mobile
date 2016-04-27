@@ -2,7 +2,6 @@ function getFollowers(f) {
     var r;
     f.Followers != null ? r = f.Followers.length : r = 0;
     return r;
-
 }
 
 function dateFormat(date) {
@@ -51,6 +50,6 @@ function removeStartReportView() {
     $('#report-view').css('background', 'rgb(255, 255, 255)');
     $('header .km-tabstrip').css('background-image', 'linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 100%);');
     $('.km-nova .km-tabstrip .km-button').css('color', '#202C31');
-    $('*[data-role="content"]').css('background-color', 'rgb(255, 255, 255)');
+    $('*[data-role="content"]').css('background-color', 'rgb(255, 255, 255)'); 
 }
 */

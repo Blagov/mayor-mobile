@@ -2,7 +2,7 @@
 
 app.selectedView = kendo.observable({
     onShow: function (event) {
-		//alert(JSON.stringify(User.getUserLocation()));
+        //alert(JSON.stringify(User.getUserLocation()));
         removeStartReportView();
         var id = event.view.params.id;
         var report;
@@ -16,24 +16,23 @@ app.selectedView = kendo.observable({
             pageSize: 0
         };
         var height = screen.width;
-   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/ipekt42qegjbv8hx/resize=w:'+height+'/'+items.data[0].Url;
+   		items.data[0].Url = 'https://bs1.cdn.telerik.com/image/v1/ju62wz48onyx8zei/resize=w:'+height+'/'+items.data[0].Url;
         var ds = new kendo.data.DataSource(items);
         var scrollView = $("#selectedReportView").data("kendoMobileScrollView");
         scrollView.setDataSource(ds);
-        
+
         var html = "<div class=\"info-row\"><label>Докладвано преди</label> #=dateFormat(data.CreatedAt)#</div><div class=\"info-row\"><label>Докладвано от</label>#=data.Owner.DisplayName#</div><div class=\"info-row\"><label>Отговорен орган</label>#=data.Region#</div><div class=\"info-row comment-info\"><label>Коментар</label><div class=\"comment-txt\">#=data.Comment#</div></div>";
 
         var reportAddress = "<h2>#=data.Address#</h2>";
-        $("#reportAddress").html(reportAddress);
-        //#=data[i].Images[0].Url
-        
+//      $("#reportAddress");
         var htmlfollowers ="<div><span class=\"km-icon km-icon-follower\"></span>#=getFollowers(data) #</div>";
-        var htmltop = "<h5>Категория: #=data.Category.Name# </h5><h5>Статус: #=status(data.Status)# </h5>";
-        
+        var htmltop = "<h5>Категория: #=data.Category.Name#</h5><h5>Статус: #=status(data.Status)# </h5>";
+		
         var template = kendo.template(html);
         var result = template(report);
         var scroller = $("#reportInfo").data("kendoMobileScroller");
         scroller.scrollElement.html(result);
+
 
         var el = app.data.mayorMobile;
         el.Users.withHeaders({
@@ -89,7 +88,7 @@ function follow() {
     }else if(switchView == 1){
         report = reports.last[params.id];
     }
-    
+  
     data.create({
             'Problem': report.Id
         },
@@ -101,6 +100,7 @@ function follow() {
             console.log(error);
         });
 }
+
 function unFollow() {
     $(".spinner").show();
     var params = getUrlParams(window.location.href);

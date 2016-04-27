@@ -52,8 +52,6 @@ app.home = kendo.observable({
     }
 });
 
-
-
 function showAroundReports(event, scroller) {
     if(reports.arround.length == 0){
        getData(function(err){
@@ -123,7 +121,7 @@ function reportView(items){
         s = '#=data[i].Address#, #=data[i].Region#';
     }
     var html =
-    '# for (var i=' + Number(items) + '; i < data.length; i++) { #' 
+    '# for (var i=' + Number(items) + '; i < data.length; i++) { #'
         + '<div id=#=i# onclick="onSelect(this.id)"  class="listview-item item" >' 
         +	  '<img class="item-img" src='+img+'#=data[i].Images[0].Url#>' 
         +     '<div class="profile-image">' 
@@ -132,7 +130,7 @@ function reportView(items){
     		+ '<div class="box-top-right">'
 		    + 	'<div class="report-date">' 
     		+ 		'<span class="km-icon km-icon-clock"></span>' 
-    		+ 		'#= getFollowers(data[i]) #' 
+    		+ 		'#=dateFormat(data[i].CreatedAt)#' 
     		+ 	'</div>' 
     		+ 	'<div class="report-followers">' 
     		+ 		'<span class="km-icon km-icon-follower"></span>' 
@@ -146,14 +144,13 @@ function reportView(items){
         	+ 	'</div>' 
     		+ 	'<div class="category">'
     		+ 		'<a class="km-widget km-button">' 
-    		+ 			'<span class="km-text km-icon km-icon-#=data[i].Category.IconName #"><!--&num;#=data[i].Category.Name #--></span>' 
+    		+ 			'<span class="km-text km-icon km-icon-#=data[i].Category.Class #"><!--&num;#=data[i].Category.Name #--></span>' 
     		+ 		'</a>'
     		+ 	'</div>'
     		+ '</div>'
    		+ '</div>'
     + '# } #'
     return html;
-	
 }
 
 function getData(cb){
@@ -243,7 +240,6 @@ function appendItems(event, scroller){
 }
 
 function updateView(event, scroller){
-
     var date;
     if(switchView==0){
         date = reports.arround[reports.arround.length - 1].CreatedAt;
